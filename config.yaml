@@ -1,0 +1,58 @@
+name: Ezhuthu
+styles: [ "Regular" ]
+version: 0.100
+unitsPerEm: 1000
+ascender: 820
+descender: 300
+source: https://example.invalid/ezhuthu
+author:
+  name: Ezhuthu Project Authors
+  email: fonts@example.invalid
+  url: https://example.invalid
+license:
+  text: "This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: https://scripts.sil.org/OFL"
+  url: https://scripts.sil.org/OFL
+manufacturer:
+  name: Ezhuthu
+  url: https://example.invalid
+sources: sources
+build: fonts
+proofs: proofs
+tests: tests
+glyphs:
+  classes:
+    LC_ALL: abcdefghijklmnopqrstuvwxyz
+    UC_ALL: ABCDEFGHIJKLMNOPQRSTUVWXYZ
+    LATIN_EXTRA: []
+    LATIN_LIGATURES: []
+    QUOTES: ["'","\"","‘","’","“","”"]
+    PARANTHESIS: "()"
+    ML_CONSONANTS: കഖഗഘങചഛജഝഞടഠഡഢണതഥദധനപഫബഭമയരലവറശഷസഹളഴ
+    ML_VOWEL_SIGNS: ['ാ', 'ി','ീ', "ു", "ൂ", "ൃ", "ൄ", "ൢ", "ൣ", "െ", "േ", "ൈ", "ൊ", "ോ","ൌ", "ൗ"]
+    ML_VOWEL_SIGNS_CONJOINING: ["ു", "ൂ", "ൃ", "ൄ", "ൢ", "ൣ"]
+    ML_I_SIGNS: ['ി','ീ']
+    ML_CONS_CONJUNCTS: ["ക്ക", "ക്ഷ", "ഗ്ഗ", "ങ്ങ", "ങ്ക",
+                     "ച്ച", "ച്ഛ", "ജ്ജ", "ഞ്ച", "ഞ്ഞ",
+                     "ട്ട", "ണ്ണ", "ണ്ഡ", "ണ്ട", "ഡ്ഡ",
+                     "ത്ത", "ത്ഥ", "ദ്ദ", "ദ്ധ", "ന്ന", "ന്ത", "ന്ധ", "ന്മ", "ന്റ",
+                     "പ്പ", "ബ്ബ", "മ്മ", "മ്പ",
+                     "യ്യ", "ല്ല", "വ്വ",
+                     "ശ്ച", "ശ്ശ", "സ്സ", "സ്റ്റ", "സ്ഥ", "സ്ത",
+                     "ഷ്ട", "ള്ള", "റ്റ"]
+    ML_REPH_CONJUNCTS: ["ക്ര", "ഗ്ര", "ഘ്ര", "ച്ര", "ട്ര", "ഡ്ര",
+                     "ത്ര", "ദ്ര", "ധ്ര", "പ്ര", "ഫ്ര", "ബ്ര", "ഭ്ര", "മ്ര",
+                     "വ്ര", "ശ്ര", "സ്ര", "സ്ത്ര", "ഹ്ര", "ഷ്ര"]
+    ML_PREVENT_CONJUNCTS: ["സ്തു","സ്തൂ", "സ്റ്റു","സ്റ്റൂ", "ട്ടു", "ട്ടൂ",
+                     "ണ്ടു","ണ്ടൂ", "ന്റു","ന്റൂ"]
+    ML_LA_CONJUNCTS: ["ക്ല", "ഗ്ല", "ത്ല", "പ്ല", "ഫ്ല", "ബ്ല", "മ്ല", "വ്ല", "സ്ല", "ശ്ല", "ഹ്ല"]
+    ML_TOP_MARKS: ["ൎ", "ഀ"]
+    ML_BOTTOM_MARKS: [ "ൢ", "ൣ"]
+  kern:
+    latin: []
+    malayalam:
+      - ['്',"@QUOTES", 100 ]
+      - [['ആ',"ക", "ഷ", 'ക്ഷ', "ദ"],["ന", "ൻ", "നു", "ന്റ", "നൂ"], -50 ]
+      - [['പ',"പു", 'പൂ', "വ", "വു", "വൂ","യ", "യു", "യൂ"],['പ',"പു", 'പൂ', "വ", "വു", "വൂ","യ", "യു", "യൂ"], -30 ]
+  calts:
+    malayalam:
+      - ['ന', "ി", 'wrap' ]
