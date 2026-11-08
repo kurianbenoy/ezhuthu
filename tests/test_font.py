@@ -7,7 +7,7 @@ import sys
 
 import uharfbuzz as hb
 
-FONT = sys.argv[1] if len(sys.argv) > 1 else "fonts/Ezhuthu-Regular.ttf"
+FONT = sys.argv[1] if len(sys.argv) > 1 else "legacy/fonts/Ezhuthu-Regular.ttf"
 
 blob = hb.Blob.from_file_path(FONT)
 face = hb.Face(blob)

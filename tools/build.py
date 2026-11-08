@@ -269,22 +269,22 @@ def build_style(style):
 def compile_fonts(styles, formats=("ttf", "otf", "woff2")):
     import ufo2ft
     import ufoLib2
-    os.makedirs("fonts", exist_ok=True)
+    os.makedirs("legacy/fonts", exist_ok=True)
     for style in styles:
         ufo = ufoLib2.Font.open(f"sources/ufo/Ezhuthu-{style}.ufo")
         for fmt in formats:
             if fmt == "ttf":
                 font = ufo2ft.compileTTF(ufo)
-                font.save(f"fonts/Ezhuthu-{style}.ttf")
+                font.save(f"legacy/fonts/Ezhuthu-{style}.ttf")
             elif fmt == "otf":
                 font = ufo2ft.compileOTF(ufo)
-                font.save(f"fonts/Ezhuthu-{style}.otf")
+                font.save(f"legacy/fonts/Ezhuthu-{style}.otf")
             elif fmt == "woff2":
                 from fontTools.ttLib import TTFont
-                tt = TTFont(f"fonts/Ezhuthu-{style}.ttf")
+                tt = TTFont(f"legacy/fonts/Ezhuthu-{style}.ttf")
                 tt.flavor = "woff2"
-                tt.save(f"fonts/Ezhuthu-{style}.woff2")
-            print(f"compiled fonts/Ezhuthu-{style}.{fmt}")
+                tt.save(f"legacy/fonts/Ezhuthu-{style}.woff2")
+            print(f"compiled legacy/fonts/Ezhuthu-{style}.{fmt}")
 
 
 if __name__ == "__main__":

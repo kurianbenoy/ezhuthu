@@ -32,6 +32,64 @@ def shape(font, text):
     return list(zip(infos, positions))
 
 
+def render_alpha(font_path, text, size=64, pad=20, show_baseline=False):
+    """Render text to a grayscale image (255 = ink) and return (image, baseline)."""
+    hbfont, upem = load_hb_font(font_path, size)
+    ftface = freetype.Face(font_path)
+    ftface.set_char_size(size * 64)
+
+    shaped = shape(hbfont, text)
+    pen_x = 0.0
+    top_max = 0.0
+    bottom_max = 0.0
+    glyphs = []
+    for info, pos in shaped:
+        gid = info.codepoint
+        x_adv = pos.x_advance / 64.0
+        x_off = pos.x_offset / 64.0
+        y_off = pos.y_offset / 64.0
+        ftface.load_glyph(gid, freetype.FT_LOAD_RENDER | freetype.FT_LOAD_TARGET_NORMAL)
+        bitmap = ftface.glyph.bitmap
+        left = ftface.glyph.bitmap_left
+        top = ftface.glyph.bitmap_top
+        w, rows, pitch = bitmap.width, bitmap.rows, bitmap.pitch
+        data = bytes(bitmap.buffer) if (w and rows) else b""
+        gx = pen_x + x_off + left
+        top_above = top + y_off
+        bottom_below = rows - top - y_off
+        top_max = max(top_max, top_above)
+        bottom_max = max(bottom_max, bottom_below)
+        glyphs.append((data, w, rows, pitch, gx, top, y_off))
+        pen_x += x_adv
+
+    width = int(pen_x) + 2 * pad
+    height = int(top_max + bottom_max) + 2 * pad
+    if width <= 0 or height <= 0:
+        return None, 0
+    img = Image.new("L", (width, height), 0)
+    baseline_y = pad + top_max
+    for data, w, rows, pitch, gx, top, y_off in glyphs:
+        px = int(round(gx)) + pad
+        py = int(round(baseline_y - top - y_off))
+        if w == 0 or rows == 0:
+            continue
+        stride = abs(pitch) if pitch else w
+        glyph_img = Image.new("L", (w, rows), 0)
+        gp = glyph_img.load()
+        for r in range(rows):
+            base = r * stride
+            for c in range(w):
+                v = data[base + c]
+                if v:
+                    gp[c, r] = v
+        img.paste(glyph_img, (px, py), glyph_img)
+    if show_baseline:
+        from PIL import ImageDraw
+        d = ImageDraw.Draw(img)
+        d.line([(0, int(baseline_y)), (width, int(baseline_y))], fill=128, width=1)
+    return img, baseline_y
+
+
 def render(font_path, text, out_path, size=64, pad=20, fg=(30, 30, 30), bg=(255, 255, 255), show_baseline=False):
     hbfont, upem = load_hb_font(font_path, size)
     ftface = freetype.Face(font_path)

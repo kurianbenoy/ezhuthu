@@ -1,9 +1,17 @@
-Copyright 2023 The Nupuram Project Authors (https://gitlab.com/smc/fonts/Nupuram)
+Copyright 2026 The Ezhuthu Project Authors.
+
+Ezhuthu Kamalam is based on Manjari, Copyright 2018 The Manjari Project Authors
+(https://gitlab.com/smc/fonts/manjari), licensed under the SIL Open Font
+License 1.1.
+
+Portions of the legacy v0.2 draft tools are adapted from Nupuram,
+Copyright 2023 The Nupuram Project Authors
+(https://gitlab.com/smc/fonts/Nupuram), licensed under the MIT license
+(see tools/malayalamfont.py).
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:
 https://scripts.sil.org/OFL
-
 
 -----------------------------------------------------------
 SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
