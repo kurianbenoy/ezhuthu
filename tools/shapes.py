@@ -189,24 +189,24 @@ def ml_arch_ring(b, x0, x1, y_base, y_top, stroke):
     b.stem(x1, y_base + r, x1, cy, stroke)
 
 
-def ml_arch_nested(b, x0, x1, y_top, y_base, stroke, shrink=0.45, inner_drop=60):
-    """Nested double arch (tha-style): outer arch + smaller inner arch inside,
-    inner legs joining at bottom center."""
+def ml_arch_nested(b, x0, x1, y_top, y_base, stroke, shrink=0.55, inner_drop=100):
+    """Nested double arch (tha-style): outer arch with legs, plus a smaller
+    inner arch whose own legs stop above the bottom (the two tunnels must be
+    clearly separated)."""
     r = (x1 - x0) / 2.0
     cy = y_top - r
     b.arc(x0 + r, cy, r, stroke, 0, 180)
     b.stem(x0, y_base, x0, cy, stroke)
     b.stem(x1, y_base, x1, cy, stroke)
-    # inner arch
+    # inner arch: narrower, hung lower, legs ending well above baseline
     ix0 = x0 + (x1 - x0) * (0.5 - shrink / 2)
     ix1 = x0 + (x1 - x0) * (0.5 + shrink / 2)
     iy_top = y_top - inner_drop
     ir = (ix1 - ix0) / 2.0
     icy = iy_top - ir
     b.arc(ix0 + ir, icy, ir, stroke, 0, 180)
-    b.stem(ix0, y_base + ir, ix0, icy, stroke)
-    b.stem(ix1, y_base + ir, ix1, icy, stroke)
-    b.arc((ix0 + ix1) / 2.0, y_base + ir, ir, stroke, 180, 360)
+    b.stem(ix0, y_base + 40, ix0, icy, stroke)
+    b.stem(ix1, y_base + 40, ix1, icy, stroke)
 
 
 def ml_loop(b, cx, cy, ri, stroke):

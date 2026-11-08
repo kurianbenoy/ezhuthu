@@ -266,7 +266,7 @@ def build_style(style):
     return mf
 
 
-def compile_fonts(styles, formats=("ttf",)):
+def compile_fonts(styles, formats=("ttf", "otf", "woff2")):
     import ufo2ft
     import ufoLib2
     os.makedirs("fonts", exist_ok=True)
@@ -279,6 +279,11 @@ def compile_fonts(styles, formats=("ttf",)):
             elif fmt == "otf":
                 font = ufo2ft.compileOTF(ufo)
                 font.save(f"fonts/Ezhuthu-{style}.otf")
+            elif fmt == "woff2":
+                from fontTools.ttLib import TTFont
+                tt = TTFont(f"fonts/Ezhuthu-{style}.ttf")
+                tt.flavor = "woff2"
+                tt.save(f"fonts/Ezhuthu-{style}.woff2")
             print(f"compiled fonts/Ezhuthu-{style}.{fmt}")
 
 

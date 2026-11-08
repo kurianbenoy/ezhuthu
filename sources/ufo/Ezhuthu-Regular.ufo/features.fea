@@ -473,106 +473,136 @@ lookup malayalam_kern {
 lookup abvm_topmarks {
     lookupflag 0;
     ;
-            pos base [ml_ka ml_ka_sign_u ml_ka_sign_uu ml_ka_virama_la ml_dha ml_dha_sign_u ml_dha_sign_uu ml_na ml_na_sign_u ml_na_sign_uu ml_sha ml_sha_sign_u ml_sha_sign_uu ml_sha_virama_la]
-            <anchor 465 0> mark @vc_vc;
+            pos base [ml_ka ml_ka_sign_u ml_ka_sign_uu ml_ka_virama_la]
+            <anchor 249 0> mark @vc_vc;
         pos base [ml_ka_virama_ka ml_ka_virama_ka_sign_u ml_ka_virama_ka_sign_uu ml_na_virama_dha ml_na_virama_dha_sign_u ml_na_virama_dha_sign_uu ml_na_virama_na ml_na_virama_na_sign_u ml_na_virama_na_sign_uu ml_sha_virama_sha ml_sha_virama_sha_sign_u ml_sha_virama_sha_sign_uu]
             <anchor 688 0> mark @vc_vc;
         pos base [ml_ka_virama_ra ml_ka_virama_ra_sign_u ml_ka_virama_ra_sign_uu ml_dha_virama_ra ml_dha_virama_ra_sign_u ml_dha_virama_ra_sign_uu ml_sha_virama_ra ml_sha_virama_ra_sign_u ml_sha_virama_ra_sign_uu]
             <anchor 540 0> mark @vc_vc;
         pos base [ml_ka_virama_ssa ml_ka_virama_ssa_sign_u ml_ka_virama_ssa_sign_uu]
             <anchor 692 0> mark @vc_vc;
-        pos base [ml_kha ml_kha_sign_u ml_kha_sign_uu ml_dda ml_dda_sign_u ml_dda_sign_uu]
-            <anchor 490 0> mark @vc_vc;
-        pos base [ml_ga ml_ga_sign_u ml_ga_sign_uu ml_ga_virama_la ml_ca_virama_ra ml_ca_virama_ra_sign_u ml_ca_virama_ra_sign_uu]
-            <anchor 445 0> mark @vc_vc;
+        pos base [ml_kha ml_kha_sign_u ml_kha_sign_uu]
+            <anchor 179 0> mark @vc_vc;
+        pos base [ml_ga ml_ga_sign_u ml_ga_sign_uu ml_ga_virama_la ml_nga ml_nga_sign_u ml_nga_sign_uu]
+            <anchor 202 0> mark @vc_vc;
         pos base [ml_ga_virama_ga ml_ga_virama_ga_sign_u ml_ga_virama_ga_sign_uu]
             <anchor 653 0> mark @vc_vc;
         pos base [ml_ga_virama_ra ml_ga_virama_ra_sign_u ml_ga_virama_ra_sign_uu]
             <anchor 520 0> mark @vc_vc;
-        pos base [ml_gha ml_gha_sign_u ml_gha_sign_uu]
-            <anchor 570 0> mark @vc_vc;
+        pos base [ml_gha ml_gha_sign_u ml_gha_sign_uu ml_ta ml_ta_sign_u ml_ta_sign_uu ml_ta_virama_la]
+            <anchor 187 0> mark @vc_vc;
         pos base [ml_gha_virama_ra ml_gha_virama_ra_sign_u ml_gha_virama_ra_sign_uu]
             <anchor 645 0> mark @vc_vc;
-        pos base [ml_nga ml_nga_sign_u ml_nga_sign_uu]
-            <anchor 500 0> mark @vc_vc;
-        pos base [ml_nga_virama_ka ml_nga_virama_ka_sign_u ml_nga_virama_ka_sign_uu ml_nga_virama_nga ml_nga_virama_nga_sign_u ml_nga_virama_nga_sign_uu ml_nya_virama_nya ml_nya_virama_nya_sign_u ml_nya_virama_nya_sign_uu ml_dda_virama_dda ml_dda_virama_dda_sign_u ml_dda_virama_dda_sign_uu ml_nna_virama_tta ml_nna_virama_dda ml_nna_virama_dda_sign_u ml_nna_virama_dda_sign_uu ml_nna_virama_nna ml_nna_virama_nna_sign_u ml_nna_virama_nna_sign_uu ml_ba_virama_ba ml_ba_virama_ba_sign_u ml_ba_virama_ba_sign_uu ml_sa_virama_ta ml_sa_virama_tha ml_sa_virama_tha_sign_u ml_sa_virama_tha_sign_uu ml_sa_virama_rra_virama_rra ml_sa_virama_sa ml_sa_virama_sa_sign_u ml_sa_virama_sa_sign_uu]
-            <anchor 710 0> mark @vc_vc;
-        pos base [ml_ca ml_ca_sign_u ml_ca_sign_uu ml_ja ml_ja_sign_u ml_ja_sign_uu]
-            <anchor 370 0> mark @vc_vc;
+        pos base [ml_nga_virama_ka ml_nga_virama_ka_sign_u ml_nga_virama_ka_sign_uu]
+            <anchor 723 0> mark @vc_vc;
+        pos base [ml_nga_virama_nga ml_nga_virama_nga_sign_u ml_nga_virama_nga_sign_uu]
+            <anchor 750 0> mark @vc_vc;
+        pos base [ml_ca ml_ca_sign_u ml_ca_sign_uu]
+            <anchor 168 0> mark @vc_vc;
         pos base [ml_ca_virama_ca ml_ca_virama_ca_sign_u ml_ca_virama_ca_sign_uu ml_ja_virama_ja ml_ja_virama_ja_sign_u ml_ja_virama_ja_sign_uu ml_ma_virama_pa ml_ma_virama_pa_sign_u ml_ma_virama_pa_sign_uu]
             <anchor 522 0> mark @vc_vc;
         pos base [ml_ca_virama_cha ml_ca_virama_cha_sign_u ml_ca_virama_cha_sign_uu]
             <anchor 642 0> mark @vc_vc;
-        pos base [ml_cha ml_cha_sign_u ml_cha_sign_uu ml_nya ml_nya_sign_u ml_nya_sign_uu ml_ddha ml_ddha_sign_u ml_ddha_sign_uu]
-            <anchor 530 0> mark @vc_vc;
-        pos base [ml_jha ml_jha_sign_u ml_jha_sign_uu ml_nna ml_nna_sign_u ml_nna_sign_uu ml_ba ml_ba_sign_u ml_ba_sign_uu ml_ba_virama_la ml_sa ml_sa_sign_u ml_sa_sign_uu ml_sa_virama_la]
-            <anchor 605 0> mark @vc_vc;
+        pos base [ml_ca_virama_ra ml_ca_virama_ra_sign_u ml_ca_virama_ra_sign_uu]
+            <anchor 445 0> mark @vc_vc;
+        pos base [ml_cha ml_cha_sign_u ml_cha_sign_uu]
+            <anchor 167 0> mark @vc_vc;
+        pos base [ml_ja ml_ja_sign_u ml_ja_sign_uu]
+            <anchor 169 0> mark @vc_vc;
+        pos base [ml_jha ml_jha_sign_u ml_jha_sign_uu]
+            <anchor 189 0> mark @vc_vc;
+        pos base [ml_nya ml_nya_sign_u ml_nya_sign_uu]
+            <anchor 206 0> mark @vc_vc;
         pos base [ml_nya_virama_ca ml_nya_virama_ca_sign_u ml_nya_virama_ca_sign_uu]
             <anchor 682 0> mark @vc_vc;
-        pos base [ml_tta ml_tta_sign_u ml_tta_sign_uu ml_lla ml_lla_sign_u ml_lla_sign_uu ml_llla ml_llla_sign_u ml_llla_sign_uu]
-            <anchor 310 0> mark @vc_vc;
+        pos base [ml_nya_virama_nya ml_nya_virama_nya_sign_u ml_nya_virama_nya_sign_uu]
+            <anchor 802 0> mark @vc_vc;
+        pos base [ml_tta ml_tta_sign_u ml_tta_sign_uu]
+            <anchor 119 0> mark @vc_vc;
         pos base [ml_tta_virama_tta ml_lla_virama_lla ml_lla_virama_lla_sign_u ml_lla_virama_lla_sign_uu]
             <anchor 417 0> mark @vc_vc;
         pos base [ml_tta_virama_ra ml_tta_virama_ra_sign_u ml_tta_virama_ra_sign_uu]
             <anchor 385 0> mark @vc_vc;
         pos base [ml_ttha ml_ttha_sign_u ml_ttha_sign_uu]
-            <anchor 300 0> mark @vc_vc;
+            <anchor 185 0> mark @vc_vc;
+        pos base [ml_dda ml_dda_sign_u ml_dda_sign_uu]
+            <anchor 189 0> mark @vc_vc;
+        pos base [ml_dda_virama_dda ml_dda_virama_dda_sign_u ml_dda_virama_dda_sign_uu]
+            <anchor 732 0> mark @vc_vc;
         pos base [ml_dda_virama_ra ml_dda_virama_ra_sign_u ml_dda_virama_ra_sign_uu]
             <anchor 565 0> mark @vc_vc;
-        pos base [ml_ta ml_ta_sign_u ml_ta_sign_uu ml_ta_virama_la ml_da_virama_da ml_da_virama_da_sign_u ml_da_virama_da_sign_uu]
-            <anchor 435 0> mark @vc_vc;
+        pos base [ml_ddha ml_ddha_sign_u ml_ddha_sign_uu]
+            <anchor 245 0> mark @vc_vc;
+        pos base [ml_nna ml_nna_sign_u ml_nna_sign_uu]
+            <anchor 248 0> mark @vc_vc;
+        pos base ml_nna_virama_tta
+            <anchor 712 0> mark @vc_vc;
+        pos base [ml_nna_virama_dda ml_nna_virama_dda_sign_u ml_nna_virama_dda_sign_uu]
+            <anchor 847 0> mark @vc_vc;
+        pos base [ml_nna_virama_nna ml_nna_virama_nna_sign_u ml_nna_virama_nna_sign_uu ml_ba_virama_ba ml_ba_virama_ba_sign_u ml_ba_virama_ba_sign_uu ml_sa_virama_sa ml_sa_virama_sa_sign_u ml_sa_virama_sa_sign_uu]
+            <anchor 933 0> mark @vc_vc;
         pos base [ml_ta_virama_ta ml_ta_virama_ta_sign_u ml_ta_virama_ta_sign_uu]
             <anchor 636 0> mark @vc_vc;
         pos base [ml_ta_virama_tha ml_ta_virama_tha_sign_u ml_ta_virama_tha_sign_uu ml_na_virama_ma ml_na_virama_ma_sign_u ml_na_virama_ma_sign_uu]
             <anchor 595 0> mark @vc_vc;
         pos base [ml_ta_virama_ra ml_ta_virama_ra_sign_u ml_ta_virama_ra_sign_uu]
             <anchor 510 0> mark @vc_vc;
-        pos base [ml_tha ml_tha_sign_u ml_tha_sign_uu ml_bha ml_bha_sign_u ml_bha_sign_uu]
-            <anchor 380 0> mark @vc_vc;
+        pos base [ml_tha ml_tha_sign_u ml_tha_sign_uu ml_pa ml_pa_sign_u ml_pa_sign_uu ml_pa_virama_la ml_ma ml_ma_sign_u ml_ma_sign_uu ml_ma_virama_la ml_va ml_va_sign_u ml_va_sign_uu ml_va_virama_la ml_ssa ml_ssa_sign_u ml_ssa_sign_uu]
+            <anchor 173 0> mark @vc_vc;
         pos base [ml_da ml_da_sign_u ml_da_sign_uu]
-            <anchor 320 0> mark @vc_vc;
+            <anchor 174 0> mark @vc_vc;
+        pos base [ml_da_virama_da ml_da_virama_da_sign_u ml_da_virama_da_sign_uu]
+            <anchor 435 0> mark @vc_vc;
         pos base [ml_da_virama_dha ml_da_virama_dha_sign_u ml_da_virama_dha_sign_uu]
             <anchor 543 0> mark @vc_vc;
         pos base [ml_da_virama_ra ml_da_virama_ra_sign_u ml_da_virama_ra_sign_uu]
             <anchor 395 0> mark @vc_vc;
+        pos base [ml_dha ml_dha_sign_u ml_dha_sign_uu]
+            <anchor 200 0> mark @vc_vc;
+        pos base [ml_na ml_na_sign_u ml_na_sign_uu]
+            <anchor 182 0> mark @vc_vc;
         pos base [ml_na_virama_ta ml_na_virama_ta_sign_u ml_na_virama_ta_sign_uu]
             <anchor 666 0> mark @vc_vc;
         pos base ml_na_virama_rra
             <anchor 613 0> mark @vc_vc;
-        pos base [ml_pa ml_pa_sign_u ml_pa_sign_uu ml_pa_virama_la]
-            <anchor 410 0> mark @vc_vc;
         pos base [ml_pa_virama_pa ml_pa_virama_pa_sign_u ml_pa_virama_pa_sign_uu]
             <anchor 592 0> mark @vc_vc;
         pos base [ml_pa_virama_ra ml_pa_virama_ra_sign_u ml_pa_virama_ra_sign_uu]
             <anchor 485 0> mark @vc_vc;
         pos base [ml_pha ml_pha_sign_u ml_pha_sign_uu ml_pha_virama_la]
-            <anchor 515 0> mark @vc_vc;
+            <anchor 234 0> mark @vc_vc;
         pos base [ml_pha_virama_ra ml_pha_virama_ra_sign_u ml_pha_virama_ra_sign_uu]
             <anchor 590 0> mark @vc_vc;
+        pos base [ml_ba ml_ba_sign_u ml_ba_sign_uu ml_ba_virama_la]
+            <anchor 225 0> mark @vc_vc;
         pos base [ml_ba_virama_ra ml_ba_virama_ra_sign_u ml_ba_virama_ra_sign_uu ml_sa_virama_ra ml_sa_virama_ra_sign_u ml_sa_virama_ra_sign_uu]
             <anchor 680 0> mark @vc_vc;
+        pos base [ml_bha ml_bha_sign_u ml_bha_sign_uu]
+            <anchor 186 0> mark @vc_vc;
         pos base [ml_bha_virama_ra ml_bha_virama_ra_sign_u ml_bha_virama_ra_sign_uu]
             <anchor 455 0> mark @vc_vc;
-        pos base [ml_ma ml_ma_sign_u ml_ma_sign_uu ml_ma_virama_la]
-            <anchor 340 0> mark @vc_vc;
-        pos base [ml_ma_virama_ma ml_ma_virama_ma_sign_u ml_ma_virama_ma_sign_uu ml_ya ml_ya_sign_u ml_ya_sign_uu ml_ssa ml_ssa_sign_u ml_ssa_sign_uu]
+        pos base [ml_ma_virama_ma ml_ma_virama_ma_sign_u ml_ma_virama_ma_sign_uu]
             <anchor 470 0> mark @vc_vc;
         pos base [ml_ma_virama_ra ml_ma_virama_ra_sign_u ml_ma_virama_ra_sign_uu]
             <anchor 415 0> mark @vc_vc;
+        pos base [ml_ya ml_ya_sign_u ml_ya_sign_uu ml_sha ml_sha_sign_u ml_sha_sign_uu ml_sha_virama_la]
+            <anchor 192 0> mark @vc_vc;
         pos base [ml_ya_virama_ya ml_ya_virama_ya_sign_u ml_ya_virama_ya_sign_uu]
             <anchor 697 0> mark @vc_vc;
-        pos base [ml_ra ml_ra_sign_u ml_ra_sign_uu uni25CC]
-            <anchor 355 0> mark @vc_vc;
+        pos base [ml_ra ml_ra_sign_u ml_ra_sign_uu]
+            <anchor 126 0> mark @vc_vc;
         pos base [ml_rra ml_rra_sign_u ml_rra_sign_uu]
-            <anchor 325 0> mark @vc_vc;
+            <anchor 124 0> mark @vc_vc;
         pos base [ml_rra_virama_rra ml_rra_virama_rra_sign_u ml_rra_virama_rra_sign_uu]
             <anchor 473 0> mark @vc_vc;
         pos base [ml_la ml_la_sign_u ml_la_sign_uu]
-            <anchor 400 0> mark @vc_vc;
+            <anchor 159 0> mark @vc_vc;
         pos base [ml_la_virama_la ml_la_virama_la_sign_u ml_la_virama_la_sign_uu]
             <anchor 575 0> mark @vc_vc;
-        pos base [ml_va ml_va_sign_u ml_va_sign_uu ml_va_virama_la]
-            <anchor 420 0> mark @vc_vc;
+        pos base [ml_lla ml_lla_sign_u ml_lla_sign_uu]
+            <anchor 113 0> mark @vc_vc;
+        pos base [ml_llla ml_llla_sign_u ml_llla_sign_uu]
+            <anchor 128 0> mark @vc_vc;
         pos base [ml_va_virama_ra ml_va_virama_ra_sign_u ml_va_virama_ra_sign_uu]
             <anchor 495 0> mark @vc_vc;
         pos base [ml_va_virama_va ml_va_virama_va_sign_u ml_va_virama_va_sign_uu]
@@ -583,62 +613,86 @@ lookup abvm_topmarks {
             <anchor 577 0> mark @vc_vc;
         pos base [ml_ssa_virama_ra ml_ssa_virama_ra_sign_u ml_ssa_virama_ra_sign_uu]
             <anchor 545 0> mark @vc_vc;
+        pos base [ml_sa ml_sa_sign_u ml_sa_sign_uu ml_sa_virama_la]
+            <anchor 262 0> mark @vc_vc;
+        pos base ml_sa_virama_ta
+            <anchor 806 0> mark @vc_vc;
         pos base [ml_sa_virama_ta_virama_ra ml_sa_virama_ta_virama_ra_sign_u ml_sa_virama_ta_virama_ra_sign_uu]
-            <anchor 725 0> mark @vc_vc;
+            <anchor 881 0> mark @vc_vc;
+        pos base [ml_sa_virama_tha ml_sa_virama_tha_sign_u ml_sa_virama_tha_sign_uu]
+            <anchor 765 0> mark @vc_vc;
+        pos base ml_sa_virama_rra_virama_rra
+            <anchor 753 0> mark @vc_vc;
         pos base [ml_ha ml_ha_sign_u ml_ha_sign_uu ml_ha_virama_la]
-            <anchor 525 0> mark @vc_vc;
+            <anchor 201 0> mark @vc_vc;
         pos base [ml_ha_virama_ra ml_ha_virama_ra_sign_u ml_ha_virama_ra_sign_uu]
             <anchor 600 0> mark @vc_vc;
+        pos base uni25CC
+            <anchor 355 0> mark @vc_vc;
 
 } abvm_topmarks;
 
 lookup blwm_bottommarks {
     lookupflag 0;
     ;
-            pos base [ml_ka ml_dha ml_na ml_sha]
-            <anchor 850 0> mark @bottom_bottom;
-        pos base [ml_kha ml_dda]
-            <anchor 900 0> mark @bottom_bottom;
-        pos base ml_ga
-            <anchor 810 0> mark @bottom_bottom;
-        pos base ml_gha
-            <anchor 1060 0> mark @bottom_bottom;
-        pos base ml_nga
-            <anchor 920 0> mark @bottom_bottom;
-        pos base [ml_ca ml_ja]
-            <anchor 660 0> mark @bottom_bottom;
-        pos base [ml_cha ml_nya ml_ddha]
-            <anchor 980 0> mark @bottom_bottom;
-        pos base [ml_jha ml_nna ml_ba ml_sa]
-            <anchor 1130 0> mark @bottom_bottom;
-        pos base [ml_tta ml_lla ml_llla]
-            <anchor 540 0> mark @bottom_bottom;
+            pos base ml_ka
+            <anchor 418 0> mark @bottom_bottom;
+        pos base ml_kha
+            <anchor 278 0> mark @bottom_bottom;
+        pos base [ml_ga ml_nga]
+            <anchor 325 0> mark @bottom_bottom;
+        pos base [ml_gha ml_ta]
+            <anchor 295 0> mark @bottom_bottom;
+        pos base ml_ca
+            <anchor 257 0> mark @bottom_bottom;
+        pos base ml_cha
+            <anchor 254 0> mark @bottom_bottom;
+        pos base ml_ja
+            <anchor 259 0> mark @bottom_bottom;
+        pos base ml_jha
+            <anchor 299 0> mark @bottom_bottom;
+        pos base ml_nya
+            <anchor 332 0> mark @bottom_bottom;
+        pos base ml_tta
+            <anchor 158 0> mark @bottom_bottom;
         pos base ml_ttha
-            <anchor 520 0> mark @bottom_bottom;
-        pos base ml_ta
-            <anchor 790 0> mark @bottom_bottom;
-        pos base [ml_tha ml_bha]
-            <anchor 680 0> mark @bottom_bottom;
+            <anchor 290 0> mark @bottom_bottom;
+        pos base ml_dda
+            <anchor 298 0> mark @bottom_bottom;
+        pos base ml_ddha
+            <anchor 410 0> mark @bottom_bottom;
+        pos base ml_nna
+            <anchor 417 0> mark @bottom_bottom;
+        pos base [ml_tha ml_pa ml_ma ml_va ml_ssa]
+            <anchor 266 0> mark @bottom_bottom;
         pos base ml_da
-            <anchor 560 0> mark @bottom_bottom;
-        pos base ml_pa
-            <anchor 740 0> mark @bottom_bottom;
+            <anchor 269 0> mark @bottom_bottom;
+        pos base ml_dha
+            <anchor 320 0> mark @bottom_bottom;
+        pos base ml_na
+            <anchor 285 0> mark @bottom_bottom;
         pos base ml_pha
-            <anchor 950 0> mark @bottom_bottom;
-        pos base ml_ma
-            <anchor 600 0> mark @bottom_bottom;
-        pos base [ml_ya ml_ssa]
-            <anchor 860 0> mark @bottom_bottom;
+            <anchor 389 0> mark @bottom_bottom;
+        pos base ml_ba
+            <anchor 370 0> mark @bottom_bottom;
+        pos base ml_bha
+            <anchor 292 0> mark @bottom_bottom;
+        pos base [ml_ya ml_sha]
+            <anchor 304 0> mark @bottom_bottom;
         pos base ml_ra
-            <anchor 630 0> mark @bottom_bottom;
+            <anchor 172 0> mark @bottom_bottom;
         pos base ml_rra
-            <anchor 570 0> mark @bottom_bottom;
+            <anchor 169 0> mark @bottom_bottom;
         pos base ml_la
-            <anchor 720 0> mark @bottom_bottom;
-        pos base ml_va
-            <anchor 760 0> mark @bottom_bottom;
+            <anchor 238 0> mark @bottom_bottom;
+        pos base ml_lla
+            <anchor 147 0> mark @bottom_bottom;
+        pos base ml_llla
+            <anchor 177 0> mark @bottom_bottom;
+        pos base ml_sa
+            <anchor 445 0> mark @bottom_bottom;
         pos base ml_ha
-            <anchor 970 0> mark @bottom_bottom;
+            <anchor 323 0> mark @bottom_bottom;
 
 } blwm_bottommarks;
 

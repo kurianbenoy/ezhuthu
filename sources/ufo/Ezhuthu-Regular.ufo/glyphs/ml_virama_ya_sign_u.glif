@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <glyph name="ml_virama_ya_sign_u" format="2">
-  <advance width="300"/>
+  <advance width="123"/>
   <outline>
     <component base="ml_virama_ya"/>
     <component base="u_drop_sign"/>

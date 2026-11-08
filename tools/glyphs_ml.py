@@ -46,9 +46,9 @@ class Design:
 
 
 DESIGNS = {
-    "Thin": Design("Thin", 44, 40, 104, 56, 200),
-    "Regular": Design("Regular", 78, 66, 88, 44, 400),
-    "Bold": Design("Bold", 112, 96, 70, 32, 700),
+    "Thin": Design("Thin", 38, 34, 66, 38, 200),
+    "Regular": Design("Regular", 62, 54, 60, 34, 400),
+    "Bold": Design("Bold", 92, 80, 48, 26, 700),
 }
 
 
@@ -57,7 +57,15 @@ def O(x=0.0, y=0.0, s=1.0):
 
 
 class Ctx:
-    """Coordinate context: local -> global transform + stroke selection."""
+    """Coordinate context: local -> global transform + stroke selection.
+
+    Design coordinates are 'generous' karshapan (x values up to ~900); the
+    global X factor compresses x so that advances match the measured
+    reference metrics (~0.47 of design x), while keeping y at body height
+    0..500. Radii are NOT compressed (loops stay circular)."""
+
+    X_FACTOR = 0.47
+    MARGIN = 24  # lsb/rsb around art x extents
 
     def __init__(self, b, D, o):
         self.b = b
@@ -66,7 +74,7 @@ class Ctx:
         self.st = D.stroke if o["s"] >= 0.99 else D.sub
 
     def x(self, v):
-        return self.o["x"] + self.o["s"] * v
+        return self.o["x"] + self.o["s"] * self.X_FACTOR * v
 
     def y(self, v):
         return self.o["y"] + self.o["s"] * v
@@ -82,25 +90,29 @@ class Ctx:
         self.b.stem(self.x(x0), self.y(y), self.x(x1), self.y(y), self.st)
 
     def loop(self, cx, cy, ri):
-        ml_loop(self.b, self.x(cx), self.y(cy), ri * self.o["s"], self.st)
+        ml_loop(self.b, self.x(cx), self.y(cy), ri * self.o["s"], self.st * 0.72)
 
     def eye(self, cx, cy, ri=None):
-        ml_eye(self.b, self.x(cx), self.y(cy), (ri or self.D.eye_ri) * self.o["s"], self.st)
+        ml_eye(self.b, self.x(cx), self.y(cy), (ri or self.D.eye_ri) * self.o["s"], self.st * 0.78)
 
     def arch(self, x0, x1, y_base, y_top):
         ml_arch(self.b, self.x(x0), self.x(x1), self.y(y_base), self.y(y_top), self.st)
 
     def stadium(self, x0, x1, y_base, y_top):
-        ml_arch_ring(self.b, self.x(x0), self.x(x1), self.y(y_base), self.y(y_top), self.st)
+        ml_arch_ring(self.b, self.x(x0), self.x(x1), self.y(y_base), self.y(y_top), self.st * 0.8)
 
     def nested(self, x0, x1, y_base, y_top, shrink=0.45, inner_drop=60):
         ml_arch_nested(self.b, self.x(x0), self.x(x1), self.y(y_top), self.y(y_base), self.st, shrink, inner_drop)
 
+    def arc(self, cx, cy, r, width, a0, a1):
+        self.b.arc(self.x(cx), self.y(cy), r * self.o["s"], width * self.o["s"], a0, a1)
+        return self
+
     def cup(self, x, y, r, a_att=340, a_end=195):
-        ml_cup(self.b, self.x(x), self.y(y), r * self.o["s"], self.st, a_att, a_end)
+        ml_cup(self.b, self.x(x), self.y(y), r * self.o["s"] * 0.66, self.st * 0.82, a_att, a_end)
 
     def crook(self, x, y, r, mirror=False):
-        ml_crook(self.b, self.x(x), self.y(y), r * self.o["s"], self.st, mirror)
+        ml_crook(self.b, self.x(x), self.y(y), r * self.o["s"] * 0.7, self.st, mirror)
 
     def flag_down(self, x, y, r):
         ml_flag_down(self.b, self.x(x), self.y(y), r * self.o["s"], self.st)
@@ -130,8 +142,9 @@ class Ctx:
 # ---------------------------------------------------------------------------
 def ka(c):
     c.loop(250, 330, c.D.loop_ri)
-    c.diag(400, 450, 620, 170)
-    c.cup(640, 120, 130)
+    # tail: sweep out of the loop's lower-right, curling left at the end
+    c.arc(480, 260, 200, c.st, 170, -40)
+    c.cup(633, 121, 110)
 
 
 def kha(c):
@@ -142,8 +155,9 @@ def kha(c):
 
 
 def ga(c):
-    c.stadium(60, 360, 0, 500)
-    c.arch(340, 620, 0, 500)
+    c.loop(200, 350, 70)
+    c.loop(520, 330, 92)
+    c.bar(110, 615, 40)
 
 
 def gha(c):
@@ -161,16 +175,12 @@ def nga(c):
 
 def ca(c):
     c.arch(80, 360, 0, 300)
-    c.cup(360, 30, 60, a_att=280, a_end=120)   # right leg foot curl inward
-    c.cup(80, 30, 60, a_att=260, a_end=100)
     c.stem(600, 500, 600, 0)
     c.bar(80, 600, 30)
 
 
 def cha(c):
     c.arch(80, 360, 0, 300)
-    c.cup(360, 30, 60, a_att=280, a_end=120)
-    c.cup(80, 30, 60, a_att=260, a_end=100)
     c.stem(560, 500, 560, 0)
     c.bar(80, 560, 30)
     c.cup(600, 40, 150, a_att=345, a_end=175)  # below tail
@@ -290,7 +300,7 @@ def bha(c):
 
 def ma(c):
     c.arch(80, 620, 0, 500)
-    c.diag(560, 450, 200, 70)
+    c.diag(540, 440, 190, 90)
     c.bar(80, 620, 30)
 
 
@@ -321,11 +331,10 @@ def la(c):
 
 
 def va(c):
-    c.arch(80, 380, 0, 500)
-    c.cup(80, 25, 60, a_att=262, a_end=100)
-    c.cup(380, 25, 60, a_att=278, a_end=80)
-    c.stem(620, 500, 620, 0)
-    c.bar(230, 620, 25)
+    c.arch(80, 380, 0, 400)
+    c.bar(80, 620, 30)
+    c.stem(620, 30, 620, -60)
+    c.cup(620, -60, 60)
 
 
 def sha(c):
@@ -340,15 +349,12 @@ def ssa(c):
     c.arch(370, 570, 300, 500)   # small arch, top area
     c.stem(620, 500, 620, 0)
     c.bar(80, 620, 30)
-    c.eye(700, 300, 44)
 
 
 def sa(c):
     c.arch(80, 360, 0, 500)
-    c.cup(80, 25, 60, a_att=262, a_end=100)
     c.stem(620, 500, 620, 0)
     c.arch(640, 1000, 0, 500)
-    c.cup(1000, 25, 60, a_att=278, a_end=80)
 
 
 def ha(c):
@@ -393,17 +399,17 @@ CHILLU_BODIES = {
 
 
 def draw_chillu(c, body_fn, flag_x):
-    ml_flag_diag(c.b, c.x(flag_x), c.y(810), 90 * c.o["s"], 170 * c.o["s"], c.st)
+    ml_flag_diag(c.b, c.x(flag_x), c.y(560), 90 * c.o["s"], 200 * c.o["s"], c.st * 0.85)
     body_fn(c)
 
 
 def chillu_ll(c):  # ൾ : flag + big ring
-    ml_flag_diag(c.b, c.x(560), c.y(810), 90 * c.o["s"], 170 * c.o["s"], c.st)
+    ml_flag_diag(c.b, c.x(540), c.y(560), 90 * c.o["s"], 200 * c.o["s"], c.st * 0.85)
     c.loop(300, 270, 150)
 
 
 def chillu_n(c):  # ൺ : flag + loop + stem + arch
-    ml_flag_diag(c.b, c.x(860), c.y(810), 90 * c.o["s"], 170 * c.o["s"], c.st)
+    ml_flag_diag(c.b, c.x(640), c.y(560), 90 * c.o["s"], 200 * c.o["s"], c.st * 0.85)
     c.loop(200, 330, c.D.loop_ri)
     c.stem(460, 500, 460, 0)
     c.arch(480, 760, 0, 500)
@@ -426,34 +432,31 @@ def va_aa(c):
 
 
 def va_i(c):
-    c.stadium(60, 340, 0, 460)
-    c.stem(400, 760, 400, -80)
-    c.crook(400, 760, 90)
-    c.stem(60, 460, 60, -110)
-    c.bar(60, 400, -120)
+    # seat hook top-right, long descender, inward curl at the foot
+    c.diag(60, 430, 300, 500)
+    c.stem(300, 500, 300, -80)
+    c.crook(300, -80, 80)
 
 
 def va_ii(c):
-    c.stadium(60, 340, 0, 460)
-    c.stem(400, 760, 400, -80)
-    c.crook(400, 760, 90)
-    c.crook(400, 760, 60, mirror=True)
-    c.stem(60, 460, 60, -110)
-    c.bar(60, 400, -120)
-    c.stem(60, -120, 60, -200)
-    c.bar(60, 400, -210)
+    va_i(c)
+    c.crook(300, -80, 55, mirror=True)
+    c.stem(60, -140, 60, -220)
+    c.bar(60, 320, -260)
 
 
 def va_u(c):
-    c.arch(60, 420, -110, 500)
-    c.bar(60, 420, -120)
+    # manjari-style "2": loop top, stem below baseline, foot curl
+    c.loop(170, 330, 52)
+    c.stem(310, 400, 310, -60)
+    c.cup(310, -60, 80)
 
 
 def va_uu(c):
-    c.arch(300, 660, -110, 500)
-    c.bar(300, 660, -120)
-    c.stem(80, 500, 80, -60)
-    c.flag_down(80, -60, 70)
+    va_u(c)
+    c.loop(430, 330, 52)
+    c.stem(570, 400, 570, -60)
+    c.cup(570, -60, 70)
 
 
 def va_r(c):
@@ -550,8 +553,8 @@ def sign_aa(c):
 
 def sign_i(c):
     # slanted seat with slight negative lsb, hook opening toward the base
-    c.diag(-40, 410, 140, 700)
-    c.crook(140, 700, 85)
+    c.diag(-40, 10, 120, 430)
+    c.crook(120, 460, 85)
 
 
 def sign_i_wrap(c):
@@ -564,19 +567,21 @@ def sign_i_wrap(c):
 
 def sign_ii(c):
     sign_i(c)
-    c.diag(140, 410, 140, 320)
-    c.crook(140, 320, 85, mirror=True)
+    c.crook(120, 460, 55, mirror=True)
 
 
 def sign_u(c):
-    # spacing ു: bowl bottom-left, leg rising on the right
-    c.cup(150, 0, 140, a_att=345, a_end=185)
-    c.stem(290, 0, 290, 110)
+    # spacing ു: flat-bottom bowl + leg rising to body top
+    c.ml_arch_ring(c.b, 20, 290, -260, 60, c.st) if False else None
+    c.stadium(20, 290, -260, 80)
+    c.stem(290, 80, 290, 330)
 
 
 def sign_uu(c):
-    c.zigzag(70, 10, 250, 120)
-    c.stem(320, 20, 320, 150)
+    # twin stacked bowls + leg
+    c.stadium(70, 260, -140, 60)
+    c.stadium(70, 260, -450, -160)
+    c.stem(260, 60, 260, 330)
 
 
 def sign_vocalic_r(c):
@@ -757,6 +762,12 @@ def ra_sweep(c):
     c.cup(0, 40, 150, a_att=350, a_end=175)
 
 
+def art_xmax(g):
+    if any(c.points for c in g):
+        return max(p.x for c in g for p in c.points)
+    return 0
+
+
 def draw_cons_conjunct(b, D, c1, c2):
     """Base consonant + subjoined second consonant, drawn into builder b."""
     fn1, w1 = CONSONANTS[c1]
@@ -807,17 +818,36 @@ def _anchors(g, W, base=False, vc=None, bottom=None, right=None):
         g.anchors.append(Anchor(name="right", x=right, y=0))
 
 
+ZERO_WIDTH_MARKS = {"\u0d4d", "\u0d4e", "\u0d00", "\u0d01"}
+
+
+def measure_width(g, default_W):
+    """Auto advance: art x-extent + margins, clamped to W * X_FACTOR."""
+    if any(c.points for c in g):
+        xs = [p.x for c in g for p in c.points]
+        if not xs:
+            return int(default_W * Ctx.X_FACTOR)
+        xmax = max(xs)
+        adv = int(xmax) + Ctx.MARGIN
+        return adv
+    return int(default_W * Ctx.X_FACTOR)
+
+
 def make_glyph(font, key, fn, D, W, unicodes=None, base=False,
                vc=None, bottom=None, right=None, overlay_origin=None):
     name = SVGGlyph.get_glyph_name(key)
     g = font.newGlyph(name)
-    g.width = W
     if unicodes:
         g.unicodes = unicodes
     b = GlyphBuilder(g)
     fn(Ctx(b, D, overlay_origin or O()))
     b.union()
-    _anchors(g, W, base=base, vc=vc, bottom=bottom, right=right)
+    ch = unicodes[0] if unicodes else key
+    if ch in ZERO_WIDTH_MARKS:
+        g.width = 0
+    else:
+        g.width = measure_width(g, W)
+    _anchors(g, g.width, base=base, vc=vc, bottom=bottom, right=right)
     return g
 
 
@@ -834,13 +864,13 @@ def build_ml(font, D):
         if body is None:
             fn = chillu_ll if ch == "ൾ" else chillu_n
             W = 940
-            flag_x = 560 if ch == "ൾ" else 860
+            flag_x = 560 if ch == "ൾ" else 640
         else:
             fn = body
             W = CONSONANTS[
                 {"ൻ": "ന", "ർ": "ര", "ൽ": "ല", "ൖ": "ഴ", "ൿ": "ക"}[ch]
             ][1]
-            flag_x = W - 230
+            flag_x = W - 210
         W = W + 170
 
         def chillu_fn(c, fn=fn, flag_x=flag_x):
@@ -900,7 +930,7 @@ def build_ml(font, D):
         g = font.newGlyph(name)
         b = GlyphBuilder(g)
         W = draw_cons_conjunct(b, D, lig[0], lig[2])
-        g.width = min(1420, max(W, 700))
+        g.width = max(W, 300)
         b.union()
         _anchors(g, g.width, base=True)
         made.add(name)
@@ -909,7 +939,7 @@ def build_ml(font, D):
         g = font.newGlyph(name)
         b = GlyphBuilder(g)
         W = draw_reph_conjunct(b, D, lig)
-        g.width = min(1450, max(W, 700))
+        g.width = max(W, 300)
         b.union()
         _anchors(g, g.width, base=True)
         made.add(name)

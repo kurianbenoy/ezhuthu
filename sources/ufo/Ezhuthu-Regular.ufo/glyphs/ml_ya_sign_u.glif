@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <glyph name="ml_ya_sign_u" format="2">
-  <advance width="940"/>
+  <advance width="384"/>
   <outline>
     <component base="ml_ya"/>
-    <component base="u_drop_sign" xOffset="940" yOffset="-10"/>
+    <component base="u_drop_sign" xOffset="384" yOffset="-10"/>
   </outline>
   <lib>
     <dict>

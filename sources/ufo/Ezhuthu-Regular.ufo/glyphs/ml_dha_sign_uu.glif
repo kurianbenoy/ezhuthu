@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <glyph name="ml_dha_sign_uu" format="2">
-  <advance width="930"/>
+  <advance width="400"/>
   <outline>
     <component base="ml_dha"/>
-    <component base="uu_drop_sign" xOffset="930" yOffset="-10"/>
+    <component base="uu_drop_sign" xOffset="400" yOffset="-10"/>
   </outline>
   <lib>
     <dict>

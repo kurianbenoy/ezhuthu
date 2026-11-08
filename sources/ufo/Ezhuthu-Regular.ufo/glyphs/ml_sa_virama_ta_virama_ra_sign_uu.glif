@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <glyph name="ml_sa_virama_ta_virama_ra_sign_uu" format="2">
-  <advance width="1450"/>
+  <advance width="1762"/>
   <outline>
     <component base="ml_sa_virama_ta_virama_ra"/>
-    <component base="uu_drop_sign" xOffset="1450" yOffset="-10"/>
+    <component base="uu_drop_sign" xOffset="1762" yOffset="-10"/>
   </outline>
   <lib>
     <dict>
