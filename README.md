@@ -18,6 +18,9 @@ gradient inside the font itself, a direct homage to
 
 > Status: **v1.000 — first Kamalam release.** Full Malayalam block + Latin,
 > working HarfBuzz shaping, variable `APER` axis, and a COLRv1 colour companion.
+> Fontbakery universal: **0 FAIL** on Regular and Bold (two documented
+> custom-axis/Latin exceptions — see [NOTES.md](NOTES.md)); COLRv1 verified in
+> Chromium 156.
 
 ---
 
