@@ -10,6 +10,7 @@ help:
 	@echo "  legacy    rebuild the v0.2 parametric draft (legacy/fonts)"
 	@echo "  test      run shaping, variation and colour tests"
 	@echo "  proofs    render the specimen PNGs and the HTML specimen"
+	@echo "  qa        run fontbakery on Regular and Bold (see NOTES.md)"
 	@echo "  specimen  alias for proofs"
 	@echo "  serve     serve specimen/ on http://localhost:8000"
 	@echo "  clean     remove generated UFOs and masters"
@@ -33,6 +34,14 @@ test: venv kamalam legacy
 proofs: kamalam
 	$(PY) tools/specimen.py
 	$(PY) tools/specimen_html.py
+
+qa: kamalam
+	$(PIP) install -q fontbakery
+	$(PY) -m fontbakery check-universal fonts/EzhuthuKamalam-Regular.ttf \
+		--no-progress -x opentype/fvar/regular_coords_correct -x alt_caron
+	$(PY) -m fontbakery check-universal fonts/EzhuthuKamalam-Bold.ttf \
+		--no-progress -x opentype/fvar/regular_coords_correct -x alt_caron \
+		-x opentype/fsselection -x opentype/mac_style
 
 specimen: proofs
 	@echo "open specimen/index.html in a browser (or run: make serve)"

@@ -203,7 +203,9 @@ def set_names(font: TTFont, family, style, full=None, ps=None,
     }
     for nid, value in records.items():
         name.setName(value, nid, 3, 1, 0x409)  # Windows Unicode English
-        name.setName(value, nid, 1, 0, 0)      # Mac Roman
+    # Remove Mac-platform records: modern fonts only need the Windows set,
+    # and duplicate Mac names make font QA noisy.
+    name.names = [n for n in name.names if n.platformID != 1]
     # Remove legacy names that could conflict with Manjari
     for nid in (18, 19, 20):
         name.removeNames(nameID=nid)
@@ -213,6 +215,18 @@ def set_metrics(font: TTFont, weight=400):
     os2 = font["OS/2"]
     hhea = font["hhea"]
     head = font["head"]
+    head.fontRevision = 1.0
+    # Minimal smart-dropout prep.  The font has no TT hinting otherwise;
+    # this keeps legacy rasterizers on the smart-dropout path.
+    from fontTools.ttLib.tables import ttProgram
+    from fontTools.ttLib import newTable
+    prep = newTable("prep")
+    prep.program = ttProgram.Program()
+    prep.program.fromBytecode(bytes([
+        0xB8, 0x01, 0xFF, 0x85,  # PUSHW 0x01FF; SCANCTRL
+        0xB0, 0x04, 0x8D,        # PUSHB 0x04; SCANTYPE
+    ]))
+    font["prep"] = prep
     asc, desc = 800, -300
     os2.sTypoAscender = asc
     os2.sTypoDescender = desc
@@ -236,6 +250,78 @@ def set_metrics(font: TTFont, weight=400):
     font["post"].isFixedPitch = 0
 
 
+def add_case_pairs(font: TTFont):
+    """Add the two Latin case pairs Manjari omits (ď, Ǒ).
+
+    Manjari has Ď and ǒ but not their lower/upper counterparts.  A composite
+    is enough: the base letter plus a combining caron.  The spacing U+02C7
+    caron is cloned into a zero-width U+030C mark so the precomposed letters
+    use a proper mark component.
+    """
+    glyf = font["glyf"]
+    if "Dcaron" not in glyf or "caron" not in glyf:
+        return
+
+    from fontTools.ttLib.tables._g_l_y_f import Glyph, GlyphComponent
+
+    # A zero-width combining caron for U+030C and the precomposed letters.
+    if "caroncomb" not in glyf:
+        order = list(font.getGlyphOrder())
+        mark = copy.deepcopy(glyf["caron"])
+        glyf["caroncomb"] = mark
+        if "caroncomb" not in order:
+            order.append("caroncomb")
+        font["hmtx"].metrics["caroncomb"] = (0, 0)
+        font.setGlyphOrder(order)
+        glyf.glyphOrder = order
+        for table in font["cmap"].tables:
+            if table.isUnicode():
+                table.cmap[0x030C] = "caroncomb"
+        gdef = font.get("GDEF")
+        if gdef is not None and getattr(gdef.table, "GlyphClassDef", None):
+            gdef.table.GlyphClassDef.classDefs["caroncomb"] = 3  # mark
+
+    # the offset used by Dcaron is already in the current UPM
+    caron_offset = None
+    for comp in glyf["Dcaron"].components:
+        if comp.glyphName in ("caron", "caroncomb"):
+            caron_offset = (comp.x, comp.y)
+            comp.glyphName = "caroncomb"
+            break
+    for comp in glyf["ocaron"].components:
+        if comp.glyphName in ("caron", "caroncomb"):
+            comp.glyphName = "caroncomb"
+            break
+    if caron_offset is None:
+        return
+
+    for new_name, base, cp in (("dcaron", "d", 0x010F), ("Ocaron", "O", 0x01D1)):
+        if new_name in glyf:
+            continue
+        order = list(font.getGlyphOrder())
+        g = Glyph()
+        g.numberOfContours = -1
+        g.components = []
+        for comp_name, x, y in ((base, 0, 0), ("caroncomb", *caron_offset)):
+            c = GlyphComponent()
+            c.flags = 0
+            c.glyphName = comp_name
+            c.x = x
+            c.y = y
+            g.components.append(c)
+        g.recalcBounds(glyf)
+        glyf[new_name] = g
+        if new_name not in order:
+            order.append(new_name)
+        font["hmtx"].metrics[new_name] = font["hmtx"].metrics[base]
+        font.setGlyphOrder(order)
+        glyf.glyphOrder = order
+        for table in font["cmap"].tables:
+            if table.isUnicode():
+                table.cmap[cp] = new_name
+    font["maxp"].numGlyphs = len(font.getGlyphOrder())
+
+
 def normalize(src, dst, petal=False, weight=400, family="Ezhuthu Kamalam",
               style="Regular", **warp_kwargs):
     font = TTFont(src)
@@ -245,6 +331,7 @@ def normalize(src, dst, petal=False, weight=400, family="Ezhuthu Kamalam",
             del font[tag]
     if petal:
         petal_warp(font, **warp_kwargs)
+    add_case_pairs(font)
     set_metrics(font, weight=weight)
     set_names(font, family, style, weight=weight)
     font.save(dst)
@@ -282,7 +369,7 @@ def build_designspace(round_path, petal_path, out_path,
     for name, loc, sub in [
         ("Round", 0, "Round"),
         ("Bloom", 50, "Bloom"),
-        ("Petal", 100, "Regular"),
+        (style, 100, style),
     ]:
         inst = InstanceDescriptor()
         inst.familyName = family
@@ -314,7 +401,9 @@ def build_vf(designspace_path, out_path, family="Ezhuthu Kamalam", style="Regula
             ],
         )],
         elidedFallbackName="Regular",
+        macNames=False,
     )
+    vf["name"].names = [n for n in vf["name"].names if n.platformID != 1]
     vf.save(out_path)
     return vf
 
@@ -374,6 +463,7 @@ def add_spectrum(src, dst, family="Ezhuthu Kamalam Spectrum",
     font["COLR"] = colr
     font["CPAL"] = buildCPAL([palette], nameTable=font["name"])
     set_names(font, family, style, weight=700)
+    font["name"].names = [n for n in font["name"].names if n.platformID != 1]
     font.save(dst)
     return font
 

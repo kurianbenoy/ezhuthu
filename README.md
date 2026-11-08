@@ -28,7 +28,7 @@ gradient inside the font itself, a direct homage to
 | **Aperture axis** | `APER 0→100` interpolates every counter and crown between a round loop and a lotus gateway. This is a new design axis for Malayalam. |
 | **Point-compatible masters** | Both extremes are warped from the *same* outlines; no topology changes, so every intermediate value is a designed shape and shaping stays identical. |
 | **COLRv1 spectrum** | A second build paints each glyph with a clipped linear gradient (`PaintGlyph` → `PaintLinearGradient`). Blue at the crown, orange at the baseline, gold in the descenders. |
-| **Full script + Latin** | 915 glyphs (Regular) / 909 (Bold), all Malayalam consonants, vowels, signs, chillus, digits, historical numerals, common conjuncts, and Latin. |
+| **Full script + Latin** | 918 glyphs (Regular) / 912 (Bold), all Malayalam consonants, vowels, signs, chillus, digits, historical numerals, common conjuncts, and Latin. |
 | **Open** | SIL Open Font License 1.1. The skeleton is Manjari by Santhosh Thottingal / SMC; the aperture engine and Spectrum build are new. |
 
 ### The five stops

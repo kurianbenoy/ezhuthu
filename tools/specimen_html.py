@@ -286,7 +286,7 @@ HTML = f"""<!doctype html>
       letterforms a blue-to-orange spectrum.</p>
     <div class="pillrow">
       <div class="pill"><b>APER</b> 0 → 100</div>
-      <div class="pill"><b>915</b> glyphs</div>
+      <div class="pill"><b>918</b> glyphs</div>
       <div class="pill"><b>Malayalam</b> + Latin</div>
       <div class="pill"><b>COLRv1</b> spectrum</div>
     </div>
@@ -433,7 +433,7 @@ HTML = f"""<!doctype html>
         <tr><td>Styles</td><td>Regular · Bold (variable)</td></tr>
         <tr><td>Axis</td><td>APER 0–100 (default 100)</td></tr>
         <tr><td>Colour</td><td>Ezhuthu Kamalam Spectrum · COLRv1</td></tr>
-        <tr><td>Glyphs</td><td>915 (Regular) · 909 (Bold)</td></tr>
+        <tr><td>Glyphs</td><td>918 (Regular) · 912 (Bold)</td></tr>
         <tr><td>Scripts</td><td>Malayalam, Latin</td></tr>
         <tr><td>Format</td><td>TTF · WOFF2</td></tr>
       </table>

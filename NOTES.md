@@ -142,7 +142,7 @@ The Spectrum build starts from the variable Bold and adds:
   `(500, 620)` (perpendicular to the gradient direction). The gradient is in
   font units and is clipped by the glyph outline. This range puts blue at the
   top of the body, orange near the baseline and gold in the descenders.
-- 904 glyphs carry a paint record; the rest fall back to monochrome.
+- 907 glyphs carry a paint record; the rest fall back to monochrome.
 
 Browsers/apps with COLRv1 (Chrome, Edge, Figma, recent Safari) paint the
 gradient; apps without it render the base outlines. The specimen also shows a
@@ -159,7 +159,7 @@ CSS gradient-clipped version so the visual idea is visible everywhere.
   glyph sequences;
 - coverage of every assigned Malayalam codepoint;
 - outline variation between the extremes;
-- COLR/CPAL structure, 904 paint records and 7 palette entries.
+- COLR/CPAL structure, 907 paint records and 7 palette entries.
 
 The HTML specimen was also checked in headless Chromium 156: the embedded
 variable fonts load, the APER slider changes the live instance, and the
@@ -167,7 +167,30 @@ variable fonts load, the APER slider changes the live instance, and the
 
 The old `tests/test_font.py` still covers the legacy draft.
 
-## 7. Known limits / next work
+## 7. Fontbakery notes
+
+The Regular font passes `fontbakery check-universal` with two exclusions that
+do not apply to this design:
+
+- `opentype/fvar/regular_coords_correct` assumes a registered `wght`/`wdth`
+  axis; Ezhuthu Kamalam's only axis is the custom `APER`.
+- `alt_caron` is a Czech/Slovak-specific check that wants `ď` to use a
+  non-standard caron glyph. The Latin `ď` here uses a combining caron, which
+  is typographically correct; the check is not relevant to a Malayalam face.
+
+For the Bold and Spectrum builds, `opentype/fsselection` and
+`opentype/mac_style` also need excluding because fontbakery infers "Bold"
+from a `wght` axis or a filename convention and cannot see the custom-axis
+Bold style; the OS/2 and `head` values themselves are correct. Run the QA
+target with:
+
+```bash
+make qa
+```
+
+The specimen HTML and COLRv1 paint were verified in headless Chromium 156.
+
+## 8. Known limits / next work
 
 - The transform is derived from Manjari's skeleton; it is not a new
   construction from a blank page. A future release could redraw the skeleton
