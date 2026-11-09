@@ -1,8 +1,13 @@
-Copyright 2026 The Ezhuthu Project Authors.
+Copyright 2026 The Kallar Project Authors.
 
-Ezhuthu Kamalam is based on Manjari, Copyright 2018 The Manjari Project Authors
+Kallar is based on Manjari, Copyright 2018 The Manjari Project Authors
 (https://gitlab.com/smc/fonts/manjari), licensed under the SIL Open Font
 License 1.1.
+
+The Devanagari, Tamil, Telugu and Kannada branches are based on Noto Sans
+Devanagari, Noto Sans Tamil, Noto Sans Telugu and Noto Sans Kannada,
+Copyright 2022 The Noto Project Authors (https://github.com/notofonts),
+licensed under the SIL Open Font License 1.1.
 
 Portions of the legacy v0.2 draft tools are adapted from Nupuram,
 Copyright 2023 The Nupuram Project Authors

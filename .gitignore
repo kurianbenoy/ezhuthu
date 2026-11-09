@@ -4,5 +4,5 @@ __pycache__/
 *.tmp
 .DS_Store
 
-# Generated intermediate masters (rebuild with `make kamalam`)
+# Generated intermediate masters (rebuild with `make kallar`)
 sources/masters/
