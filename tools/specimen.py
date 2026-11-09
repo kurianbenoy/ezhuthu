@@ -170,6 +170,61 @@ def instantiate_aper(src, aper):
     return out
 
 
+def solid_text(font_path, text, size, color=(20, 20, 30, 255), pad=20):
+    alpha, baseline = render_alpha(font_path, text, size=size, pad=pad)
+    if alpha is None:
+        return None, 0
+    layer = Image.new("RGBA", (alpha.width, alpha.height), color[:3] + (255,))
+    layer.putalpha(alpha)
+    return layer, baseline
+
+
+def paste_text(canvas, font_path, text, size, x, baseline, color=(20, 20, 30),
+               pad=20):
+    layer, b = solid_text(font_path, text, size, color + (255,) if len(color) == 3 else color, pad)
+    if layer is None:
+        return
+    canvas.alpha_composite(layer, (int(x), int(baseline - b)))
+
+
+def paste_text_right(canvas, font_path, text, size, right, baseline, color=(20, 20, 30)):
+    layer, b = solid_text(font_path, text, size, color + (255,) if len(color) == 3 else color)
+    if layer is None:
+        return
+    canvas.alpha_composite(layer, (int(right - layer.width), int(baseline - b)))
+
+
+def _cubic(p0, p1, p2, p3, t):
+    mt = 1 - t
+    return (
+        mt ** 3 * p0[0] + 3 * mt * mt * t * p1[0] + 3 * mt * t * t * p2[0] + t ** 3 * p3[0],
+        mt ** 3 * p0[1] + 3 * mt * mt * t * p1[1] + 3 * mt * t * t * p2[1] + t ** 3 * p3[1],
+    )
+
+
+def teardrop_pts(cx, cy, rx, ry, cusp=20, n=40):
+    """Smooth petal outline in PIL coordinates (y grows down): round base,
+    pointed crown at the top."""
+    p0 = (cx, cy + ry)                 # round base (lower on screen)
+    p1 = (cx + rx, cy)                 # right
+    tip = (cx, cy - ry - cusp)         # pointed crown (higher on screen)
+    p3 = (cx - rx, cy)                 # left
+    pts = []
+    for i in range(n):
+        t = i / n
+        pts.append(_cubic(p0, (cx + rx * 0.62, cy + ry), (cx + rx, cy + ry * 0.62), p1, t))
+    for i in range(n):
+        t = i / n
+        pts.append(_cubic(p1, (cx + rx, cy - ry * 0.42), (cx + rx * 0.55, tip[1] + ry * 0.12), tip, t))
+    for i in range(n):
+        t = i / n
+        pts.append(_cubic(tip, (cx - rx * 0.55, tip[1] + ry * 0.12), (cx - rx, cy - ry * 0.42), p3, t))
+    for i in range(n):
+        t = i / n
+        pts.append(_cubic(p3, (cx - rx, cy + ry * 0.62), (cx - rx * 0.62, cy + ry), p0, t))
+    return pts
+
+
 def petal_outline(cx, cy, rx, ry, cusp=0.18, n=120):
     """Petal/leaf polyline for decorative background arches."""
     pts = []
@@ -415,6 +470,216 @@ def make_glyphs():
     print("glyphs")
 
 
+def rounded_gradient(w, h, radius, stops=STOPS, alpha=255):
+    img = gradient_image(w, h, stops).convert("RGBA")
+    mask = Image.new("L", (w, h), 0)
+    d = ImageDraw.Draw(mask)
+    d.rounded_rectangle((0, 0, w, h), radius=radius, fill=alpha)
+    img.putalpha(mask)
+    return img
+
+
+def make_poster():
+    W, H = 1600, 2000
+    bg = glow_background(W, H).convert("RGBA")
+    add_mandala(bg, W / 2, 760, 470, petals=24, alpha=15, width=2)
+    d = ImageDraw.Draw(bg)
+    draw_label(d, "EZHUTHU KAMALAM", (90, 80), 20, (190, 205, 255), bold=True, tracking=4)
+    draw_label(d, "A MALAYALAM TYPEFACE THAT BLOOMS", (90, 114), 14, (135, 150, 190), tracking=3)
+    draw_label(d, "APER 0 → 100", (W - 300, 80), 16, (255, 210, 170), bold=True)
+    draw_rule(d, 90, 160, W - 90, 160, (255, 255, 255, 26))
+
+    layer, baseline, bbox = gradient_text(BOLD, "സർവം", 420, glow=20)
+    if layer:
+        paste_center(bg, layer, W / 2, top=300)
+
+    tag, tb = solid_text(BOLD, "ഭാഷയിൽ എല്ലാം", 108, (244, 235, 220, 255))
+    if tag:
+        paste_center(bg, tag, W / 2, top=1040)
+
+    paste_text(bg, REG, "എല്ലാ ഭാഷകളും എല്ലാ മനുഷ്യർക്കും.", 38, 90, 1250, (190, 198, 220))
+    paste_text(bg, REG, "ഒരു ലിപി. ഒരു വാതിൽ. ഒരു ലോകം.", 38, 90, 1310, (190, 198, 220))
+    draw_rule(d, 90, 1400, W - 90, 1400, (255, 255, 255, 24))
+
+    # APER strip
+    y = 1460
+    for i, (v, name) in enumerate([(0, "ROUND"), (25, "QUARTER"), (50, "BLOOM"),
+                                   (75, "THREE-QUARTERS"), (100, "PETAL")]):
+        fpath = instantiate_aper(BOLD, v)
+        alpha, b = render_alpha(fpath, "ക", size=150, pad=6)
+        x = 90 + i * 290
+        if alpha is not None:
+            lay = Image.new("RGBA", (alpha.width, alpha.height), (255, 238, 224, 255))
+            lay.putalpha(alpha)
+            bg.alpha_composite(lay, (x, y))
+        draw_label(d, f"{v:03d}", (x + 10, y + 190), 18, (238, 121, 68), bold=True)
+        draw_label(d, name, (x + 10, y + 218), 11, (160, 172, 205), tracking=2)
+    draw_label(d, "Ezhuthu Kamalam  /  v1.000  /  OFL 1.1  /  Malayalam + Latin",
+               (90, H - 80), 14, (140, 152, 185))
+    bg.convert("RGB").save(os.path.join(PROOFS, "kamalam_poster.png"))
+    print("poster")
+
+
+def make_editorial():
+    W, H = 1600, 1100
+    bg = Image.new("RGBA", (W, H), (245, 240, 230, 255))
+    d = ImageDraw.Draw(bg)
+    # paper grain
+    rng = np.random.default_rng(11)
+    grain = rng.normal(0, 2.2, (H, W, 1))
+    bg = Image.fromarray(np.clip(np.array(bg)[:, :, :3] + grain, 0, 255).astype(np.uint8), "RGB").convert("RGBA")
+    d = ImageDraw.Draw(bg)
+    draw_label(d, "EZHUTHU KAMALAM  /  EDITORIAL", (80, 62), 13, (150, 110, 70), bold=True, tracking=2)
+    draw_rule(d, 80, 96, W - 80, 96, (30, 30, 30, 40))
+    draw_rule(d, W // 2, 130, W // 2, H - 80, (30, 30, 30, 28), width=1)
+
+    # left page
+    drop, db, _ = gradient_text(BOLD, "മ", 300, stops=[(0, (20, 24, 40)), (1, (80, 40, 30))], glow=0)
+    if drop:
+        bg.alpha_composite(drop, (80, 150))
+    paste_text(bg, BOLD, "വായനയുടെ", 82, 80, 560, (22, 22, 30))
+    paste_text(bg, BOLD, "പുതിയ വഴി", 82, 80, 650, (22, 22, 30))
+    lines = [
+        "മലയാളം ഒരു ദ്രാവിഡ ഭാഷയാണ്.",
+        "കേരളത്തിലെ ഔദ്യോഗിക ഭാഷയും",
+        "ഇതാണ്. എഴുത്ത് കമലം ഈ",
+        "ലിപിക്ക് ഒരു പുതിയ ഭാവം",
+        "നൽകുന്നു — വൃത്താകൃതിയിൽ",
+        "നിന്ന് താമരയുടെ ദളങ്ങളിലേക്ക്.",
+    ]
+    y = 730
+    for line in lines:
+        paste_text(bg, REG, line, 26, 84, y, (50, 46, 42))
+        y += 42
+    draw_label(d, "01", (80, H - 120), 14, (150, 110, 70), bold=True)
+    draw_label(d, "Ezhuthu Kamalam / Aperture 100", (80, H - 92), 12, (120, 110, 100))
+
+    # right page
+    draw_label(d, "PULL QUOTE", (W // 2 + 80, 160), 12, (150, 110, 70), bold=True, tracking=2)
+    quote, qb, _ = gradient_text(BOLD, "ഭാഷയിൽ", 96, stops=[(0, (20, 24, 40)), (1, (110, 50, 35))])
+    quote2, qb2, _ = gradient_text(BOLD, "വിരിയുന്ന ലിപി", 96, stops=[(0, (110, 50, 35)), (1, (20, 24, 40))])
+    if quote:
+        bg.alpha_composite(quote, (W // 2 + 80, 220))
+    if quote2:
+        bg.alpha_composite(quote2, (W // 2 + 80, 360))
+    paste_text(bg, REG, "ഒരു അക്ഷരം ഒരു വാതിൽ തുറക്കുന്നു.", 30,
+               W // 2 + 80, 600, (60, 55, 50))
+    paste_text(bg, REG, "ഓരോ ദളവും ഒരു പുതിയ ഭാഷ.", 30,
+               W // 2 + 80, 650, (60, 55, 50))
+    # lotus mark
+    add_mandala(bg, W // 2 + 300, 860, 120, petals=16, alpha=45, width=2)
+    draw_label(d, "02", (W - 120, H - 120), 14, (150, 110, 70), bold=True)
+    draw_label(d, "Ezhuthu Kamalam / Spectrum", (W - 360, H - 92), 12, (120, 110, 100))
+    bg.convert("RGB").save(os.path.join(PROOFS, "kamalam_editorial.png"))
+    print("editorial")
+
+
+def make_social():
+    W = H = 1080
+    grad = gradient_image(W, H, STOPS).convert("RGBA")
+    # darken edges
+    Y, X = np.mgrid[0:H, 0:W].astype(np.float32)
+    d = np.sqrt(((X - W / 2) / (W * 0.7)) ** 2 + ((Y - H / 2) / (H * 0.7)) ** 2)
+    vig = np.clip(1 - d * 0.8, 0, 1)[..., None]
+    arr = np.array(grad)[:, :, :3] * vig
+    bg = Image.fromarray(arr.astype(np.uint8), "RGB").convert("RGBA")
+    add_mandala(bg, W / 2, H / 2, 330, petals=24, alpha=20, width=1)
+    layer, baseline, bbox = gradient_text(BOLD, "എഴുത്ത്", 260,
+                                          stops=[(0, (255, 244, 228)), (1, (255, 205, 160))],
+                                          glow=14)
+    if layer:
+        paste_center(bg, layer, W / 2, top=260)
+    d = ImageDraw.Draw(bg)
+    draw_label(d, "EZHUTHU KAMALAM", (60, 56), 15, (255, 255, 255), bold=True, tracking=3)
+    draw_label(d, "APERTURE-VARIABLE MALAYALAM", (60, 84), 11, (255, 235, 220), tracking=2)
+    draw_label(d, "APER 100", (W - 190, 56), 14, (255, 255, 255), bold=True)
+    paste_text(bg, BOLD, "ഭാഷയിൽ വിരിയുന്ന ലിപി", 34, 60, H - 120, (255, 248, 238))
+    draw_label(d, "A typeface that blooms.", (60, H - 92), 20, (255, 240, 225))
+    draw_rule(d, 60, H - 58, W - 60, H - 58, (255, 255, 255, 90))
+    bg.convert("RGB").save(os.path.join(PROOFS, "kamalam_social.png"))
+    print("social")
+
+
+def make_ui():
+    W, H = 1600, 1000
+    bg = Image.new("RGBA", (W, H), (9, 11, 20, 255))
+    d = ImageDraw.Draw(bg)
+    # sidebar
+    d.rectangle((0, 0, 300, H), fill=(13, 16, 28, 255))
+    draw_rule(d, 300, 0, 300, H, (255, 255, 255, 20))
+    paste_text(bg, BOLD, "എഴുത്ത്", 38, 34, 78, (245, 236, 222))
+    draw_label(d, "KAMALAM", (36, 92), 11, (238, 121, 68), bold=True, tracking=3)
+    menu = [("ചാറ്റ്", True), ("ഭാഷ", False), ("ഡോക്യുമെന്റ്", False), ("സെറ്റിംഗ്സ്", False)]
+    y = 180
+    for item, active in menu:
+        if active:
+            d.rounded_rectangle((20, y - 28, 280, y + 18), radius=12, fill=(64, 34, 25, 255))
+        paste_text(bg, REG, item, 22, 46, y, (238, 236, 230) if active else (150, 158, 185))
+        y += 62
+    draw_label(d, "APER", (36, H - 110), 11, (140, 150, 180), bold=True, tracking=2)
+    draw_label(d, "100", (36, H - 86), 26, (238, 121, 68), bold=True)
+    d.rounded_rectangle((96, H - 100, 264, H - 94), radius=3, fill=(255, 255, 255, 24))
+    d.rounded_rectangle((96, H - 100, 264, H - 94), radius=3, fill=(238, 121, 68, 255))
+
+    # top bar
+    paste_text(bg, REG, "സ്വാഗതം", 20, 340, 68, (150, 160, 190))
+    d.rounded_rectangle((W - 250, 38, W - 40, 82), radius=22, fill=(24, 26, 42, 255),
+                        outline=(60, 64, 90, 255), width=1)
+    draw_label(d, "APER 100", (W - 215, 52), 12, (255, 210, 170), bold=True, tracking=2)
+    draw_rule(d, 340, 110, W - 40, 110, (255, 255, 255, 20))
+
+    # main heading
+    paste_text(bg, BOLD, "നിങ്ങളുടെ ഭാഷയിൽ,", 62, 340, 240, (246, 240, 230))
+    paste_text(bg, BOLD, "നിങ്ങളുടെ എഐ", 62, 340, 320, (246, 240, 230))
+    paste_text(bg, REG, "മലയാളത്തിൽ ചിന്തിക്കുന്ന, മലയാളത്തിൽ", 24,
+               340, 410, (165, 175, 200))
+    paste_text(bg, REG, "സംസാരിക്കുന്ന, മലയാളത്തിന് വേണ്ടി", 24,
+               340, 446, (165, 175, 200))
+    paste_text(bg, REG, "പണിയുന്ന എഐ.", 24, 340, 482, (165, 175, 200))
+
+    # gradient button
+    btn = rounded_gradient(300, 64, 18)
+    bg.alpha_composite(btn, (340, 540))
+    paste_text(bg, BOLD, "ആരംഭിക്കാം", 26, 380, 585, (255, 250, 242))
+    d.rounded_rectangle((670, 540, 830, 604), radius=18, outline=(255, 255, 255, 30), width=1)
+    paste_text(bg, REG, "കൂടുതൽ", 24, 708, 585, (220, 225, 245))
+
+    # right card
+    d.rounded_rectangle((980, 180, W - 40, 820), radius=28, fill=(18, 20, 34, 255),
+                        outline=(50, 54, 78, 255), width=1)
+    layer, baseline, bbox = gradient_text(BOLD, "കമലം", 150, glow=12)
+    if layer:
+        paste_center(bg, layer, 1290, top=240)
+    draw_label(d, "APERTURE 100 / PETAL", (1290 - 105, 470), 12, (238, 150, 100), bold=True, tracking=2)
+    paste_text(bg, REG, "ഓരോ അക്ഷരവും ഒരു വാതിൽ.", 26, 1030, 560, (220, 226, 242))
+    paste_text(bg, REG, "ഓരോ ദളവും ഒരു ഭാഷ.", 26, 1030, 602, (180, 190, 215))
+    d.rounded_rectangle((1030, 680, 1560, 684), radius=2, fill=(50, 54, 78, 255))
+    draw_label(d, "Ezhuthu Kamalam  ·  COLRv1 Spectrum", (1030, 710), 12,
+               (140, 152, 185), tracking=1)
+    bg.convert("RGB").save(os.path.join(PROOFS, "kamalam_ui.png"))
+    print("ui")
+
+
+def make_lockup():
+    W, H = 1600, 620
+    bg = Image.new("RGBA", (W, H), (247, 243, 235, 255))
+    d = ImageDraw.Draw(bg)
+    # gateway/lotus mark: line-art petals on a threshold
+    outer = teardrop_pts(300, 300, 108, 158, cusp=30)
+    d.line(outer + [outer[0]], fill=(36, 30, 26, 255), width=7, joint="curve")
+    inner = teardrop_pts(300, 308, 62, 92, cusp=16)
+    d.line(inner + [inner[0]], fill=(36, 30, 26, 255), width=5, joint="curve")
+    d.line((300 - 128, 458, 300 + 128, 458), fill=(36, 30, 26, 255), width=7)
+    d.ellipse((287, 297, 313, 323), fill=(238, 121, 68, 255))
+    paste_text(bg, BOLD, "എഴുത്ത് കമലം", 96, 500, 300, (28, 26, 30))
+    draw_label(d, "EZHUTHU KAMALAM", (510, 350), 18, (120, 80, 50), bold=True, tracking=4)
+    draw_label(d, "Aperture-variable Malayalam  ·  APER 0—100", (510, 384), 15, (120, 110, 100))
+    draw_rule(d, 510, 430, 1100, 430, (30, 30, 30, 40))
+    draw_label(d, "OFL 1.1  ·  v1.000", (510, 450), 13, (150, 120, 90))
+    bg.convert("RGB").save(os.path.join(PROOFS, "kamalam_lockup.png"))
+    print("lockup")
+
+
 def make_anim():
     W = H = 480
     frames = []
@@ -449,7 +714,18 @@ def make_anim():
 
 
 def main():
-    which = sys.argv[1:] or ["hero", "axis", "gradient", "spectrum", "glyphs", "anim"]
+    which = sys.argv[1:] or ["hero", "axis", "gradient", "spectrum", "glyphs",
+                             "poster", "editorial", "social", "ui", "lockup", "anim"]
+    if "poster" in which:
+        make_poster()
+    if "editorial" in which:
+        make_editorial()
+    if "social" in which:
+        make_social()
+    if "ui" in which:
+        make_ui()
+    if "lockup" in which:
+        make_lockup()
     if "anim" in which:
         make_anim()
     if "hero" in which:

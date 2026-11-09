@@ -55,6 +55,18 @@ one continuous field rather than a set of separately coloured letters. In
 applications without COLRv1 support the font falls back to its monochrome
 outlines.
 
+### In context
+
+| | |
+|---|---|
+| ![Poster](proofs/kamalam_poster.png) | ![Editorial](proofs/kamalam_editorial.png) |
+| ![Product UI](proofs/kamalam_ui.png) | ![Social card](proofs/kamalam_social.png) |
+
+![Lockup](proofs/kamalam_lockup.png)
+
+The poster, editorial, product UI, social card and lockup are generated from
+the same fonts and the same aperture logic — not mocked up by hand.
+
 ---
 
 ## Files

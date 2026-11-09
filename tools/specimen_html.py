@@ -5,10 +5,14 @@ Run: .venv/bin/python tools/specimen_html.py
 Output: specimen/index.html (open directly in a browser)
 """
 import base64
+import io
 import os
+
+from PIL import Image
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FONTS = os.path.join(ROOT, "fonts")
+PROOFS = os.path.join(ROOT, "proofs")
 OUT = os.path.join(ROOT, "specimen", "index.html")
 
 
@@ -17,9 +21,24 @@ def b64(name):
         return base64.b64encode(fp.read()).decode("ascii")
 
 
+def img_b64(name, maxw=900, quality=82):
+    im = Image.open(os.path.join(PROOFS, name)).convert("RGB")
+    if im.width > maxw:
+        im = im.resize((maxw, int(im.height * maxw / im.width)), Image.LANCZOS)
+    buf = io.BytesIO()
+    im.save(buf, "JPEG", quality=quality, optimize=True)
+    return base64.b64encode(buf.getvalue()).decode("ascii")
+
+
 REG = b64("EzhuthuKamalam-Regular.woff2")
 BOLD = b64("EzhuthuKamalam-Bold.woff2")
 SPEC = b64("EzhuthuKamalam-Spectrum.woff2")
+
+POSTER = img_b64("kamalam_poster.png")
+EDITORIAL = img_b64("kamalam_editorial.png")
+UI = img_b64("kamalam_ui.png")
+SOCIAL = img_b64("kamalam_social.png")
+LOCKUP = img_b64("kamalam_lockup.png")
 
 CONSONANTS = "കഖഗഘങചഛജഝഞടഠഡഢണതഥദധനപഫബഭമയരറലവശഷസഹളഴ"
 VOWELS = "അആഇഈഉഊഋൠഌൡഎഏഐഒഓഔ"
@@ -246,6 +265,13 @@ HTML = f"""<!doctype html>
   .charset span {{ display: inline-block; margin-right: .18em; }}
   .charset .dim {{ color: var(--dim2); }}
 
+  .brandgrid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }}
+  .brandgrid figure {{ margin: 0; border: 1px solid var(--line); border-radius: 18px; overflow: hidden; background: rgba(255,255,255,.02); }}
+  .brandgrid img {{ display: block; width: 100%; height: auto; }}
+  .brandgrid figcaption {{ padding: 12px 16px; font-family: ui-sans-serif, system-ui, sans-serif; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--dim2); }}
+  .brandgrid .wide {{ grid-column: 1 / -1; }}
+  @media (max-width: 760px) {{ .brandgrid {{ grid-template-columns: 1fr; }} }}
+
   table.specs {{ width: 100%; border-collapse: collapse; font-family: ui-sans-serif, system-ui, sans-serif; font-size: 14px; }}
   table.specs td {{ padding: 14px 0; border-bottom: 1px solid var(--line); vertical-align: top; }}
   table.specs td:first-child {{ color: var(--dim); width: 34%; }}
@@ -270,6 +296,7 @@ HTML = f"""<!doctype html>
       <a href="#spectrum">Spectrum</a>
       <a href="#text">In text</a>
       <a href="#charset">Character set</a>
+      <a href="#context">In context</a>
       <a href="#specs">Specs</a>
     </nav>
   </div>
@@ -418,11 +445,45 @@ HTML = f"""<!doctype html>
   </div>
 </section>
 
+<section id="context">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="kicker">05 / In context</div>
+        <h2 class="ml">ഉപയോഗത്തിൽ</h2>
+        <small>Poster, editorial, product UI and social — the same type system.</small>
+      </div>
+    </div>
+    <div class="brandgrid">
+      <figure class="wide">
+        <img src="data:image/jpeg;base64,{POSTER}" alt="Ezhuthu Kamalam poster">
+        <figcaption>Poster · APER 100 · spectrum</figcaption>
+      </figure>
+      <figure>
+        <img src="data:image/jpeg;base64,{EDITORIAL}" alt="Ezhuthu Kamalam editorial spread">
+        <figcaption>Editorial · text + display</figcaption>
+      </figure>
+      <figure>
+        <img src="data:image/jpeg;base64,{UI}" alt="Ezhuthu Kamalam product UI">
+        <figcaption>Product UI · Malayalam first</figcaption>
+      </figure>
+      <figure>
+        <img src="data:image/jpeg;base64,{SOCIAL}" alt="Ezhuthu Kamalam social card">
+        <figcaption>Social · gradient card</figcaption>
+      </figure>
+      <figure>
+        <img src="data:image/jpeg;base64,{LOCKUP}" alt="Ezhuthu Kamalam lockup">
+        <figcaption>Lockup · gateway petal + wordmark</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
 <section id="specs">
   <div class="wrap">
     <div class="section-head">
       <div>
-        <div class="kicker">05 / Specs</div>
+        <div class="kicker">06 / Specs</div>
         <h2 class="ml">വിവരങ്ങൾ</h2>
         <small>What is inside the files.</small>
       </div>
