@@ -171,8 +171,19 @@
     margin: 26px 0 8px;
     font-variation-settings: "APER" 100;
     transition: font-variation-settings .08s linear;
+    cursor: text;
+    border-radius: 10px;
   }
+  .demo:focus { outline: 1px dashed rgba(238,121,68,.65); outline-offset: 10px; }
   .demo-sub { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 13px; color: var(--dim); }
+  @keyframes bloom {
+    from { font-variation-settings: "APER" 0; }
+    to { font-variation-settings: "APER" 100; }
+  }
+  .hero h1 { animation: bloom 2.4s cubic-bezier(.2,.8,.2,1) both; }
+  @media (prefers-reduced-motion: reduce) {
+    .hero h1 { animation: none; }
+  }
 
   .axis-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-top: 44px; }
   .axis-card { border: 1px solid var(--line); border-radius: 18px; padding: 26px 14px 18px; text-align: center; background: rgba(255,255,255,.02); }
@@ -288,8 +299,8 @@
             <input id="aper" type="range" min="0" max="100" step="1" value="100" aria-label="Aperture axis">
             <div class="aper-readout">APER <b id="aper-value">100</b></div>
           </div>
-          <div id="demo" class="demo ml">മലയാളം</div>
-          <div class="demo-sub">Malayalam · live variable instance</div>
+          <div id="demo" class="demo ml" contenteditable="true" spellcheck="false">മലയാളം</div>
+          <div class="demo-sub">Click the word and type your own Malayalam · live variable instance</div>
         </div>
       </div>
       <div class="panel">
