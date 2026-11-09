@@ -92,13 +92,17 @@ where the crowns settle into a quiet, readable rhythm.
 
 ## Five scripts, one aperture
 
-| Script | Family | Base skeleton | Script codepoints | Glyphs |
-|---|---|---|---:|---:|
-| Malayalam | `Kallar` | Manjari | full block | 918 / 912 |
-| Devanagari (Hindi) | `Kallar Devanagari` | Noto Sans Devanagari | 201 | 1117 |
-| Tamil | `Kallar Tamil` | Noto Sans Tamil | 72 | 576 |
-| Telugu | `Kallar Telugu` | Noto Sans Telugu | 100 | 1247 |
-| Kannada | `Kallar Kannada` | Noto Sans Kannada | 91 | 933 |
+| Script | Native name | Family | Base skeleton | Script codepoints | Glyphs |
+|---|---|---|---|---:|---:|
+| Malayalam | **കല്ലാർ** | `Kallar` | Manjari | full block | 918 / 912 |
+| Devanagari (Hindi) | **कल्लार** | `Kallar Devanagari` | Noto Sans Devanagari | 201 | 1117 |
+| Tamil | **கல்லார்** | `Kallar Tamil` | Noto Sans Tamil | 72 | 576 |
+| Telugu | **కల్లార్** | `Kallar Telugu` | Noto Sans Telugu | 100 | 1247 |
+| Kannada | **ಕಲ್ಲಾರ್** | `Kallar Kannada` | Noto Sans Kannada | 91 | 933 |
+
+The name **Kallar** is written **കല്ലാർ** in Malayalam, **कल्लार** in
+Devanagari, **கல்லார்** in Tamil, **కల్లార్** in Telugu and **ಕಲ್ಲಾರ್** in
+Kannada.
 
 “Hindi” is written in Devanagari; the Devanagari family also covers Marathi,
 Nepali and Sanskrit. The Tamil, Telugu and Kannada families each cover their
