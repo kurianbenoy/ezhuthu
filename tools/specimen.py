@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Generate Ezhuthu Kamalam specimen / proof images.
+"""Generate Kallar specimen / proof images.
 
 Outputs (proofs/):
-  kamalam_hero.png       — dark Sarvam-inspired hero poster
-  kamalam_axis.png       — the APER axis, 0 → 100
-  kamalam_gradient.png   — spectrum text block
-  kamalam_spectrum.png   — gradient wordmark
-  kamalam_glyphs.png     — monochrome character sheet
+  kallar_hero.png       — dark Sarvam-inspired hero poster
+  kallar_axis.png       — the APER axis, 0 → 100
+  kallar_gradient.png   — spectrum text block
+  kallar_spectrum.png   — gradient wordmark
+  kallar_glyphs.png     — monochrome character sheet
 """
 import math
 import os
@@ -28,9 +28,9 @@ TMP = os.path.join(tempfile.gettempdir(), "ezhuthu_specimen")
 os.makedirs(TMP, exist_ok=True)
 os.makedirs(PROOFS, exist_ok=True)
 
-REG = os.path.join(FONTS, "EzhuthuKamalam-Regular.ttf")
-BOLD = os.path.join(FONTS, "EzhuthuKamalam-Bold.ttf")
-SPECTRUM = os.path.join(FONTS, "EzhuthuKamalam-Spectrum.ttf")
+REG = os.path.join(FONTS, "Kallar-Regular.ttf")
+BOLD = os.path.join(FONTS, "Kallar-Bold.ttf")
+SPECTRUM = os.path.join(FONTS, "Kallar-Spectrum.ttf")
 
 DEJAVU = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 DEJAVU_BOLD = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
@@ -296,12 +296,12 @@ def make_hero():
     bg = glow_background(W, H).convert("RGBA")
     add_mandala(bg, W * 0.5, H * 0.46, 350, petals=24, alpha=16, width=1)
     d = ImageDraw.Draw(bg)
-    draw_label(d, "EZHUTHU KAMALAM", (72, 62), 19, (190, 205, 255), bold=True, tracking=3)
+    draw_label(d, "KALLAR", (72, 62), 19, (190, 205, 255), bold=True, tracking=3)
     draw_label(d, "APERTURE-VARIABLE MALAYALAM", (72, 92), 14, (130, 145, 190), tracking=2)
     draw_label(d, "APER 0 → 100", (W - 236, 62), 15, (255, 210, 170), bold=True)
     draw_rule(d, 72, 130, W - 72, 130, (255, 255, 255, 26))
 
-    word = "കമലം"
+    word = "കല്ലർ"
     layer, baseline, bbox = gradient_text(BOLD, word, 360, glow=18)
     if layer:
         x, y = paste_center(bg, layer, W / 2, top=190)
@@ -313,7 +313,7 @@ def make_hero():
     d = ImageDraw.Draw(bg)
     draw_label(d, "A Malayalam typeface that blooms — from round loops to lotus gateways.",
                (W / 2 - 380, 770), 24, (205, 212, 235))
-    draw_label(d, "Ezhuthu Kamalam  ·  variable Aperture axis  ·  COLRv1 spectrum",
+    draw_label(d, "Kallar  ·  variable Aperture axis  ·  COLRv1 spectrum",
                (W / 2 - 330, 806), 18, (150, 162, 200))
     # bottom cards
     cols = [
@@ -328,9 +328,9 @@ def make_hero():
         draw_label(d, num, (x, 898), 14, (238, 121, 68), bold=True)
         draw_label(d, title, (x + 40, 896), 17, (240, 243, 255), bold=True, tracking=1)
         draw_label(d, body, (x + 40, 922), 16, (160, 172, 205))
-    draw_label(d, "Ezhuthu Kamalam  /  v1.100  /  OFL 1.1", (72, 962), 13,
+    draw_label(d, "Kallar  /  v1.100  /  OFL 1.1", (72, 962), 13,
                (120, 132, 168))
-    bg.convert("RGB").save(os.path.join(PROOFS, "kamalam_hero.png"))
+    bg.convert("RGB").save(os.path.join(PROOFS, "kallar_hero.png"))
     print("hero")
 
 
@@ -370,9 +370,9 @@ def make_axis():
                   (255, 255, 255, 24))
     draw_label(d, "classic loop", (80, 650), 13, (150, 162, 200))
     draw_label(d, "lotus gateway", (W - 230, 650), 13, (238, 180, 120))
-    draw_label(d, "Malayalam · Ezhuthu Kamalam Bold · variable APER", (80, 704), 12,
+    draw_label(d, "Malayalam · Kallar Bold · variable APER", (80, 704), 12,
                (120, 132, 168))
-    bg.convert("RGB").save(os.path.join(PROOFS, "kamalam_axis.png"))
+    bg.convert("RGB").save(os.path.join(PROOFS, "kallar_axis.png"))
     print("axis")
 
 
@@ -404,9 +404,9 @@ def make_gradient():
     draw_rule(d, 72, 760, W - 72, 760, (255, 255, 255, 30))
     draw_label(d, "Blue at the crown, orange at the baseline — a continuous field across the text block.",
                (72, 784), 19, (190, 200, 230))
-    draw_label(d, "Ezhuthu Kamalam Spectrum  ·  COLRv1 / CPAL  ·  falls back to monochrome",
+    draw_label(d, "Kallar Spectrum  ·  COLRv1 / CPAL  ·  falls back to monochrome",
                (72, 818), 16, (130, 145, 185))
-    bg.convert("RGB").save(os.path.join(PROOFS, "kamalam_gradient.png"))
+    bg.convert("RGB").save(os.path.join(PROOFS, "kallar_gradient.png"))
     print("gradient")
 
 
@@ -422,9 +422,9 @@ def make_spectrum():
         paste_center(bg, layer, W / 2, top=30)
     d = ImageDraw.Draw(bg)
     draw_label(d, "eḻuttu kamalaṃ", (72, 520), 18, (140, 155, 195), tracking=1)
-    draw_label(d, "EZHUTHU KAMALAM / SPECTRUM", (W - 330, 520), 14,
+    draw_label(d, "KALLAR / SPECTRUM", (W - 330, 520), 14,
                (238, 150, 100), bold=True, tracking=2)
-    bg.convert("RGB").save(os.path.join(PROOFS, "kamalam_spectrum.png"))
+    bg.convert("RGB").save(os.path.join(PROOFS, "kallar_spectrum.png"))
     print("spectrum")
 
 
@@ -436,7 +436,7 @@ def make_glyphs():
     bg = Image.new("RGB", (W, H), (250, 249, 246))
     d = ImageDraw.Draw(bg)
     fpath = instantiate_aper(REG, 100)
-    d.text((72, 50), "EZHUTHU KAMALAM", font=ImageFont.truetype(DEJAVU_BOLD, 22),
+    d.text((72, 50), "KALLAR", font=ImageFont.truetype(DEJAVU_BOLD, 22),
            fill=(20, 20, 30))
     d.text((72, 82), "Malayalam consonants · independent vowels · signs · digits",
            font=ImageFont.truetype(DEJAVU, 16), fill=(90, 90, 100))
@@ -464,9 +464,9 @@ def make_glyphs():
                    f"{ord(ch):04X}", font=ImageFont.truetype(DEJAVU, 10), fill=(150, 150, 160))
         y += ((len(chars) + cols - 1) // cols) * 108 + 30
     d.line([(72, H - 80), (W - 72, H - 80)], fill=(200, 200, 205), width=1)
-    d.text((72, H - 62), "Aperture 100 / Petal · Ezhuthu Kamalam Regular",
+    d.text((72, H - 62), "Aperture 100 / Petal · Kallar Regular",
            font=ImageFont.truetype(DEJAVU, 13), fill=(100, 100, 110))
-    bg.save(os.path.join(PROOFS, "kamalam_glyphs.png"))
+    bg.save(os.path.join(PROOFS, "kallar_glyphs.png"))
     print("glyphs")
 
 
@@ -484,7 +484,7 @@ def make_poster():
     bg = glow_background(W, H).convert("RGBA")
     add_mandala(bg, W / 2, 760, 470, petals=24, alpha=15, width=2)
     d = ImageDraw.Draw(bg)
-    draw_label(d, "EZHUTHU KAMALAM", (90, 80), 20, (190, 205, 255), bold=True, tracking=4)
+    draw_label(d, "KALLAR", (90, 80), 20, (190, 205, 255), bold=True, tracking=4)
     draw_label(d, "A MALAYALAM TYPEFACE THAT BLOOMS", (90, 114), 14, (135, 150, 190), tracking=3)
     draw_label(d, "APER 0 → 100", (W - 300, 80), 16, (255, 210, 170), bold=True)
     draw_rule(d, 90, 160, W - 90, 160, (255, 255, 255, 26))
@@ -514,9 +514,9 @@ def make_poster():
             bg.alpha_composite(lay, (x, y))
         draw_label(d, f"{v:03d}", (x + 10, y + 190), 18, (238, 121, 68), bold=True)
         draw_label(d, name, (x + 10, y + 218), 11, (160, 172, 205), tracking=2)
-    draw_label(d, "Ezhuthu Kamalam  /  v1.100  /  OFL 1.1  /  Malayalam + Latin",
+    draw_label(d, "Kallar  /  v1.100  /  OFL 1.1  /  Malayalam + Latin",
                (90, H - 80), 14, (140, 152, 185))
-    bg.convert("RGB").save(os.path.join(PROOFS, "kamalam_poster.png"))
+    bg.convert("RGB").save(os.path.join(PROOFS, "kallar_poster.png"))
     print("poster")
 
 
@@ -529,7 +529,7 @@ def make_editorial():
     grain = rng.normal(0, 2.2, (H, W, 1))
     bg = Image.fromarray(np.clip(np.array(bg)[:, :, :3] + grain, 0, 255).astype(np.uint8), "RGB").convert("RGBA")
     d = ImageDraw.Draw(bg)
-    draw_label(d, "EZHUTHU KAMALAM  /  EDITORIAL", (80, 62), 13, (150, 110, 70), bold=True, tracking=2)
+    draw_label(d, "KALLAR  /  EDITORIAL", (80, 62), 13, (150, 110, 70), bold=True, tracking=2)
     draw_rule(d, 80, 96, W - 80, 96, (30, 30, 30, 40))
     draw_rule(d, W // 2, 130, W // 2, H - 80, (30, 30, 30, 28), width=1)
 
@@ -542,7 +542,7 @@ def make_editorial():
     lines = [
         "മലയാളം ഒരു ദ്രാവിഡ ഭാഷയാണ്.",
         "കേരളത്തിലെ ഔദ്യോഗിക ഭാഷയും",
-        "ഇതാണ്. എഴുത്ത് കമലം ഈ",
+        "ഇതാണ്. കല്ലർ ഈ",
         "ലിപിക്ക് ഒരു പുതിയ ഭാവം",
         "നൽകുന്നു — വൃത്താകൃതിയിൽ",
         "നിന്ന് താമരയുടെ ദളങ്ങളിലേക്ക്.",
@@ -552,7 +552,7 @@ def make_editorial():
         paste_text(bg, REG, line, 26, 84, y, (50, 46, 42))
         y += 42
     draw_label(d, "01", (80, H - 120), 14, (150, 110, 70), bold=True)
-    draw_label(d, "Ezhuthu Kamalam / Aperture 100", (80, H - 92), 12, (120, 110, 100))
+    draw_label(d, "Kallar / Aperture 100", (80, H - 92), 12, (120, 110, 100))
 
     # right page
     draw_label(d, "PULL QUOTE", (W // 2 + 80, 160), 12, (150, 110, 70), bold=True, tracking=2)
@@ -569,8 +569,8 @@ def make_editorial():
     # lotus mark
     add_mandala(bg, W // 2 + 300, 860, 120, petals=16, alpha=45, width=2)
     draw_label(d, "02", (W - 120, H - 120), 14, (150, 110, 70), bold=True)
-    draw_label(d, "Ezhuthu Kamalam / Spectrum", (W - 360, H - 92), 12, (120, 110, 100))
-    bg.convert("RGB").save(os.path.join(PROOFS, "kamalam_editorial.png"))
+    draw_label(d, "Kallar / Spectrum", (W - 360, H - 92), 12, (120, 110, 100))
+    bg.convert("RGB").save(os.path.join(PROOFS, "kallar_editorial.png"))
     print("editorial")
 
 
@@ -584,19 +584,19 @@ def make_social():
     arr = np.array(grad)[:, :, :3] * vig
     bg = Image.fromarray(arr.astype(np.uint8), "RGB").convert("RGBA")
     add_mandala(bg, W / 2, H / 2, 330, petals=24, alpha=20, width=1)
-    layer, baseline, bbox = gradient_text(BOLD, "എഴുത്ത്", 260,
+    layer, baseline, bbox = gradient_text(BOLD, "കല്ലർ", 260,
                                           stops=[(0, (255, 244, 228)), (1, (255, 205, 160))],
                                           glow=14)
     if layer:
         paste_center(bg, layer, W / 2, top=260)
     d = ImageDraw.Draw(bg)
-    draw_label(d, "EZHUTHU KAMALAM", (60, 56), 15, (255, 255, 255), bold=True, tracking=3)
+    draw_label(d, "KALLAR", (60, 56), 15, (255, 255, 255), bold=True, tracking=3)
     draw_label(d, "APERTURE-VARIABLE MALAYALAM", (60, 84), 11, (255, 235, 220), tracking=2)
     draw_label(d, "APER 100", (W - 190, 56), 14, (255, 255, 255), bold=True)
     paste_text(bg, BOLD, "ഭാഷയിൽ വിരിയുന്ന ലിപി", 34, 60, H - 120, (255, 248, 238))
     draw_label(d, "A typeface that blooms.", (60, H - 92), 20, (255, 240, 225))
     draw_rule(d, 60, H - 58, W - 60, H - 58, (255, 255, 255, 90))
-    bg.convert("RGB").save(os.path.join(PROOFS, "kamalam_social.png"))
+    bg.convert("RGB").save(os.path.join(PROOFS, "kallar_social.png"))
     print("social")
 
 
@@ -607,8 +607,8 @@ def make_ui():
     # sidebar
     d.rectangle((0, 0, 300, H), fill=(13, 16, 28, 255))
     draw_rule(d, 300, 0, 300, H, (255, 255, 255, 20))
-    paste_text(bg, BOLD, "എഴുത്ത്", 38, 34, 78, (245, 236, 222))
-    draw_label(d, "KAMALAM", (36, 92), 11, (238, 121, 68), bold=True, tracking=3)
+    paste_text(bg, BOLD, "കല്ലർ", 38, 34, 78, (245, 236, 222))
+    draw_label(d, "KALLAR", (36, 92), 11, (238, 121, 68), bold=True, tracking=3)
     menu = [("ചാറ്റ്", True), ("ഭാഷ", False), ("ഡോക്യുമെന്റ്", False), ("സെറ്റിംഗ്സ്", False)]
     y = 180
     for item, active in menu:
@@ -654,9 +654,9 @@ def make_ui():
     paste_text(bg, REG, "ഓരോ അക്ഷരവും ഒരു വാതിൽ.", 26, 1030, 560, (220, 226, 242))
     paste_text(bg, REG, "ഓരോ ദളവും ഒരു ഭാഷ.", 26, 1030, 602, (180, 190, 215))
     d.rounded_rectangle((1030, 680, 1560, 684), radius=2, fill=(50, 54, 78, 255))
-    draw_label(d, "Ezhuthu Kamalam  ·  COLRv1 Spectrum", (1030, 710), 12,
+    draw_label(d, "Kallar  ·  COLRv1 Spectrum", (1030, 710), 12,
                (140, 152, 185), tracking=1)
-    bg.convert("RGB").save(os.path.join(PROOFS, "kamalam_ui.png"))
+    bg.convert("RGB").save(os.path.join(PROOFS, "kallar_ui.png"))
     print("ui")
 
 
@@ -671,12 +671,12 @@ def make_lockup():
     d.line(inner + [inner[0]], fill=(36, 30, 26, 255), width=5, joint="curve")
     d.line((300 - 128, 458, 300 + 128, 458), fill=(36, 30, 26, 255), width=7)
     d.ellipse((287, 297, 313, 323), fill=(238, 121, 68, 255))
-    paste_text(bg, BOLD, "എഴുത്ത് കമലം", 96, 500, 300, (28, 26, 30))
-    draw_label(d, "EZHUTHU KAMALAM", (510, 350), 18, (120, 80, 50), bold=True, tracking=4)
+    paste_text(bg, BOLD, "കല്ലർ", 96, 500, 300, (28, 26, 30))
+    draw_label(d, "KALLAR", (510, 350), 18, (120, 80, 50), bold=True, tracking=4)
     draw_label(d, "Aperture-variable Malayalam  ·  APER 0—100", (510, 384), 15, (120, 110, 100))
     draw_rule(d, 510, 430, 1100, 430, (30, 30, 30, 40))
     draw_label(d, "OFL 1.1  ·  v1.100", (510, 450), 13, (150, 120, 90))
-    bg.convert("RGB").save(os.path.join(PROOFS, "kamalam_lockup.png"))
+    bg.convert("RGB").save(os.path.join(PROOFS, "kallar_lockup.png"))
     print("lockup")
 
 
@@ -707,7 +707,7 @@ def make_anim():
         d.rounded_rectangle((130, 420, 130 + (W - 170) * v / 100, 426), radius=3,
                             fill=(238, 121, 68, 255))
         frames.append(bg.convert("RGB"))
-    frames[0].save(os.path.join(PROOFS, "kamalam_aper.gif"),
+    frames[0].save(os.path.join(PROOFS, "kallar_aper.gif"),
                    save_all=True, append_images=frames[1:], duration=90, loop=0,
                    optimize=True)
     print("anim")

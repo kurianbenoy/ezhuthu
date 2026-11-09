@@ -1,4 +1,4 @@
-.PHONY: help venv kamalam multiscript legacy test proofs specimen serve clean distclean \
+.PHONY: help venv kallar kamalam multiscript legacy test proofs specimen serve clean distclean \
 	pdf pdf-multiscript qa qa-multiscript
 
 PY := .venv/bin/python
@@ -7,12 +7,12 @@ PIP := .venv/bin/pip
 help:
 	@echo "targets:"
 	@echo "  venv      create .venv and install build/proof dependencies"
-	@echo "  kamalam   build the variable Ezhuthu Kamalam family + Spectrum"
+	@echo "  kallar    build the variable Kallar family + Spectrum"
 	@echo "  multiscript build Devanagari, Tamil, Telugu and Kannada families"
 	@echo "  legacy    rebuild the v0.2 parametric draft (legacy/fonts)"
 	@echo "  test      run shaping, variation and colour tests"
 	@echo "  proofs    render the specimen PNGs and the HTML specimen"
-	@echo "  pdf       print the specimen to proofs/EzhuthuKamalam-Specimen.pdf"
+	@echo "  pdf       print the specimen to proofs/Kallar-Specimen.pdf"
 	@echo "  pdf-multiscript print the multiscript specimen to PDF"
 	@echo "  qa        run fontbakery on the Malayalam Regular and Bold"
 	@echo "  qa-multiscript run fontbakery on the four script families"
@@ -26,8 +26,8 @@ venv:
 	$(PIP) install -q ufoLib2 ufo2ft fonttools fontFeatures munch PyYAML \
 		uharfbuzz freetype-py pillow booleanOperations Brotli scipy
 
-kamalam: venv
-	$(PY) tools/kamalam.py all
+kallar: venv
+	$(PY) tools/kallar.py all
 
 multiscript: venv
 	$(PY) tools/multiscript.py
@@ -35,8 +35,8 @@ multiscript: venv
 legacy: venv
 	$(PY) tools/build.py
 
-test: venv kamalam multiscript
-	$(PY) tests/test_kamalam.py
+test: venv kallar multiscript
+	$(PY) tests/test_kallar.py
 	$(PY) tests/test_multiscript.py
 	@if test -f legacy/fonts/Ezhuthu-Regular.ttf; then \
 		$(PY) tests/test_font.py legacy/fonts/Ezhuthu-Regular.ttf; \
@@ -44,7 +44,7 @@ test: venv kamalam multiscript
 		echo "legacy font not built; run: make legacy"; \
 	fi
 
-proofs: kamalam multiscript
+proofs: kallar multiscript
 	$(PY) tools/specimen.py
 	$(PY) tools/specimen_multiscript.py
 	$(PY) tools/specimen_html.py
@@ -59,33 +59,37 @@ pdf-multiscript: proofs
 	$(PIP) install -q playwright
 	$(PY) -m playwright install chromium
 	$(PY) tools/pdf.py specimen/multiscript.html \
-		proofs/EzhuthuKamalam-Multiscript-Specimen.pdf
+		proofs/Kallar-Multiscript-Specimen.pdf
 
-qa: kamalam
+qa: kallar
 	$(PIP) install -q fontbakery
-	$(PY) -m fontbakery check-universal fonts/EzhuthuKamalam-Regular.ttf \
+	$(PY) -m fontbakery check-universal fonts/Kallar-Regular.ttf \
 		--no-progress -x opentype/fvar/regular_coords_correct -x alt_caron
-	$(PY) -m fontbakery check-universal fonts/EzhuthuKamalam-Bold.ttf \
+	$(PY) -m fontbakery check-universal fonts/Kallar-Bold.ttf \
 		--no-progress -x opentype/fvar/regular_coords_correct -x alt_caron \
 		-x opentype/fsselection -x opentype/mac_style
 
 qa-multiscript: multiscript
 	$(PIP) install -q fontbakery
 	@for f in \
-		fonts/EzhuthuKamalamDevanagari-Regular.ttf \
-		fonts/EzhuthuKamalamDevanagari-Bold.ttf \
-		fonts/EzhuthuKamalamTamil-Regular.ttf \
-		fonts/EzhuthuKamalamTamil-Bold.ttf \
-		fonts/EzhuthuKamalamTelugu-Regular.ttf \
-		fonts/EzhuthuKamalamTelugu-Bold.ttf \
-		fonts/EzhuthuKamalamKannada-Regular.ttf \
-		fonts/EzhuthuKamalamKannada-Bold.ttf; do \
+		fonts/KallarDevanagari-Regular.ttf \
+		fonts/KallarDevanagari-Bold.ttf \
+		fonts/KallarTamil-Regular.ttf \
+		fonts/KallarTamil-Bold.ttf \
+		fonts/KallarTelugu-Regular.ttf \
+		fonts/KallarTelugu-Bold.ttf \
+		fonts/KallarKannada-Regular.ttf \
+		fonts/KallarKannada-Bold.ttf; do \
 		echo "== $$f"; \
 		$(PY) -m fontbakery check-universal "$$f" --no-progress \
 			-x opentype/fvar/regular_coords_correct -x alt_caron \
 			-x opentype/fsselection -x opentype/mac_style \
 			2>&1 | grep -E '^    (FAIL|WARN|PASS):|^Total:' | tail -5; \
 	done
+
+# Backward-compatible alias for the v1.000 name.
+kamalam: kallar
+	@echo "note: make kamalam is now make kallar"
 
 specimen: proofs
 	@echo "open specimen/index.html in a browser (or run: make serve)"
@@ -97,6 +101,6 @@ clean:
 	rm -rf sources/ufo sources/masters
 
 distclean: clean
-	rm -rf fonts/*.ttf fonts/*.otf fonts/*.woff2 proofs/kamalam_*.png \
-		proofs/EzhuthuKamalam-Specimen.pdf \
-		proofs/EzhuthuKamalam-Multiscript-Specimen.pdf
+	rm -rf fonts/*.ttf fonts/*.otf fonts/*.woff2 proofs/kallar_*.png \
+		proofs/Kallar-Specimen.pdf \
+		proofs/Kallar-Multiscript-Specimen.pdf

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Ezhuthu Kamalam multiscript — Devanagari, Tamil, Telugu and Kannada.
+"""Kallar multiscript — Devanagari, Tamil, Telugu and Kannada.
 
-The Malayalam family is built by ``tools/kamalam.py`` from Manjari.  This
+The Malayalam family is built by ``tools/kallar.py`` from Manjari.  This
 module builds the sister families from the corresponding Noto Sans variable
 skeletons, applying the same ``APER`` aperture engine, naming model, Spectrum
 treatment and QA pipeline.
@@ -33,7 +33,7 @@ from fontTools.varLib.instancer import instantiateVariableFont
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from kamalam import (  # noqa: E402
+from kallar import (  # noqa: E402
     FIXED_TIME,
     UPEM,
     add_spectrum,
@@ -58,8 +58,8 @@ NOTO_KNDA = "https://github.com/notofonts/kannada"
 
 SCRIPTS = {
     "devanagari": {
-        "family": "Ezhuthu Kamalam Devanagari",
-        "stem": "EzhuthuKamalamDevanagari",
+        "family": "Kallar Devanagari",
+        "stem": "KallarDevanagari",
         "base": os.path.join(BASE, "NotoSansDevanagari-VF.ttf"),
         "upstream": NOTO_DEVA,
         "ranges": [(0x0900, 0x097F), (0xA8E0, 0xA8FF), (0x1CD0, 0x1CFF)],
@@ -79,8 +79,8 @@ SCRIPTS = {
         ],
     },
     "tamil": {
-        "family": "Ezhuthu Kamalam Tamil",
-        "stem": "EzhuthuKamalamTamil",
+        "family": "Kallar Tamil",
+        "stem": "KallarTamil",
         "base": os.path.join(BASE, "NotoSansTamil-VF.ttf"),
         "upstream": NOTO_TAML,
         "ranges": [(0x0B80, 0x0BFF)],
@@ -99,8 +99,8 @@ SCRIPTS = {
         ],
     },
     "telugu": {
-        "family": "Ezhuthu Kamalam Telugu",
-        "stem": "EzhuthuKamalamTelugu",
+        "family": "Kallar Telugu",
+        "stem": "KallarTelugu",
         "base": os.path.join(BASE, "NotoSansTelugu-VF.ttf"),
         "upstream": NOTO_TELU,
         "ranges": [(0x0C00, 0x0C7F)],
@@ -119,8 +119,8 @@ SCRIPTS = {
         ],
     },
     "kannada": {
-        "family": "Ezhuthu Kamalam Kannada",
-        "stem": "EzhuthuKamalamKannada",
+        "family": "Kallar Kannada",
+        "stem": "KallarKannada",
         "base": os.path.join(BASE, "NotoSansKannada-VF.ttf"),
         "upstream": NOTO_KNDA,
         "ranges": [(0x0C80, 0x0CFF)],
@@ -182,13 +182,13 @@ def script_glyphs(path, codepoints):
 def copyright_for(script):
     return (
         f"Copyright 2022 The Noto Project Authors ({script['upstream']}). "
-        "Modified 2026 by The Ezhuthu Project Authors. "
+        "Modified 2026 by The Kallar Project Authors. "
         "Licensed under the SIL Open Font License, Version 1.1."
     )
 
 
 def designer_for(_script):
-    return "Ezhuthu Project Authors; base design by the Noto Project Authors"
+    return "Kallar Project Authors; base design by the Noto Project Authors"
 
 
 def style_for(weight):

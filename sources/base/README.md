@@ -1,6 +1,6 @@
 # Base skeletons
 
-Ezhuthu Kamalam is a multi-script type system built on open-source structural
+Kallar is a multi-script type system built on open-source structural
 skeletons. The new work is the aperture engine (`APER`), the lotus-gateway
 counters, the Spectrum builds, the metrics, the build pipeline and the
 specimens. The base outlines are used under the SIL Open Font License 1.1.
@@ -22,10 +22,10 @@ its own `OFL.txt` beside the binary.
 
 The Malayalam branch is a derivative of Manjari. The Devanagari, Tamil, Telugu
 and Kannada branches are derivatives of the corresponding Noto Sans faces.
-Each derived family is renamed to `Ezhuthu Kamalam <Script>`, preserves the
+Each derived family is renamed to `Kallar <Script>`, preserves the
 upstream copyright and OFL notice, and records the base in its name table and
 documentation. The aperture axis and the Spectrum treatment are original work
-by the Ezhuthu Project Authors.
+by the Kallar Project Authors.
 
 This project is independent and is not affiliated with or endorsed by Google,
 the Noto Project Authors, Sarvam AI, or SMC.

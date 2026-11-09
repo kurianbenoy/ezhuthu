@@ -15,7 +15,7 @@ from playwright.sync_api import sync_playwright
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_HTML = os.path.join(ROOT, "specimen", "index.html")
-DEFAULT_OUT = os.path.join(ROOT, "proofs", "EzhuthuKamalam-Specimen.pdf")
+DEFAULT_OUT = os.path.join(ROOT, "proofs", "Kallar-Specimen.pdf")
 
 
 def main():

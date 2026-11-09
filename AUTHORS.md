@@ -1,9 +1,9 @@
 # Authors & credits
 
-## Ezhuthu Kamalam
+## Kallar
 
 - **Design, aperture engine, variable font, Spectrum build, specimen:**
-  Ezhuthu Project Authors, 2026.
+  Kallar Project Authors, 2026.
 - **Malayalam base skeleton:** Manjari by **Santhosh Thottingal** and
   **Swathanthra Malayalam Computing** (SMC), Copyright 2018 The Manjari
   Project Authors. Licensed under the SIL Open Font License 1.1.

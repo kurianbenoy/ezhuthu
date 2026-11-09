@@ -1,9 +1,9 @@
-Ezhuthu Kamalam Multiscript Font Family
-=======================================
+Kallar Multiscript Font Family
+==============================
 
-![Five scripts, one aperture](proofs/kamalam_multiscript.png)
+![Five scripts, one aperture](proofs/kallar_multiscript.png)
 
-**Ezhuthu Kamalam** is a multiscript display type system built around one
+**Kallar** is a multiscript display type system built around one
 idea: the counter as a **lotus gateway**. At one end of its variable axis a
 loop is the classic round form; at the other, its crown rises into a soft
 petal. The transformation is not a decorative filter — it is a real OpenType
@@ -20,24 +20,27 @@ Thottingal and Swathanthra Malayalam Computing. The four new branches are
 built on the corresponding **Noto Sans** skeletons by the Noto Project
 Authors. All bases are used under the SIL Open Font License. The aperture
 engine, variable axis, Spectrum builds, metrics and specimens are new work by
-the Ezhuthu Project Authors.
+the Kallar Project Authors.
+
+The project lives in the Ezhuthu repository:
+[github.com/kurianbenoy/ezhuthu](https://github.com/kurianbenoy/ezhuthu).
 
 Five Scripts, One Aperture
 --------------------------
 
 | Script | Family | Base skeleton | Script codepoints | Glyphs |
 |---|---|---|---:|---:|
-| Malayalam | `Ezhuthu Kamalam` | Manjari | full block | 918 / 912 |
-| Devanagari (Hindi) | `Ezhuthu Kamalam Devanagari` | Noto Sans Devanagari | 201 | 1117 |
-| Tamil | `Ezhuthu Kamalam Tamil` | Noto Sans Tamil | 72 | 576 |
-| Telugu | `Ezhuthu Kamalam Telugu` | Noto Sans Telugu | 100 | 1247 |
-| Kannada | `Ezhuthu Kamalam Kannada` | Noto Sans Kannada | 91 | 933 |
+| Malayalam | `Kallar` | Manjari | full block | 918 / 912 |
+| Devanagari (Hindi) | `Kallar Devanagari` | Noto Sans Devanagari | 201 | 1117 |
+| Tamil | `Kallar Tamil` | Noto Sans Tamil | 72 | 576 |
+| Telugu | `Kallar Telugu` | Noto Sans Telugu | 100 | 1247 |
+| Kannada | `Kallar Kannada` | Noto Sans Kannada | 91 | 933 |
 
 “Hindi” is written in Devanagari; the Devanagari family also covers Marathi,
 Nepali and Sanskrit. The Tamil, Telugu and Kannada families each cover their
 own script plus the Latin, digits and punctuation inherited from the base.
 
-![The APER axis across four scripts](proofs/kamalam_multiscript_axis.png)
+![The APER axis across four scripts](proofs/kallar_multiscript_axis.png)
 
 Each script has its own aperture profile, because the scripts do not share a
 single counter grammar:
@@ -56,15 +59,15 @@ The per-script specimens show the full system:
 
 | | |
 |---|---|
-| ![Devanagari](proofs/kamalam_devanagari.png) | ![Tamil](proofs/kamalam_tamil.png) |
-| ![Telugu](proofs/kamalam_telugu.png) | ![Kannada](proofs/kamalam_kannada.png) |
+| ![Devanagari](proofs/kallar_devanagari.png) | ![Tamil](proofs/kallar_tamil.png) |
+| ![Telugu](proofs/kallar_telugu.png) | ![Kannada](proofs/kallar_kannada.png) |
 
 The Aperture Axis
 -----------------
 
-![The five stops of the aperture axis](proofs/kamalam_axis.png)
+![The five stops of the aperture axis](proofs/kallar_axis.png)
 
-Every counter in Ezhuthu Kamalam can open from a classic round loop
+Every counter in Kallar can open from a classic round loop
 (`APER 0`) to a pointed lotus gateway (`APER 100`). The axis is exposed as
 `APER` in every variable font and has five named stops:
 
@@ -76,7 +79,7 @@ Every counter in Ezhuthu Kamalam can open from a classic round loop
 | 75 | Three-quarters | A clear petal silhouette |
 | 100 | Petal | The full lotus display cut (default) |
 
-![The aperture axis in motion](proofs/kamalam_aper.gif)
+![The aperture axis in motion](proofs/kallar_aper.gif)
 
 The two masters share the same point topology, so every intermediate value is
 a designed shape and HarfBuzz shaping is identical at every stop. The axis
@@ -86,9 +89,9 @@ kerning.
 The Spectrum
 ------------
 
-![Ezhuthu Kamalam Spectrum](proofs/kamalam_gradient.png)
+![Kallar Spectrum](proofs/kallar_gradient.png)
 
-**Ezhuthu Kamalam Spectrum** carries a blue → orange gradient inside the font
+**Kallar Spectrum** carries a blue → orange gradient inside the font
 itself with COLRv1 and CPAL. Blue sits at the crown, orange near the baseline
 and gold in the descenders, so a paragraph reads as one continuous field
 rather than a set of separately coloured letters. Regular and Bold Spectrum
@@ -106,15 +109,15 @@ surfaces a contemporary Indian type system has to live on.
 
 | | |
 |---|---|
-| ![Poster](proofs/kamalam_poster.png) | ![Editorial spread](proofs/kamalam_editorial.png) |
-| ![Product UI](proofs/kamalam_ui.png) | ![Social card](proofs/kamalam_social.png) |
+| ![Poster](proofs/kallar_poster.png) | ![Editorial spread](proofs/kallar_editorial.png) |
+| ![Product UI](proofs/kallar_ui.png) | ![Social card](proofs/kallar_social.png) |
 
-![Ezhuthu Kamalam lockup](proofs/kamalam_lockup.png)
+![Kallar lockup](proofs/kallar_lockup.png)
 
 Character Set
 -------------
 
-![Ezhuthu Kamalam character sheet](proofs/kamalam_glyphs.png)
+![Kallar character sheet](proofs/kallar_glyphs.png)
 
 The Malayalam family covers the complete Malayalam block plus Latin:
 
@@ -138,22 +141,22 @@ The Malayalam family:
 
 | File | What it is |
 |---|---|
-| `fonts/EzhuthuKamalam-Regular.ttf/.woff2` | Variable Regular, `APER` 0–100 (default 100) |
-| `fonts/EzhuthuKamalam-Bold.ttf/.woff2` | Variable Bold, `APER` 0–100 (default 100) |
-| `fonts/EzhuthuKamalam-Spectrum.ttf/.woff2` | Variable Bold + COLRv1 spectrum |
-| `fonts/EzhuthuKamalam-SpectrumRegular.ttf/.woff2` | Variable Regular + COLRv1 spectrum |
-| `fonts/EzhuthuKamalam-Round.ttf/.woff2` | Static `APER 0` instance |
-| `fonts/EzhuthuKamalam-Petal.ttf/.woff2` | Static `APER 100` instance |
-| `fonts/EzhuthuKamalam-BoldPetal.ttf/.woff2` | Static Bold `APER 100` instance |
+| `fonts/Kallar-Regular.ttf/.woff2` | Variable Regular, `APER` 0–100 (default 100) |
+| `fonts/Kallar-Bold.ttf/.woff2` | Variable Bold, `APER` 0–100 (default 100) |
+| `fonts/Kallar-Spectrum.ttf/.woff2` | Variable Bold + COLRv1 spectrum |
+| `fonts/Kallar-SpectrumRegular.ttf/.woff2` | Variable Regular + COLRv1 spectrum |
+| `fonts/Kallar-Round.ttf/.woff2` | Static `APER 0` instance |
+| `fonts/Kallar-Petal.ttf/.woff2` | Static `APER 100` instance |
+| `fonts/Kallar-BoldPetal.ttf/.woff2` | Static Bold `APER 100` instance |
 
 Each new script ships the same seven styles:
 
 | Family | Files |
 |---|---|
-| Ezhuthu Kamalam Devanagari | `fonts/EzhuthuKamalamDevanagari-{Regular,Bold,Round,Petal,BoldPetal,Spectrum,SpectrumRegular}.{ttf,woff2}` |
-| Ezhuthu Kamalam Tamil | `fonts/EzhuthuKamalamTamil-{Regular,Bold,Round,Petal,BoldPetal,Spectrum,SpectrumRegular}.{ttf,woff2}` |
-| Ezhuthu Kamalam Telugu | `fonts/EzhuthuKamalamTelugu-{Regular,Bold,Round,Petal,BoldPetal,Spectrum,SpectrumRegular}.{ttf,woff2}` |
-| Ezhuthu Kamalam Kannada | `fonts/EzhuthuKamalamKannada-{Regular,Bold,Round,Petal,BoldPetal,Spectrum,SpectrumRegular}.{ttf,woff2}` |
+| Kallar Devanagari | `fonts/KallarDevanagari-{Regular,Bold,Round,Petal,BoldPetal,Spectrum,SpectrumRegular}.{ttf,woff2}` |
+| Kallar Tamil | `fonts/KallarTamil-{Regular,Bold,Round,Petal,BoldPetal,Spectrum,SpectrumRegular}.{ttf,woff2}` |
+| Kallar Telugu | `fonts/KallarTelugu-{Regular,Bold,Round,Petal,BoldPetal,Spectrum,SpectrumRegular}.{ttf,woff2}` |
+| Kallar Kannada | `fonts/KallarKannada-{Regular,Bold,Round,Petal,BoldPetal,Spectrum,SpectrumRegular}.{ttf,woff2}` |
 
 Specimens:
 
@@ -161,8 +164,8 @@ Specimens:
 |---|---|
 | `specimen/index.html` | Interactive Malayalam specimen (fonts embedded) |
 | `specimen/multiscript.html` | Interactive five-script specimen with a shared APER slider |
-| `proofs/EzhuthuKamalam-Specimen.pdf` | Vector Malayalam PDF specimen |
-| `proofs/EzhuthuKamalam-Multiscript-Specimen.pdf` | Vector multiscript PDF specimen |
+| `proofs/Kallar-Specimen.pdf` | Vector Malayalam PDF specimen |
+| `proofs/Kallar-Multiscript-Specimen.pdf` | Vector multiscript PDF specimen |
 
 Downloading the font files
 --------------------------
@@ -170,7 +173,7 @@ Downloading the font files
 The latest TTF and WOFF2 builds live in [`fonts/`](fonts/). The multiscript
 specimen is [`specimen/multiscript.html`](specimen/multiscript.html); the
 vector PDF is
-[`proofs/EzhuthuKamalam-Multiscript-Specimen.pdf`](proofs/EzhuthuKamalam-Multiscript-Specimen.pdf).
+[`proofs/Kallar-Multiscript-Specimen.pdf`](proofs/Kallar-Multiscript-Specimen.pdf).
 Open the HTML directly, or serve both specimens with:
 
 ```bash
@@ -182,13 +185,13 @@ Using the font
 
 ```css
 @font-face {
-  font-family: "Ezhuthu Kamalam Devanagari";
-  src: url("EzhuthuKamalamDevanagari-Regular.woff2") format("woff2");
+  font-family: "Kallar Devanagari";
+  src: url("KallarDevanagari-Regular.woff2") format("woff2");
   font-weight: 400;
 }
 
 .deva {
-  font-family: "Ezhuthu Kamalam Devanagari";
+  font-family: "Kallar Devanagari";
   font-variation-settings: "APER" 100; /* 0 = round, 100 = petal */
 }
 ```
@@ -205,18 +208,18 @@ shared Latin, and the script families fill in the rest:
 ```css
 .multiscript {
   font-family:
-    "Ezhuthu Kamalam",
-    "Ezhuthu Kamalam Devanagari",
-    "Ezhuthu Kamalam Tamil",
-    "Ezhuthu Kamalam Telugu",
-    "Ezhuthu Kamalam Kannada",
+    "Kallar",
+    "Kallar Devanagari",
+    "Kallar Tamil",
+    "Kallar Telugu",
+    "Kallar Kannada",
     sans-serif;
   font-variation-settings: "APER" 100;
 }
 ```
 
-For the colour builds, use `EzhuthuKamalam<Script>-SpectrumRegular` or
-`EzhuthuKamalam<Script>-Spectrum`. Clients with COLRv1 support paint the
+For the colour builds, use `Kallar<Script>-SpectrumRegular` or
+`Kallar<Script>-Spectrum`. Clients with COLRv1 support paint the
 gradient; clients without it fall back to the monochrome outlines.
 
 Building from source
@@ -226,7 +229,7 @@ The build is Python + fontTools + varLib + COLRv1:
 
 ```bash
 make venv            # create .venv and install dependencies
-make kamalam         # Malayalam: masters, variable fonts, Spectrum, instances
+make kallar          # Malayalam: masters, variable fonts, Spectrum, instances
 make multiscript     # Devanagari, Tamil, Telugu and Kannada families
 make test            # shaping, variation and colour tests for all five scripts
 make proofs          # specimen PNGs, GIF and both interactive HTML specimens
@@ -237,7 +240,7 @@ make qa-multiscript  # fontbakery on the four new Regular/Bold families
 ```
 
 Sources live in `sources/base/` (Manjari and the four Noto Sans variable
-skeletons). The aperture engine is `tools/kamalam.py`; the multiscript driver
+skeletons). The aperture engine is `tools/kallar.py`; the multiscript driver
 is `tools/multiscript.py`. The build is reproducible: repeated runs produce
 byte-identical TTF and WOFF2 files. Design and engineering notes are in
 [NOTES.md](NOTES.md).
@@ -260,12 +263,12 @@ Testing and QA
   [NOTES.md](NOTES.md)).
 - Both HTML specimens and the COLRv1 gradient were verified in headless
   Chromium 156; the shared APER slider drives all four script families.
-- Byte-identical repeat builds for `make kamalam` and `make multiscript`.
+- Byte-identical repeat builds for `make kallar` and `make multiscript`.
 
 License
 -------
 
-Ezhuthu Kamalam is licensed under the **SIL Open Font License v1.1**
+Kallar is licensed under the **SIL Open Font License v1.1**
 (<http://scripts.sil.org/OFL>). See [OFL.txt](OFL.txt).
 
 The Malayalam base skeleton is **Manjari**, Copyright 2018 The Manjari
@@ -278,7 +281,7 @@ families, Copyright 2022 The Noto Project Authors
 upstream licences are kept in `sources/base/NotoSans*-OFL.txt`.
 
 The aperture engine, variable axis, Spectrum builds, metrics and specimens are
-Copyright 2026 The Ezhuthu Project Authors.
+Copyright 2026 The Kallar Project Authors.
 
 The legacy v0.2 from-scratch parametric draft is preserved in
 [`legacy/`](legacy/) and in `tools/glyphs_ml.py`.
@@ -286,7 +289,7 @@ The legacy v0.2 from-scratch parametric draft is preserved in
 Credits
 -------
 
-- **Design, aperture engine, variable fonts, Spectrum, specimens:** Ezhuthu
+- **Design, aperture engine, variable fonts, Spectrum, specimens:** Kallar
   Project Authors
 - **Malayalam base skeleton:** Santhosh Thottingal and Swathanthra Malayalam
   Computing
@@ -306,5 +309,5 @@ issue in the repository or send a pull request against the `tools/` and
 `sources/` directories. Please run `make test` and `make qa-multiscript`
 before sending a contribution.
 
-If you use Ezhuthu Kamalam in a project, a small credit — “Typeface: Ezhuthu
-Kamalam” — is appreciated.
+If you use Kallar in a project, a small credit — “Typeface: Kallar” — is
+appreciated.

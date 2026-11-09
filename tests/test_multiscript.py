@@ -104,8 +104,8 @@ def test_metadata():
                 fail(f"{os.path.basename(p)}: OFL missing")
             if "Noto Project Authors" not in copyright_note:
                 fail(f"{os.path.basename(p)}: Noto copyright missing")
-            if "Ezhuthu Project Authors" not in copyright_note:
-                fail(f"{os.path.basename(p)}: Ezhuthu copyright missing")
+            if "Kallar Project Authors" not in copyright_note:
+                fail(f"{os.path.basename(p)}: Kallar copyright missing")
             if "Noto Project Authors" not in designer:
                 fail(f"{os.path.basename(p)}: Noto designer credit missing")
         if (TTFont(path(stem, "Regular"))["name"].getDebugName(1)

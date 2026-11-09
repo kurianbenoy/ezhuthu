@@ -1,10 +1,10 @@
-# Ezhuthu Kamalam — design & engineering notes
+# Kallar — design & engineering notes
 
 ## 1. The idea
 
 Malayalam is a loop script. The loop head (തല) is the script's most recognisable
 gesture: a round counter, an opening, a tail. Most Malayalam typefaces treat
-that loop as a circle or an oval. Ezhuthu Kamalam treats it as a **gateway**.
+that loop as a circle or an oval. Kallar treats it as a **gateway**.
 
 At `APER 0` the counter is the classic round loop inherited from Manjari. As
 `APER` rises, the crown of the counter lifts into a soft point: the negative
@@ -14,7 +14,7 @@ loops (ക, ഖ, ങ) share one rhythm. The result is not a decorative overlay; 
 *counters themselves* change shape.
 
 The second layer is colour. Sarvam's identity uses a blue → orange spectrum and
-a lotus/gateway monogram. Ezhuthu Kamalam Spectrum carries a vertical
+a lotus/gateway monogram. Kallar Spectrum carries a vertical
 blue → orange gradient inside the font with COLRv1, clipped to each glyph. At
 text sizes the tops are blue, the baseline zone is pink/orange and the
 descenders are gold — one continuous field across the text block.
@@ -151,7 +151,7 @@ CSS gradient-clipped version so the visual idea is visible everywhere.
 
 ## 6. Testing
 
-`tests/test_kamalam.py` checks:
+`tests/test_kallar.py` checks:
 
 - `fvar` axis `APER = 0…100`, default 100;
 - `STAT` axis values Round / Bloom / Petal;
@@ -164,10 +164,10 @@ CSS gradient-clipped version so the visual idea is visible everywhere.
 
 The HTML specimen was also checked in headless Chromium 156: the embedded
 variable fonts load, the APER slider changes the live instance, and the
-`Ezhuthu Kamalam Spectrum` sample paints its COLRv1 gradient in the browser.
+`Kallar Spectrum` sample paints its COLRv1 gradient in the browser.
 
 Builds are reproducible: `head.created`/`head.modified` are pinned to a fixed
-date and `recalcTimestamp` is disabled, so repeated `make kamalam` runs produce
+date and `recalcTimestamp` is disabled, so repeated `make kallar` runs produce
 byte-identical TTF and WOFF2 files. `make proofs` is deterministic too.
 
 The old `tests/test_font.py` still covers the legacy draft.
@@ -178,7 +178,7 @@ The Regular font passes `fontbakery check-universal` with two exclusions that
 do not apply to this design:
 
 - `opentype/fvar/regular_coords_correct` assumes a registered `wght`/`wdth`
-  axis; Ezhuthu Kamalam's only axis is the custom `APER`.
+  axis; Kallar's only axis is the custom `APER`.
 - `alt_caron` is a Czech/Slovak-specific check that wants `ď` to use a
   non-standard caron glyph. The Latin `ď` here uses a combining caron, which
   is typographically correct; the check is not relevant to a Malayalam face.
@@ -236,7 +236,7 @@ line height.
 
 The variable bases are instantiated at `wght=400/700`, `wdth=100`, scaled to
 1000 UPM (they are already 1000), stripped of hinting and variation tables, and
-given the Ezhuthu name/metrics. The vendored files and SHA-256 checksums are in
+given the Kallar name/metrics. The vendored files and SHA-256 checksums are in
 `sources/base/README.md`.
 
 ### 9.3 Script-specific aperture profiles
@@ -296,7 +296,7 @@ All set `USE_TYPO_METRICS`.
 `tests/test_multiscript.py` checks, for all four scripts:
 
 - `fvar` `APER=0…100`, default 100, and STAT values 0/50/100;
-- the Noto copyright and Ezhuthu modification notice in name ID 0, the Noto
+- the Noto copyright and Kallar modification notice in name ID 0, the Noto
   designer credit in name ID 9, and the OFL notice in name ID 13;
 - shaping of every case, display word and paragraph at APER 0/50/100, with
   identical glyph names and advances and no `.notdef`;

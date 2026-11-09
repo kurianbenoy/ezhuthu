@@ -1,15 +1,17 @@
-FONTLOG for Ezhuthu Kamalam
-==========================
+FONTLOG for Kallar
+==================
 
-Ezhuthu Kamalam is an aperture-variable multiscript display family. The
-Malayalam branch is based on the Manjari skeleton (OFL 1.1); the Devanagari,
-Tamil, Telugu and Kannada branches are based on the corresponding Noto Sans
-skeletons (OFL 1.1). All branches add the Petal/Aperture transformation, a
-variable APER axis, and COLRv1 blue→orange Spectrum builds.
+Kallar is an aperture-variable multiscript display family. The Malayalam
+branch is based on the Manjari skeleton (OFL 1.1); the Devanagari, Tamil,
+Telugu and Kannada branches are based on the corresponding Noto Sans skeletons
+(OFL 1.1). All branches add the Petal/Aperture transformation, a variable APER
+axis, and COLRv1 blue→orange Spectrum builds.
 
-2026-11-09 — v1.100 (Multiscript)
---------------------------------
-- Added Ezhuthu Kamalam Devanagari, Tamil, Telugu and Kannada.
+2026-11-09 — v1.100 (Kallar Multiscript)
+---------------------------------------
+- Renamed the family from Ezhuthu Kamalam to Kallar. The v1.000 entry below is
+  the historical Malayalam release under the former name.
+- Added Kallar Devanagari, Tamil, Telugu and Kannada.
 - Each family: variable Regular and Bold with APER 0–100, static Round/Petal/
   Bold Petal instances, and COLRv1 Spectrum Regular/Bold builds.
 - Same point-preserving aperture engine, with script-specific profiles:
@@ -27,8 +29,8 @@ variable APER axis, and COLRv1 blue→orange Spectrum builds.
 - Fontbakery: 0 FAIL on the eight new Regular/Bold VFs with the documented
   custom-axis / STAT-length / Bold exclusions.
 
-2026-11-09 — v1.000 (Kamalam)
------------------------------
+2026-11-09 — v1.000 (Kamalam, now Kallar)
+-----------------------------------------
 - First production release of Ezhuthu Kamalam.
 - Variable Regular and Bold fonts with the custom APER (Aperture) axis,
   0 = round, 50 = bloom, 100 = petal (default).

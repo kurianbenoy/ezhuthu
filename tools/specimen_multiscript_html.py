@@ -65,8 +65,8 @@ for key, script in SCRIPTS.items():
     reg = b64(os.path.join(FONTS, f"{stem}-Regular.woff2"))
     bold = b64(os.path.join(FONTS, f"{stem}-Bold.woff2"))
     spec = b64(os.path.join(FONTS, f"{stem}-Spectrum.woff2"))
-    family = f"EK {title}"
-    spec_family = f"EK {title} Spectrum"
+    family = f"Kallar {title}"
+    spec_family = f"Kallar {title} Spectrum"
     FACES.append(f"""
   @font-face {{
     font-family: '{family}';
@@ -118,13 +118,13 @@ CARDS = "".join(CARDS)
 HERO_WORDS = "".join(HERO_WORDS)
 DOWNLOADS = "".join(DOWNLOADS)
 
-HERO_IMG = img_b64("kamalam_multiscript.png", maxw=1100)
-AXIS_IMG = img_b64("kamalam_multiscript_axis.png", maxw=1100)
+HERO_IMG = img_b64("kallar_multiscript.png", maxw=1100)
+AXIS_IMG = img_b64("kallar_multiscript_axis.png", maxw=1100)
 SHEETS = "".join(
     f"""
     <figure>
-      <img src="data:image/jpeg;base64,{img_b64(f'kamalam_{key}.png', maxw=900)}"
-           alt="Ezhuthu Kamalam {LABELS[key][0]} specimen">
+      <img src="data:image/jpeg;base64,{img_b64(f'kallar_{key}.png', maxw=900)}"
+           alt="Kallar {LABELS[key][0]} specimen">
       <figcaption>{LABELS[key][0]} · APER 0—100 · COLRv1 Spectrum</figcaption>
     </figure>""" for key in SCRIPTS
 )
@@ -134,7 +134,7 @@ HTML = f"""<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ezhuthu Kamalam — multiscript specimen</title>
+<title>Kallar — multiscript specimen</title>
 <style>
   {FACES}
   :root {{
@@ -283,7 +283,7 @@ HTML = f"""<!doctype html>
 <body>
 <header>
   <div class="wrap">
-    <div class="brand">EZHUTHU <span>KAMALAM</span></div>
+    <div class="brand">KALLAR</div>
     <nav>
       <a href="#scripts">Scripts</a>
       <a href="#axis">Axis</a>
@@ -350,7 +350,7 @@ HTML = f"""<!doctype html>
     </div>
     <div class="gallery">
       <figure class="wide">
-        <img src="data:image/jpeg;base64,{HERO_IMG}" alt="Ezhuthu Kamalam multiscript hero">
+        <img src="data:image/jpeg;base64,{HERO_IMG}" alt="Kallar multiscript hero">
         <figcaption>Five scripts · APER 100 · spectrum</figcaption>
       </figure>
       {SHEETS}
@@ -381,7 +381,7 @@ HTML = f"""<!doctype html>
           derivative of Manjari. The Devanagari, Tamil, Telugu and Kannada
           branches are derivatives of the corresponding Noto Sans faces. The
           aperture engine, APER axis, Spectrum treatment, metrics and specimens
-          are original work by the Ezhuthu Project Authors. All bases are used
+          are original work by the Kallar Project Authors. All bases are used
           under the SIL Open Font License 1.1.</p>
         <p><strong>Independence.</strong> This project is independent and is
           not affiliated with or endorsed by Google, the Noto Project Authors,
@@ -406,7 +406,7 @@ HTML = f"""<!doctype html>
 
 <footer>
   <div class="wrap">
-    Ezhuthu Kamalam · v1.100 · SIL Open Font License 1.1 · Malayalam +
+    Kallar · v1.100 · SIL Open Font License 1.1 · Malayalam +
     Devanagari + Tamil + Telugu + Kannada · <a href="index.html">Malayalam
     specimen</a> · <a href="../README.md">README</a>
   </div>

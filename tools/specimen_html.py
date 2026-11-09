@@ -30,16 +30,16 @@ def img_b64(name, maxw=900, quality=82):
     return base64.b64encode(buf.getvalue()).decode("ascii")
 
 
-REG = b64("EzhuthuKamalam-Regular.woff2")
-BOLD = b64("EzhuthuKamalam-Bold.woff2")
-SPEC = b64("EzhuthuKamalam-Spectrum.woff2")
-SPEC_REG = b64("EzhuthuKamalam-SpectrumRegular.woff2")
+REG = b64("Kallar-Regular.woff2")
+BOLD = b64("Kallar-Bold.woff2")
+SPEC = b64("Kallar-Spectrum.woff2")
+SPEC_REG = b64("Kallar-SpectrumRegular.woff2")
 
-POSTER = img_b64("kamalam_poster.png")
-EDITORIAL = img_b64("kamalam_editorial.png")
-UI = img_b64("kamalam_ui.png")
-SOCIAL = img_b64("kamalam_social.png")
-LOCKUP = img_b64("kamalam_lockup.png")
+POSTER = img_b64("kallar_poster.png")
+EDITORIAL = img_b64("kallar_editorial.png")
+UI = img_b64("kallar_ui.png")
+SOCIAL = img_b64("kallar_social.png")
+LOCKUP = img_b64("kallar_lockup.png")
 
 CONSONANTS = "കഖഗഘങചഛജഝഞടഠഡഢണതഥദധനപഫബഭമയരറലവശഷസഹളഴ"
 VOWELS = "അആഇഈഉഊഋൠഌൡഎഏഐഒഓഔ"
@@ -47,7 +47,7 @@ VOWEL_SIGNS = "ാ ി ീ ു ൂ ൃ ൄ െ േ ൈ ൊ ോ ൌ ൗ ം ഃ �
 CHILLUS = "ൺ ൻ ർ ൽ ൾ"
 SPECIMEN = (
     "മലയാളം ഒരു ദ്രാവിഡ ഭാഷയാണ്. കേരളത്തിലെ ഔദ്യോഗിക ഭാഷയും ഇതാണ്. "
-    "എഴുത്ത് കമലം ഈ ലിപിക്ക് ഒരു പുതിയ ഭാവം നൽകുന്നു — വൃത്താകൃതിയിലുള്ള "
+    "കല്ലർ ഈ ലിപിക്ക് ഒരു പുതിയ ഭാവം നൽകുന്നു — വൃത്താകൃതിയിലുള്ള "
     "കണ്ണികളിൽ നിന്ന് താമരയുടെ ദളങ്ങളിലേക്ക്."
 )
 
@@ -56,31 +56,31 @@ HTML = f"""<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ezhuthu Kamalam — aperture-variable Malayalam</title>
+<title>Kallar — aperture-variable Malayalam</title>
 <style>
   @font-face {{
-    font-family: 'Ezhuthu Kamalam';
+    font-family: 'Kallar';
     src: url(data:font/woff2;base64,{REG}) format('woff2');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
   }}
   @font-face {{
-    font-family: 'Ezhuthu Kamalam';
+    font-family: 'Kallar';
     src: url(data:font/woff2;base64,{BOLD}) format('woff2');
     font-weight: 700;
     font-style: normal;
     font-display: swap;
   }}
   @font-face {{
-    font-family: 'Ezhuthu Kamalam Spectrum';
+    font-family: 'Kallar Spectrum';
     src: url(data:font/woff2;base64,{SPEC_REG}) format('woff2');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
   }}
   @font-face {{
-    font-family: 'Ezhuthu Kamalam Spectrum';
+    font-family: 'Kallar Spectrum';
     src: url(data:font/woff2;base64,{SPEC}) format('woff2');
     font-weight: 700;
     font-style: normal;
@@ -102,7 +102,7 @@ HTML = f"""<!doctype html>
     margin: 0;
     background: var(--bg);
     color: var(--ink);
-    font-family: 'Ezhuthu Kamalam', ui-sans-serif, system-ui, sans-serif;
+    font-family: 'Kallar', ui-sans-serif, system-ui, sans-serif;
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
   }}
@@ -193,7 +193,7 @@ HTML = f"""<!doctype html>
   section {{ padding: 110px 0; border-top: 1px solid var(--line); }}
   .section-head {{ display: flex; align-items: baseline; justify-content: space-between; gap: 20px; margin-bottom: 42px; }}
   .kicker {{ font-family: ui-sans-serif, system-ui, sans-serif; font-size: 11px; letter-spacing: .32em; text-transform: uppercase; color: var(--orange); }}
-  h2 {{ font-family: 'Ezhuthu Kamalam', sans-serif; font-weight: 400; font-size: clamp(34px, 5vw, 64px); line-height: 1.08; margin: 10px 0 0; }}
+  h2 {{ font-family: 'Kallar', sans-serif; font-weight: 400; font-size: clamp(34px, 5vw, 64px); line-height: 1.08; margin: 10px 0 0; }}
   h2 small {{ display: block; font-family: ui-sans-serif, system-ui, sans-serif; font-size: 14px; letter-spacing: .02em; color: var(--dim); margin-top: 14px; font-weight: 400; }}
   .lede {{ font-family: ui-sans-serif, system-ui, sans-serif; font-size: 16px; line-height: 1.8; color: var(--dim); max-width: 760px; }}
   .grid2 {{ display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: start; }}
@@ -297,7 +297,7 @@ HTML = f"""<!doctype html>
   table.specs td:last-child {{ color: var(--ink); }}
 
   footer {{ padding: 70px 0 50px; border-top: 1px solid var(--line); color: var(--dim); font-family: ui-sans-serif, system-ui, sans-serif; font-size: 13px; line-height: 1.8; }}
-  footer .big {{ font-family: 'Ezhuthu Kamalam'; font-size: 32px; color: var(--ink); margin-bottom: 18px; font-variation-settings: "APER" 100; }}
+  footer .big {{ font-family: 'Kallar'; font-size: 32px; color: var(--ink); margin-bottom: 18px; font-variation-settings: "APER" 100; }}
   footer a {{ color: #f3c9a7; text-decoration: none; }}
   .fine {{ font-size: 11px; color: var(--dim2); margin-top: 22px; max-width: 720px; }}
 
@@ -309,7 +309,7 @@ HTML = f"""<!doctype html>
 
 <header>
   <div class="wrap">
-    <div class="brand">EZHUTHU <span>KAMALAM</span></div>
+    <div class="brand">KALLAR</div>
     <nav>
       <a href="#aperture">Aperture</a>
       <a href="#spectrum">Spectrum</a>
@@ -326,7 +326,7 @@ HTML = f"""<!doctype html>
   <div class="mandala ml" aria-hidden="true">◌</div>
   <div class="hero-inner">
     <div class="eyebrow">Aperture-variable Malayalam · OFL 1.1</div>
-    <h1 class="ml">കമലം</h1>
+    <h1 class="ml">കല്ലർ</h1>
     <div class="tagline ml">ഭാഷയിൽ വിരിയുന്ന ലിപി</div>
     <p class="sub">A Malayalam typeface that blooms — from round loops to lotus gateways.
       One variable axis turns every counter into a petal, and a COLRv1 build gives the
@@ -351,7 +351,7 @@ HTML = f"""<!doctype html>
     </div>
     <div class="grid2">
       <div>
-        <p class="lede">Malayalam is a script of loops. Ezhuthu Kamalam treats each loop
+        <p class="lede">Malayalam is a script of loops. Kallar treats each loop
           as a threshold: at <b class="accent">APER 0</b> it is the classic round Manjari
           loop; at <b class="accent">APER 100</b> the crown rises into a soft lotus point.
           Drag the slider — the same outlines, one continuous transformation.</p>
@@ -395,7 +395,7 @@ HTML = f"""<!doctype html>
     <div class="gradient-line ml">ഭാഷയുടെ സാധ്യതകൾ</div>
     <div class="gradient-line small ml">എല്ലാവർക്കും വേണ്ടിയുള്ള എഐ</div>
     <div class="grid2" style="margin-top:34px">
-      <p class="spectrum-note">The <b>Ezhuthu Kamalam Spectrum</b> build uses a COLRv1
+      <p class="spectrum-note">The <b>Kallar Spectrum</b> build uses a COLRv1
         <code>PaintLinearGradient</code> clipped to each glyph. Blue sits at the crown,
         orange at the baseline, gold in the descenders, so a paragraph reads as one
         continuous field rather than a set of coloured letters. The sample above uses
@@ -403,8 +403,8 @@ HTML = f"""<!doctype html>
         the same gradient in its COLR/CPAL tables.</p>
       <div class="panel">
         <div class="label">COLRv1 build</div>
-        <div class="ml" style="font-family:'Ezhuthu Kamalam Spectrum','Ezhuthu Kamalam';font-weight:700;font-size:clamp(34px,5vw,68px);line-height:1.3;font-variation-settings:'APER' 100">കമലം സർവം</div>
-        <div class="ml" style="font-family:'Ezhuthu Kamalam Spectrum','Ezhuthu Kamalam';font-weight:400;font-size:clamp(22px,3.2vw,40px);line-height:1.5;margin-top:14px;font-variation-settings:'APER' 100">മലയാളം ഒരു ദ്രാവിഡ ഭാഷയാണ്.</div>
+        <div class="ml" style="font-family:'Kallar Spectrum','Kallar';font-weight:700;font-size:clamp(34px,5vw,68px);line-height:1.3;font-variation-settings:'APER' 100">കമലം സർവം</div>
+        <div class="ml" style="font-family:'Kallar Spectrum','Kallar';font-weight:400;font-size:clamp(22px,3.2vw,40px);line-height:1.5;margin-top:14px;font-variation-settings:'APER' 100">മലയാളം ഒരു ദ്രാവിഡ ഭാഷയാണ്.</div>
         <p class="spectrum-note" style="margin:10px 0 0">If your browser supports COLRv1 the
           samples above are painted by the font itself (Bold and Regular); otherwise they
           fall back to monochrome.</p>
@@ -436,7 +436,7 @@ HTML = f"""<!doctype html>
         <p class="specimen-p small ml">ക്ക ക്ഷ ഗ്ഗ ങ്ങ ഞ്ഞ ട്ട ണ്ണ ത്ത ന്ന മ്പ മ്മ യ്യ ല്ല വ്വ സ്സ സ്ത്ര ക്ര ത്ര പ്ര ശ്ര</p>
         <p class="specimen-p small ml">ൻ ർ ൽ ൾ ൺ ൖ ൿ · ക്കു ക്രു ല്ലൂ · ക്യ ക്വ</p>
         <div class="label" style="margin-top:28px">Latin</div>
-        <p class="specimen-p small" style="font-weight:400">Ezhuthu Kamalam — Malayalam type for the AI age. 0123456789</p>
+        <p class="specimen-p small" style="font-weight:400">Kallar — Malayalam type for the AI age. 0123456789</p>
         <div class="label" style="margin-top:28px">Two apertures</div>
         <p class="specimen-p small ml" style="font-variation-settings:'APER' 0">മലയാളം · APER 0</p>
         <p class="specimen-p small ml" style="font-variation-settings:'APER' 100">മലയാളം · APER 100</p>
@@ -478,23 +478,23 @@ HTML = f"""<!doctype html>
     </div>
     <div class="brandgrid">
       <figure class="wide">
-        <img src="data:image/jpeg;base64,{POSTER}" alt="Ezhuthu Kamalam poster">
+        <img src="data:image/jpeg;base64,{POSTER}" alt="Kallar poster">
         <figcaption>Poster · APER 100 · spectrum</figcaption>
       </figure>
       <figure>
-        <img src="data:image/jpeg;base64,{EDITORIAL}" alt="Ezhuthu Kamalam editorial spread">
+        <img src="data:image/jpeg;base64,{EDITORIAL}" alt="Kallar editorial spread">
         <figcaption>Editorial · text + display</figcaption>
       </figure>
       <figure>
-        <img src="data:image/jpeg;base64,{UI}" alt="Ezhuthu Kamalam product UI">
+        <img src="data:image/jpeg;base64,{UI}" alt="Kallar product UI">
         <figcaption>Product UI · Malayalam first</figcaption>
       </figure>
       <figure>
-        <img src="data:image/jpeg;base64,{SOCIAL}" alt="Ezhuthu Kamalam social card">
+        <img src="data:image/jpeg;base64,{SOCIAL}" alt="Kallar social card">
         <figcaption>Social · gradient card</figcaption>
       </figure>
       <figure>
-        <img src="data:image/jpeg;base64,{LOCKUP}" alt="Ezhuthu Kamalam lockup">
+        <img src="data:image/jpeg;base64,{LOCKUP}" alt="Kallar lockup">
         <figcaption>Lockup · gateway petal + wordmark</figcaption>
       </figure>
     </div>
@@ -512,21 +512,21 @@ HTML = f"""<!doctype html>
     </div>
     <div class="grid2">
       <table class="specs">
-        <tr><td>Family</td><td>Ezhuthu Kamalam</td></tr>
+        <tr><td>Family</td><td>Kallar</td></tr>
         <tr><td>Styles</td><td>Regular · Bold (variable)</td></tr>
         <tr><td>Axis</td><td>APER 0–100 (default 100)</td></tr>
-        <tr><td>Colour</td><td>Ezhuthu Kamalam Spectrum · Regular + Bold · COLRv1</td></tr>
+        <tr><td>Colour</td><td>Kallar Spectrum · Regular + Bold · COLRv1</td></tr>
         <tr><td>Glyphs</td><td>918 (Regular) · 912 (Bold)</td></tr>
         <tr><td>Scripts</td><td>Malayalam, Latin</td></tr>
         <tr><td>Format</td><td>TTF · WOFF2</td></tr>
       </table>
       <table class="specs">
-        <tr><td>Design</td><td>Ezhuthu Project Authors</td></tr>
+        <tr><td>Design</td><td>Kallar Project Authors</td></tr>
         <tr><td>Base skeleton</td><td>Manjari by Santhosh Thottingal / SMC</td></tr>
         <tr><td>Engineering</td><td>Python · fontTools · varLib · COLRv1</td></tr>
         <tr><td>License</td><td>SIL Open Font License 1.1</td></tr>
         <tr><td>Version</td><td>1.100</td></tr>
-        <tr><td>Spacing</td><td>Manjari metrics + Ezhuthu tuning</td></tr>
+        <tr><td>Spacing</td><td>Manjari metrics + Kallar tuning</td></tr>
         <tr><td>Coverage</td><td>Malayalam U+0D00–U+0D7F + Latin</td></tr>
       </table>
     </div>
@@ -535,25 +535,25 @@ HTML = f"""<!doctype html>
 
 <footer>
   <div class="wrap">
-    <div class="big ml">എഴുത്ത് കമലം</div>
-    <p>An open-source Malayalam display family by the Ezhuthu Project Authors.
+    <div class="big ml">കല്ലർ</div>
+    <p>An open-source Malayalam display family by the Kallar Project Authors.
       The skeleton is based on <b>Manjari</b> by Santhosh Thottingal and
       Swathanthra Malayalam Computing, used under the SIL Open Font License 1.1.
       The aperture engine, variable axis, spectrum build and specimen are new work.</p>
     <p class="fine">The blue-to-orange spectrum is an homage to the visual language of
       Sarvam AI. This project is independent and is not affiliated with or endorsed by
-      Sarvam AI. The name “Ezhuthu” means “writing”; “Kamalam” means “lotus”.</p>
+      Sarvam AI. The lotus-gateway idea comes from the Malayalam loop; the family is named Kallar.</p>
     <p class="fine">Files:
-      <a href="../fonts/EzhuthuKamalam-Regular.woff2">Regular WOFF2</a> ·
-      <a href="../fonts/EzhuthuKamalam-Bold.woff2">Bold WOFF2</a> ·
-      <a href="../fonts/EzhuthuKamalam-Spectrum.woff2">Spectrum Bold WOFF2</a> ·
-      <a href="../fonts/EzhuthuKamalam-SpectrumRegular.woff2">Spectrum Regular WOFF2</a> ·
-      <a href="../fonts/EzhuthuKamalam-Regular.ttf">Regular TTF</a> ·
-      <a href="../fonts/EzhuthuKamalam-Bold.ttf">Bold TTF</a> ·
-      <a href="../fonts/EzhuthuKamalam-Spectrum.ttf">Spectrum Bold TTF</a> ·
-      <a href="../fonts/EzhuthuKamalam-SpectrumRegular.ttf">Spectrum Regular TTF</a> ·
-      <a href="../fonts/EzhuthuKamalam-Petal.ttf">Static Petal</a> ·
-      <a href="../proofs/EzhuthuKamalam-Specimen.pdf">PDF specimen</a></p>
+      <a href="../fonts/Kallar-Regular.woff2">Regular WOFF2</a> ·
+      <a href="../fonts/Kallar-Bold.woff2">Bold WOFF2</a> ·
+      <a href="../fonts/Kallar-Spectrum.woff2">Spectrum Bold WOFF2</a> ·
+      <a href="../fonts/Kallar-SpectrumRegular.woff2">Spectrum Regular WOFF2</a> ·
+      <a href="../fonts/Kallar-Regular.ttf">Regular TTF</a> ·
+      <a href="../fonts/Kallar-Bold.ttf">Bold TTF</a> ·
+      <a href="../fonts/Kallar-Spectrum.ttf">Spectrum Bold TTF</a> ·
+      <a href="../fonts/Kallar-SpectrumRegular.ttf">Spectrum Regular TTF</a> ·
+      <a href="../fonts/Kallar-Petal.ttf">Static Petal</a> ·
+      <a href="../proofs/Kallar-Specimen.pdf">PDF specimen</a></p>
   </div>
 </footer>
 

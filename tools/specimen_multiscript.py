@@ -2,12 +2,12 @@
 """Generate the multiscript specimen images.
 
 Outputs (proofs/):
-  kamalam_multiscript.png       — five-script hero poster
-  kamalam_multiscript_axis.png  — the APER axis across four scripts
-  kamalam_devanagari.png        — Devanagari sheet
-  kamalam_tamil.png             — Tamil sheet
-  kamalam_telugu.png            — Telugu sheet
-  kamalam_kannada.png           — Kannada sheet
+  kallar_multiscript.png       — five-script hero poster
+  kallar_multiscript_axis.png  — the APER axis across four scripts
+  kallar_devanagari.png        — Devanagari sheet
+  kallar_tamil.png             — Tamil sheet
+  kallar_telugu.png            — Telugu sheet
+  kallar_kannada.png           — Kannada sheet
 """
 import os
 import sys
@@ -87,7 +87,7 @@ def make_hero():
     bg = glow_background(W, H).convert("RGBA")
     add_mandala(bg, W / 2, 260, 360, petals=28, alpha=14, width=1)
     d = ImageDraw.Draw(bg)
-    draw_label(d, "EZHUTHU KAMALAM", (90, 80), 20, (205, 215, 255),
+    draw_label(d, "KALLAR", (90, 80), 20, (205, 215, 255),
                bold=True, tracking=5)
     draw_label(d, "MULTISCRIPT  /  ONE APERTURE", (90, 116), 14,
                (145, 160, 200), tracking=4)
@@ -98,7 +98,7 @@ def make_hero():
     # Malayalam stays the reference row, then the four new scripts.
     rows = [
         ("മലയാളം", "MALAYALAM", "MLYM",
-         os.path.join(FONTS, "EzhuthuKamalam-BoldPetal.ttf"), "എഴുത്ത് കമലം"),
+         os.path.join(FONTS, "Kallar-BoldPetal.ttf"), "കല്ലർ"),
     ]
     for key, script in SCRIPTS.items():
         rows.append((
@@ -127,13 +127,13 @@ def make_hero():
             draw_rule(d, 90, y - 40, W - 90, y - 40, (255, 255, 255, 22))
 
     draw_rule(d, 90, H - 130, W - 90, H - 130, (255, 255, 255, 30))
-    draw_label(d, "EZHUTHU KAMALAM  /  v1.100  /  OFL 1.1", (90, H - 100),
+    draw_label(d, "KALLAR  /  v1.100  /  OFL 1.1", (90, H - 100),
                14, (150, 162, 195), tracking=1)
     draw_label(d, "MALAYALAM  ·  DEVANAGARI  ·  TAMIL  ·  TELUGU  ·  KANNADA",
                (90, H - 74), 12, (190, 170, 150), tracking=1)
     draw_label(d, "A type system that blooms.", (W - 330, H - 100), 16,
                (255, 235, 220))
-    bg.convert("RGB").save(os.path.join(PROOFS, "kamalam_multiscript.png"))
+    bg.convert("RGB").save(os.path.join(PROOFS, "kallar_multiscript.png"))
     print("multiscript hero")
 
 
@@ -186,9 +186,9 @@ def make_axis():
         if i < len(rows) - 1:
             draw_rule(d, 90, y + rowh - 18, W - 90, y + rowh - 18,
                       (255, 255, 255, 18))
-    draw_label(d, "Ezhuthu Kamalam  /  the same axis in four scripts",
+    draw_label(d, "Kallar  /  the same axis in four scripts",
                (90, H - 60), 12, (150, 162, 195))
-    bg.convert("RGB").save(os.path.join(PROOFS, "kamalam_multiscript_axis.png"))
+    bg.convert("RGB").save(os.path.join(PROOFS, "kallar_multiscript_axis.png"))
     print("multiscript axis")
 
 
@@ -207,7 +207,7 @@ def make_sheet(key):
     W, H = 1600, 1200
     bg = paper_background(W, H)
     d = ImageDraw.Draw(bg)
-    draw_label(d, f"EZHUTHU KAMALAM  /  {key.upper()}", (80, 62), 13,
+    draw_label(d, f"KALLAR  /  {key.upper()}", (80, 62), 13,
                (150, 110, 70), bold=True, tracking=2)
     draw_rule(d, 80, 96, W - 80, 96, (30, 30, 30, 40))
     draw_label(d, "APER 0 — 100", (W - 250, 62), 13, (150, 110, 70),
@@ -259,7 +259,7 @@ def make_sheet(key):
     draw_label(d, f"{script['family']}  /  OFL 1.1  /  base: Noto Sans "
                f"{ {'devanagari':'Devanagari','tamil':'Tamil','telugu':'Telugu','kannada':'Kannada'}[key] }",
                (80, H - 70), 11, (150, 130, 110))
-    bg.convert("RGB").save(os.path.join(PROOFS, f"kamalam_{key}.png"))
+    bg.convert("RGB").save(os.path.join(PROOFS, f"kallar_{key}.png"))
     print(f"{key} sheet")
 
 
