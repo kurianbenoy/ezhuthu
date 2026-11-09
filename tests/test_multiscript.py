@@ -119,7 +119,8 @@ def test_metadata():
 # ---------------------------------------------------------------------------
 def test_shaping():
     for key, script in SCRIPTS.items():
-        cases = script["cases"] + script["display"] + script["paragraph"]
+        cases = ([script["name"]] + script["cases"] + script["display"]
+                 + script["paragraph"])
         for style in ("Regular", "Bold"):
             font = load(path(script["stem"], style))
             for aper in (0, 50, 100):
