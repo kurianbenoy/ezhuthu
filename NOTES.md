@@ -166,6 +166,10 @@ The HTML specimen was also checked in headless Chromium 156: the embedded
 variable fonts load, the APER slider changes the live instance, and the
 `Ezhuthu Kamalam Spectrum` sample paints its COLRv1 gradient in the browser.
 
+Builds are reproducible: `head.created`/`head.modified` are pinned to a fixed
+date and `recalcTimestamp` is disabled, so repeated `make kamalam` runs produce
+byte-identical TTF and WOFF2 files. `make proofs` is deterministic too.
+
 The old `tests/test_font.py` still covers the legacy draft.
 
 ## 7. Fontbakery notes
