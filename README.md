@@ -117,7 +117,8 @@ make serve   # http://localhost:8000
 
 The specimen has a live APER slider, an editable Malayalam demo line, a
 load-time bloom animation, and a brand-application gallery. The fonts are
-embedded in the HTML, so it works offline.
+embedded in the HTML, so it works offline. A vector PDF is also available:
+[`proofs/EzhuthuKamalam-Specimen.pdf`](proofs/EzhuthuKamalam-Specimen.pdf).
 
 The build reads `sources/base/Manjari-Regular.ttf` and
 `sources/base/Manjari-Bold.ttf`, scales them to 1000 UPM, generates the round

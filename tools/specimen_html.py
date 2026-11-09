@@ -551,7 +551,8 @@ HTML = f"""<!doctype html>
       <a href="../fonts/EzhuthuKamalam-Bold.ttf">Bold TTF</a> ·
       <a href="../fonts/EzhuthuKamalam-Spectrum.ttf">Spectrum Bold TTF</a> ·
       <a href="../fonts/EzhuthuKamalam-SpectrumRegular.ttf">Spectrum Regular TTF</a> ·
-      <a href="../fonts/EzhuthuKamalam-Petal.ttf">Static Petal</a></p>
+      <a href="../fonts/EzhuthuKamalam-Petal.ttf">Static Petal</a> ·
+      <a href="../proofs/EzhuthuKamalam-Specimen.pdf">PDF specimen</a></p>
   </div>
 </footer>
 

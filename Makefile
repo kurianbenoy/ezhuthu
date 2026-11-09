@@ -10,6 +10,7 @@ help:
 	@echo "  legacy    rebuild the v0.2 parametric draft (legacy/fonts)"
 	@echo "  test      run shaping, variation and colour tests"
 	@echo "  proofs    render the specimen PNGs and the HTML specimen"
+	@echo "  pdf       print the specimen to proofs/EzhuthuKamalam-Specimen.pdf"
 	@echo "  qa        run fontbakery on Regular and Bold (see NOTES.md)"
 	@echo "  specimen  alias for proofs"
 	@echo "  serve     serve specimen/ on http://localhost:8000"
@@ -34,6 +35,11 @@ test: venv kamalam legacy
 proofs: kamalam
 	$(PY) tools/specimen.py
 	$(PY) tools/specimen_html.py
+
+pdf: proofs
+	$(PIP) install -q playwright
+	$(PY) -m playwright install chromium
+	$(PY) tools/pdf.py
 
 qa: kamalam
 	$(PIP) install -q fontbakery
