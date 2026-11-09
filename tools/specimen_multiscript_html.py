@@ -47,12 +47,6 @@ SENTENCES = {
     "telugu": "అన్ని భాషలు అందరికీ.",
     "kannada": "ಎಲ್ಲಾ ಭಾಷೆಗಳು ಎಲ್ಲರಿಗೂ.",
 }
-SPECTRUM_WORDS = {
-    "devanagari": "कमल",
-    "tamil": "தாமரை",
-    "telugu": "కమలం",
-    "kannada": "ಕಮಲ",
-}
 
 FACES = []
 CARDS = []
@@ -83,7 +77,7 @@ for key, script in SCRIPTS.items():
     src: url(data:font/woff2;base64,{spec}) format('woff2');
     font-weight: 700; font-style: normal; font-display: swap;
   }}""")
-    display = " ".join(script["display"][:2])
+    display = script["name"]
     CARDS.append(f"""
     <article class="card">
       <div class="card-head">
@@ -94,12 +88,12 @@ for key, script in SCRIPTS.items():
       <div class="display ml" style="font-family:'{family}'">{display}</div>
       <p class="sentence ml" style="font-family:'{family}'">{SENTENCES[key]}</p>
       <div class="spectrum-row">
-        <span class="spectrum ml" style="font-family:'{spec_family}'">{SPECTRUM_WORDS[key]}</span>
+        <span class="spectrum ml" style="font-family:'{spec_family}'">{script["name"]}</span>
         <small>COLRv1 · APER <span class="aper-copy">100</span></small>
       </div>
     </article>""")
     HERO_WORDS.append(
-        f"<span class=\"ml\" style=\"font-family:'{family}'\">{script['display'][0]}</span>"
+        f"<span class=\"ml\" style=\"font-family:'{family}'\">{script['name']}</span>"
     )
     DOWNLOADS.append(f"""
       <tr>

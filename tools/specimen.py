@@ -301,7 +301,7 @@ def make_hero():
     draw_label(d, "APER 0 → 100", (W - 236, 62), 15, (255, 210, 170), bold=True)
     draw_rule(d, 72, 130, W - 72, 130, (255, 255, 255, 26))
 
-    word = "കല്ലർ"
+    word = "കല്ലാർ"
     layer, baseline, bbox = gradient_text(BOLD, word, 360, glow=18)
     if layer:
         x, y = paste_center(bg, layer, W / 2, top=190)
@@ -417,11 +417,11 @@ def make_spectrum():
     W, H = 1600, 620
     bg = Image.new("RGBA", (W, H), (6, 8, 16, 255))
     add_petal_motif(bg, W / 2, H / 2 + 20, W * 0.34, H * 0.40, alpha=12, width=1)
-    layer, baseline, bbox = gradient_text(BOLD, "സർവം", 300, glow=16)
+    layer, baseline, bbox = gradient_text(BOLD, "കല്ലാർ", 300, glow=16)
     if layer:
         paste_center(bg, layer, W / 2, top=30)
     d = ImageDraw.Draw(bg)
-    draw_label(d, "eḻuttu kamalaṃ", (72, 520), 18, (140, 155, 195), tracking=1)
+    draw_label(d, "kallār", (72, 520), 18, (140, 155, 195), tracking=1)
     draw_label(d, "KALLAR / SPECTRUM", (W - 330, 520), 14,
                (238, 150, 100), bold=True, tracking=2)
     bg.convert("RGB").save(os.path.join(PROOFS, "kallar_spectrum.png"))
@@ -542,7 +542,7 @@ def make_editorial():
     lines = [
         "മലയാളം ഒരു ദ്രാവിഡ ഭാഷയാണ്.",
         "കേരളത്തിലെ ഔദ്യോഗിക ഭാഷയും",
-        "ഇതാണ്. കല്ലർ ഈ",
+        "ഇതാണ്. കല്ലാർ ഈ",
         "ലിപിക്ക് ഒരു പുതിയ ഭാവം",
         "നൽകുന്നു — വൃത്താകൃതിയിൽ",
         "നിന്ന് താമരയുടെ ദളങ്ങളിലേക്ക്.",
@@ -584,7 +584,7 @@ def make_social():
     arr = np.array(grad)[:, :, :3] * vig
     bg = Image.fromarray(arr.astype(np.uint8), "RGB").convert("RGBA")
     add_mandala(bg, W / 2, H / 2, 330, petals=24, alpha=20, width=1)
-    layer, baseline, bbox = gradient_text(BOLD, "കല്ലർ", 260,
+    layer, baseline, bbox = gradient_text(BOLD, "കല്ലാർ", 260,
                                           stops=[(0, (255, 244, 228)), (1, (255, 205, 160))],
                                           glow=14)
     if layer:
@@ -607,7 +607,7 @@ def make_ui():
     # sidebar
     d.rectangle((0, 0, 300, H), fill=(13, 16, 28, 255))
     draw_rule(d, 300, 0, 300, H, (255, 255, 255, 20))
-    paste_text(bg, BOLD, "കല്ലർ", 38, 34, 78, (245, 236, 222))
+    paste_text(bg, BOLD, "കല്ലാർ", 38, 34, 78, (245, 236, 222))
     draw_label(d, "KALLAR", (36, 92), 11, (238, 121, 68), bold=True, tracking=3)
     menu = [("ചാറ്റ്", True), ("ഭാഷ", False), ("ഡോക്യുമെന്റ്", False), ("സെറ്റിംഗ്സ്", False)]
     y = 180
@@ -671,7 +671,7 @@ def make_lockup():
     d.line(inner + [inner[0]], fill=(36, 30, 26, 255), width=5, joint="curve")
     d.line((300 - 128, 458, 300 + 128, 458), fill=(36, 30, 26, 255), width=7)
     d.ellipse((287, 297, 313, 323), fill=(238, 121, 68, 255))
-    paste_text(bg, BOLD, "കല്ലർ", 96, 500, 300, (28, 26, 30))
+    paste_text(bg, BOLD, "കല്ലാർ", 96, 500, 300, (28, 26, 30))
     draw_label(d, "KALLAR", (510, 350), 18, (120, 80, 50), bold=True, tracking=4)
     draw_label(d, "Aperture-variable Malayalam  ·  APER 0—100", (510, 384), 15, (120, 110, 100))
     draw_rule(d, 510, 430, 1100, 430, (30, 30, 30, 40))

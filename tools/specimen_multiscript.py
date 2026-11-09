@@ -79,7 +79,7 @@ def gradient_paste(canvas, font, text, size, x, baseline, stops=STOPS,
 
 
 def script_display(script):
-    return " ".join(script["display"][:2])
+    return script["name"]
 
 
 def make_hero():
@@ -98,7 +98,7 @@ def make_hero():
     # Malayalam stays the reference row, then the four new scripts.
     rows = [
         ("മലയാളം", "MALAYALAM", "MLYM",
-         os.path.join(FONTS, "Kallar-BoldPetal.ttf"), "കല്ലർ"),
+         os.path.join(FONTS, "Kallar-BoldPetal.ttf"), "കല്ലാർ"),
     ]
     for key, script in SCRIPTS.items():
         rows.append((
@@ -214,14 +214,14 @@ def make_sheet(key):
                bold=True, tracking=2)
 
     # large display word
-    gradient_paste(bg, font_path(stem, "BoldPetal"), display[0], 250,
+    gradient_paste(bg, font_path(stem, "BoldPetal"), script["name"], 250,
                    80, 380, stops=[(0, (20, 24, 40)), (1, (120, 50, 35))],
                    pad=40)
     # the script's own name, in its own script
     paste_solid(bg, font_path(stem, "Petal"), script_name, 44, 80, 520,
                 (120, 80, 50))
     # second display word
-    paste_solid(bg, font_path(stem, "BoldPetal"), display[1], 110,
+    paste_solid(bg, font_path(stem, "BoldPetal"), display[2], 110,
                 80, 650, (28, 26, 30))
     # paragraph
     y = 745
@@ -252,7 +252,7 @@ def make_sheet(key):
     # spectrum sample, on the right, above the strip
     draw_label(d, "SPECTRUM  /  COLRv1", (W - 520, 640), 11, (150, 110, 70),
                bold=True, tracking=2)
-    gradient_paste(bg, font_path(stem, "BoldPetal"), display[0], 96,
+    gradient_paste(bg, font_path(stem, "BoldPetal"), script["name"], 96,
                    W - 520, 775, stops=STOPS, glow=6)
 
     draw_rule(d, 80, H - 90, W - 80, H - 90, (30, 30, 30, 36))

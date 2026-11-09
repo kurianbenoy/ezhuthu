@@ -59,6 +59,7 @@ NOTO_KNDA = "https://github.com/notofonts/kannada"
 SCRIPTS = {
     "devanagari": {
         "family": "Kallar Devanagari",
+        "name": "कल्लार",
         "stem": "KallarDevanagari",
         "base": os.path.join(BASE, "NotoSansDevanagari-VF.ttf"),
         "upstream": NOTO_DEVA,
@@ -80,6 +81,7 @@ SCRIPTS = {
     },
     "tamil": {
         "family": "Kallar Tamil",
+        "name": "கல்லார்",
         "stem": "KallarTamil",
         "base": os.path.join(BASE, "NotoSansTamil-VF.ttf"),
         "upstream": NOTO_TAML,
@@ -100,6 +102,7 @@ SCRIPTS = {
     },
     "telugu": {
         "family": "Kallar Telugu",
+        "name": "కల్లార్",
         "stem": "KallarTelugu",
         "base": os.path.join(BASE, "NotoSansTelugu-VF.ttf"),
         "upstream": NOTO_TELU,
@@ -120,6 +123,7 @@ SCRIPTS = {
     },
     "kannada": {
         "family": "Kallar Kannada",
+        "name": "ಕಲ್ಲಾರ್",
         "stem": "KallarKannada",
         "base": os.path.join(BASE, "NotoSansKannada-VF.ttf"),
         "upstream": NOTO_KNDA,

@@ -47,7 +47,7 @@ VOWEL_SIGNS = "ാ ി ീ ു ൂ ൃ ൄ െ േ ൈ ൊ ോ ൌ ൗ ം ഃ �
 CHILLUS = "ൺ ൻ ർ ൽ ൾ"
 SPECIMEN = (
     "മലയാളം ഒരു ദ്രാവിഡ ഭാഷയാണ്. കേരളത്തിലെ ഔദ്യോഗിക ഭാഷയും ഇതാണ്. "
-    "കല്ലർ ഈ ലിപിക്ക് ഒരു പുതിയ ഭാവം നൽകുന്നു — വൃത്താകൃതിയിലുള്ള "
+    "കല്ലാർ ഈ ലിപിക്ക് ഒരു പുതിയ ഭാവം നൽകുന്നു — വൃത്താകൃതിയിലുള്ള "
     "കണ്ണികളിൽ നിന്ന് താമരയുടെ ദളങ്ങളിലേക്ക്."
 )
 
@@ -326,7 +326,7 @@ HTML = f"""<!doctype html>
   <div class="mandala ml" aria-hidden="true">◌</div>
   <div class="hero-inner">
     <div class="eyebrow">Aperture-variable Malayalam · OFL 1.1</div>
-    <h1 class="ml">കല്ലർ</h1>
+    <h1 class="ml">കല്ലാർ</h1>
     <div class="tagline ml">ഭാഷയിൽ വിരിയുന്ന ലിപി</div>
     <p class="sub">A Malayalam typeface that blooms — from round loops to lotus gateways.
       One variable axis turns every counter into a petal, and a COLRv1 build gives the
@@ -535,7 +535,7 @@ HTML = f"""<!doctype html>
 
 <footer>
   <div class="wrap">
-    <div class="big ml">കല്ലർ</div>
+    <div class="big ml">കല്ലാർ</div>
     <p>An open-source Malayalam display family by the Kallar Project Authors.
       The skeleton is based on <b>Manjari</b> by Santhosh Thottingal and
       Swathanthra Malayalam Computing, used under the SIL Open Font License 1.1.
