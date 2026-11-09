@@ -1,0 +1,5 @@
+One issue I am seeing in this project is that my base idea of only using manjari as the skelton was replaced with other variants like: Noto Sans Devanagari, Noto Sans Tamil etc. Even if you take more time and find it difficult, go ahead and implement it with manjari as the base
+
+---
+
+Update README with new version and push it to github
