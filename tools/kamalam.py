@@ -87,14 +87,27 @@ def _split_contours(glyph):
 # the petal warp
 # ---------------------------------------------------------------------------
 def petal_warp(font: TTFont, hole_bump=HOLE_BUMP, peak_bump=PEAK_BUMP,
-               sigma_f=SIGMA_F, pinch=PINCH, cap_frac=CAP_FRAC):
+               sigma_f=SIGMA_F, pinch=PINCH, cap_frac=CAP_FRAC,
+               only=None, freeze_top=None, peak_max_frac=None,
+               freeze_above=None, peak_max_y=None, freeze_fade=None,
+               valley_bump=0.0):
     """Move counters and outer crowns into lotus-petal shapes.
 
     The operation is point-preserving: only coordinates change, so two
     masters warped with different parameters remain interpolation-compatible.
+
+    ``only`` restricts the transform to a set of glyph names.  ``freeze_top``
+    is a fraction of the glyph height and ``freeze_above`` an absolute y:
+    points above that line do not move, which keeps a headline (Devanagari
+    shirorekha) perfectly straight.  ``freeze_fade`` softens the transition
+    over that many units below the freeze line.  ``peak_max_frac`` /
+    ``peak_max_y`` limit outer-contour peak candidates to below that height.
+    ``valley_bump`` optionally pulls rounded lower loops into downward petals.
     """
     glyf = font["glyf"]
     for gname in font.getGlyphOrder():
+        if only is not None and gname not in only:
+            continue
         if gname not in glyf:
             continue
         glyph = glyf[gname]
@@ -107,6 +120,26 @@ def petal_warp(font: TTFont, hole_bump=HOLE_BUMP, peak_bump=PEAK_BUMP,
         gymin = min(p[1] for p in allpts)
         gymax = max(p[1] for p in allpts)
         gh = max(1.0, gymax - gymin)
+        freeze_y = None
+        if freeze_above is not None:
+            freeze_y = freeze_above
+        elif freeze_top is not None:
+            freeze_y = gymin + freeze_top * gh
+        peak_y = None
+        if peak_max_y is not None:
+            peak_y = peak_max_y
+        elif peak_max_frac is not None:
+            peak_y = gymin + peak_max_frac * gh
+
+        def move_weight(y):
+            """Smooth 0..1 falloff below the freeze line."""
+            if freeze_y is None:
+                return 1.0
+            if y > freeze_y:
+                return 0.0
+            if not freeze_fade:
+                return 1.0
+            return min(1.0, (freeze_y - y) / freeze_fade)
 
         # All outer-contour points, used to cap counter movement so a petal
         # can never break through the stroke.
@@ -133,14 +166,17 @@ def petal_warp(font: TTFont, hole_bump=HOLE_BUMP, peak_bump=PEAK_BUMP,
                     continue
                 for i in range(s, e + 1):
                     x, y = coords[i]
+                    weight = move_weight(y)
+                    if weight <= 0:
+                        continue
                     u = (x - cx) / w
                     v = (y - ymin) / h
                     if v <= 0.45:
                         continue
                     t = (v - 0.45) / 0.55
                     dist = tree.query((x, y))[0]
-                    bump = min(hole_bump, cap_frac * dist)
-                    pin = min(pinch * w, 0.30 * dist)
+                    bump = min(hole_bump, cap_frac * dist) * weight
+                    pin = min(pinch * w, 0.30 * dist) * weight
                     new[i] = (x - pin * u * t * t,
                               y + bump * (1.0 - u * u) * t * t)
             else:  # outer contour: sharpen local crowns
@@ -151,6 +187,8 @@ def petal_warp(font: TTFont, hole_bump=HOLE_BUMP, peak_bump=PEAK_BUMP,
                     y1 = pts[j][1]
                     y2 = pts[(j + 1) % n][1]
                     if y1 >= y0 and y1 >= y2 and y1 > gymin + 0.45 * gh:
+                        if peak_y is not None and y1 > peak_y:
+                            continue
                         if (not peaks or
                                 abs(pts[j][0] - peaks[-1][0]) > 0.15 * (xmax - xmin)):
                             peaks.append((pts[j][0], y1))
@@ -158,12 +196,42 @@ def petal_warp(font: TTFont, hole_bump=HOLE_BUMP, peak_bump=PEAK_BUMP,
                     sigma = max(30.0, (xmax - xmin) * sigma_f)
                     for i in range(s, e + 1):
                         x, y = coords[i]
+                        weight = move_weight(y)
+                        if weight <= 0:
+                            continue
                         wy = max(0.0, (y - (gymin + 0.35 * gh)) / (gh * 0.65))
                         wy = min(1.0, wy)
                         d = (x - px) / sigma
                         pull = math.exp(-d * d) * (wy * wy)
-                        new[i] = (new[i][0] - 0.5 * pinch * (x - px) * math.exp(-d * d) * wy,
-                                  new[i][1] + peak_bump * pull)
+                        new[i] = (new[i][0] - 0.5 * pinch * (x - px) *
+                                  math.exp(-d * d) * wy * weight,
+                                  new[i][1] + peak_bump * pull * weight)
+
+                if valley_bump:
+                    valleys = []
+                    for j in range(n):
+                        y0 = pts[(j - 1) % n][1]
+                        y1 = pts[j][1]
+                        y2 = pts[(j + 1) % n][1]
+                        if y1 < y0 and y1 < y2 and y1 < gymin + 0.55 * gh:
+                            if (not valleys or
+                                    abs(pts[j][0] - valleys[-1][0]) >
+                                    0.15 * (xmax - xmin)):
+                                valleys.append((pts[j][0], y1))
+                    for px, py in valleys:
+                        sigma = max(30.0, (xmax - xmin) * sigma_f)
+                        for i in range(s, e + 1):
+                            x, y = coords[i]
+                            weight = move_weight(y)
+                            if weight <= 0:
+                                continue
+                            wy = max(0.0, (gymin + 0.55 * gh - y) / (0.55 * gh))
+                            wy = min(1.0, wy)
+                            d = (x - px) / sigma
+                            pull = math.exp(-d * d) * (wy * wy)
+                            new[i] = (new[i][0] - 0.5 * pinch * (x - px) *
+                                      math.exp(-d * d) * wy * weight,
+                                      new[i][1] - valley_bump * pull * weight)
         glyph.coordinates = new
         glyph.recalcBounds(glyf)
 
@@ -172,7 +240,8 @@ def petal_warp(font: TTFont, hole_bump=HOLE_BUMP, peak_bump=PEAK_BUMP,
 # font metadata
 # ---------------------------------------------------------------------------
 def set_names(font: TTFont, family, style, full=None, ps=None,
-              weight=400, copyright_note=None, version="Version 1.000"):
+              weight=400, copyright_note=None, version="Version 1.100",
+              designer=None, url=None):
     full = full or f"{family} {style}"
     ps = ps or f"{family.replace(' ', '')}-{style.replace(' ', '')}"
     copyright_note = copyright_note or (
@@ -180,6 +249,10 @@ def set_names(font: TTFont, family, style, full=None, ps=None,
         "Based on Manjari, Copyright 2018 The Manjari Project Authors "
         "(https://gitlab.com/smc/fonts/manjari, OFL-1.1)."
     )
+    designer = designer or (
+        "Ezhuthu Project Authors; base design by Santhosh Thottingal (SMC)"
+    )
+    url = url or "https://github.com/kurianbenoy/ezhuthu"
     name = font["name"]
     # Keep name IDs >= 256: those are the fvar/STAT axis and instance names
     # created by varLib.  Only the classic IDs are rewritten.
@@ -193,9 +266,9 @@ def set_names(font: TTFont, family, style, full=None, ps=None,
         5: version,
         6: ps,
         8: "Ezhuthu Project Authors",
-        9: "Ezhuthu Project Authors; base design by Santhosh Thottingal (SMC)",
-        11: "https://example.invalid/ezhuthu",
-        12: "https://example.invalid/ezhuthu",
+        9: designer,
+        11: url,
+        12: url,
         13: "This Font Software is licensed under the SIL Open Font License, "
             "Version 1.1. This license is available with a FAQ at: "
             "https://scripts.sil.org/OFL",
@@ -216,11 +289,13 @@ def set_names(font: TTFont, family, style, full=None, ps=None,
         name.removeNames(nameID=nid)
 
 
-def set_metrics(font: TTFont, weight=400):
+def set_metrics(font: TTFont, weight=400, asc=None, desc=None,
+                win_asc=None, win_desc=None, auto_win=False,
+                underline_position=None, underline_thickness=None):
     os2 = font["OS/2"]
     hhea = font["hhea"]
     head = font["head"]
-    head.fontRevision = 1.0
+    head.fontRevision = 1.1
     head.created = FIXED_TIME
     head.modified = FIXED_TIME
     # Minimal smart-dropout prep.  The font has no TT hinting otherwise;
@@ -234,17 +309,35 @@ def set_metrics(font: TTFont, weight=400):
         0xB0, 0x04, 0x8D,        # PUSHB 0x04; SCANTYPE
     ]))
     font["prep"] = prep
-    asc, desc = 800, -300
+    asc = 800 if asc is None else asc
+    desc = -300 if desc is None else desc
+    if auto_win:
+        glyf = font["glyf"]
+        extents = []
+        for gname in font.getGlyphOrder():
+            if gname not in glyf:
+                continue
+            g = glyf[gname]
+            if getattr(g, "numberOfContours", 0) == 0:
+                continue
+            extents.append((g.yMin, g.yMax))
+        ymin = min(e[0] for e in extents)
+        ymax = max(e[1] for e in extents)
+        win_asc = max(asc, int(math.ceil(ymax)) + 50)
+        win_desc = max(-desc, int(math.ceil(-ymin)) + 50)
+    else:
+        win_asc = 1100 if win_asc is None else win_asc
+        win_desc = 700 if win_desc is None else win_desc
     os2.sTypoAscender = asc
     os2.sTypoDescender = desc
     os2.sTypoLineGap = 0
-    # Win metrics must cover the real glyph extents (-614 .. 1075) so
-    # descenders and tall marks are never clipped by legacy rasterizers.
-    os2.usWinAscent = 1100
-    os2.usWinDescent = 700
+    os2.usWinAscent = win_asc
+    os2.usWinDescent = win_desc
     os2.usWeightClass = weight
     os2.achVendID = "EZHX"
-    os2.fsSelection = (os2.fsSelection & ~0x21) | (0x20 if weight >= 700 else 0x40)
+    # bit 0 = italic, bit 5 = bold, bit 6 = regular.  The base fonts differ in
+    # which of these they set, so clear all three before setting the style bit.
+    os2.fsSelection = (os2.fsSelection & ~0x61) | (0x20 if weight >= 700 else 0x40)
     os2.fsSelection |= 0x80  # USE_TYPO_METRICS
     hhea.ascent = asc
     hhea.descent = desc
@@ -252,8 +345,12 @@ def set_metrics(font: TTFont, weight=400):
     head.macStyle = 1 if weight >= 700 else 0
     # neutral, upright font
     font["post"].italicAngle = 0.0
-    font["post"].underlinePosition = -100
-    font["post"].underlineThickness = 50
+    font["post"].underlinePosition = (
+        -100 if underline_position is None else underline_position
+    )
+    font["post"].underlineThickness = (
+        50 if underline_thickness is None else underline_thickness
+    )
     font["post"].isFixedPitch = 0
 
 
@@ -390,23 +487,30 @@ def build_designspace(round_path, petal_path, out_path,
     return ds
 
 
-def build_vf(designspace_path, out_path, family="Ezhuthu Kamalam", style="Regular"):
+def build_vf(designspace_path, out_path, family="Ezhuthu Kamalam", style="Regular",
+             metrics=None, copyright_note=None, designer=None, url=None,
+             stat_values=None):
     ds = DesignSpaceDocument.fromfile(designspace_path)
     vf, _, _ = varlib_build(ds)
-    set_metrics(vf, weight=700 if style == "Bold" else 400)
-    set_names(vf, family, style, weight=700 if style == "Bold" else 400)
-    # A clear STAT table for the custom axis
+    set_metrics(vf, weight=700 if style == "Bold" else 400, **(metrics or {}))
+    set_names(vf, family, style, weight=700 if style == "Bold" else 400,
+              copyright_note=copyright_note, designer=designer, url=url)
+    # A clear STAT table for the custom axis.  The default poetic names are
+    # used by the Malayalam family; the multiscript build passes shorter
+    # labels because the family name plus "Bloom"/"Petal" would exceed the
+    # 31-character Windows limit.
+    stat_values = stat_values or [
+        dict(value=0, name="Round", flags=0x2),
+        dict(value=50, name="Bloom"),
+        dict(value=100, name="Petal"),
+    ]
     buildStatTable(
         vf,
         axes=[dict(
             tag="APER",
             name="Aperture",
             ordering=0,
-            values=[
-                dict(value=0, name="Round", flags=0x2),
-                dict(value=50, name="Bloom"),
-                dict(value=100, name="Petal"),
-            ],
+            values=stat_values,
         )],
         elidedFallbackName="Regular",
         macNames=False,
@@ -432,7 +536,8 @@ SPECTRUM = [
 
 
 def add_spectrum(src, dst, family="Ezhuthu Kamalam Spectrum",
-                 style="Bold", weight=700, y_top=620, y_bottom=-120):
+                 style="Bold", weight=700, y_top=620, y_bottom=-120,
+                 copyright_note=None, designer=None, url=None):
     font = TTFont(src)
     glyph_map = font.getReverseGlyphMap()
     glyf = font["glyf"]
@@ -471,7 +576,8 @@ def add_spectrum(src, dst, family="Ezhuthu Kamalam Spectrum",
     colr = buildCOLR(color_glyphs, version=1, glyphMap=glyph_map)
     font["COLR"] = colr
     font["CPAL"] = buildCPAL([palette], nameTable=font["name"])
-    set_names(font, family, style, weight=weight)
+    set_names(font, family, style, weight=weight,
+              copyright_note=copyright_note, designer=designer, url=url)
     font["name"].names = [n for n in font["name"].names if n.platformID != 1]
     font.recalcTimestamp = False
     font.save(dst)
@@ -488,14 +594,16 @@ def instantiate(src, dst, location):
     return font
 
 
-def instantiate_with_names(src, dst, location, family, style):
+def instantiate_with_names(src, dst, location, family, style,
+                           copyright_note=None, designer=None, url=None):
     font = TTFont(src)
     instantiateVariableFont(font, location, inplace=True)
     # drop variation tables left over from the instancer
-    for tag in ("fvar", "gvar", "STAT", "avar", "HVAR"):
+    for tag in ("fvar", "gvar", "STAT", "avar", "HVAR", "MVAR"):
         if tag in font:
             del font[tag]
-    set_names(font, family, style, weight=700 if "Bold" in style else 400)
+    set_names(font, family, style, weight=700 if "Bold" in style else 400,
+              copyright_note=copyright_note, designer=designer, url=url)
     font.recalcTimestamp = False
     font.save(dst)
     return font

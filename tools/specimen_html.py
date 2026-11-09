@@ -317,6 +317,7 @@ HTML = f"""<!doctype html>
       <a href="#charset">Character set</a>
       <a href="#context">In context</a>
       <a href="#specs">Specs</a>
+      <a href="multiscript.html">Multiscript →</a>
     </nav>
   </div>
 </header>
@@ -524,7 +525,7 @@ HTML = f"""<!doctype html>
         <tr><td>Base skeleton</td><td>Manjari by Santhosh Thottingal / SMC</td></tr>
         <tr><td>Engineering</td><td>Python · fontTools · varLib · COLRv1</td></tr>
         <tr><td>License</td><td>SIL Open Font License 1.1</td></tr>
-        <tr><td>Version</td><td>1.000</td></tr>
+        <tr><td>Version</td><td>1.100</td></tr>
         <tr><td>Spacing</td><td>Manjari metrics + Ezhuthu tuning</td></tr>
         <tr><td>Coverage</td><td>Malayalam U+0D00–U+0D7F + Latin</td></tr>
       </table>
