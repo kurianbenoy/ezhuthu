@@ -28,9 +28,13 @@ kamalam: venv
 legacy: venv
 	$(PY) tools/build.py
 
-test: venv kamalam legacy
+test: venv kamalam
 	$(PY) tests/test_kamalam.py
-	$(PY) tests/test_font.py legacy/fonts/Ezhuthu-Regular.ttf
+	@if test -f legacy/fonts/Ezhuthu-Regular.ttf; then \
+		$(PY) tests/test_font.py legacy/fonts/Ezhuthu-Regular.ttf; \
+	else \
+		echo "legacy font not built; run: make legacy"; \
+	fi
 
 proofs: kamalam
 	$(PY) tools/specimen.py

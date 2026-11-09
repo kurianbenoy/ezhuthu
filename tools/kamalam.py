@@ -49,6 +49,11 @@ PROOFS = os.path.join(ROOT, "proofs")
 
 UPEM = 1000
 
+# Reproducible builds: freeze the head timestamps so repeated builds are
+# byte-identical unless the design actually changes.
+from fontTools.misc.timeTools import timestampFromString  # noqa: E402
+FIXED_TIME = timestampFromString("Mon Nov  9 00:00:00 2026")
+
 # Design constants (in 1000-unit em)
 HOLE_BUMP = 110.0       # how far a counter crown rises at APER=100
 PEAK_BUMP = 40.0        # how far an outer contour crown rises
@@ -216,6 +221,8 @@ def set_metrics(font: TTFont, weight=400):
     hhea = font["hhea"]
     head = font["head"]
     head.fontRevision = 1.0
+    head.created = FIXED_TIME
+    head.modified = FIXED_TIME
     # Minimal smart-dropout prep.  The font has no TT hinting otherwise;
     # this keeps legacy rasterizers on the smart-dropout path.
     from fontTools.ttLib.tables import ttProgram
@@ -334,6 +341,7 @@ def normalize(src, dst, petal=False, weight=400, family="Ezhuthu Kamalam",
     add_case_pairs(font)
     set_metrics(font, weight=weight)
     set_names(font, family, style, weight=weight)
+    font.recalcTimestamp = False
     font.save(dst)
     return font
 
@@ -404,6 +412,7 @@ def build_vf(designspace_path, out_path, family="Ezhuthu Kamalam", style="Regula
         macNames=False,
     )
     vf["name"].names = [n for n in vf["name"].names if n.platformID != 1]
+    vf.recalcTimestamp = False
     vf.save(out_path)
     return vf
 
@@ -464,6 +473,7 @@ def add_spectrum(src, dst, family="Ezhuthu Kamalam Spectrum",
     font["CPAL"] = buildCPAL([palette], nameTable=font["name"])
     set_names(font, family, style, weight=weight)
     font["name"].names = [n for n in font["name"].names if n.platformID != 1]
+    font.recalcTimestamp = False
     font.save(dst)
     return font
 
@@ -486,6 +496,7 @@ def instantiate_with_names(src, dst, location, family, style):
         if tag in font:
             del font[tag]
     set_names(font, family, style, weight=700 if "Bold" in style else 400)
+    font.recalcTimestamp = False
     font.save(dst)
     return font
 
@@ -560,6 +571,7 @@ def main(argv=None):
         dst = src[:-4] + ".woff2"
         tt = TTFont(src)
         tt.flavor = "woff2"
+        tt.recalcTimestamp = False
         tt.save(dst)
         print("woff2", dst)
 
