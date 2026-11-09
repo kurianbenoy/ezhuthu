@@ -252,7 +252,7 @@ def set_names(font: TTFont, family, style, full=None, ps=None,
     designer = designer or (
         "Kallar Project Authors; base design by Santhosh Thottingal (SMC)"
     )
-    url = url or "https://github.com/kurianbenoy/ezhuthu"
+    url = url or "https://github.com/kurianbenoy/kallar"
     name = font["name"]
     # Keep name IDs >= 256: those are the fvar/STAT axis and instance names
     # created by varLib.  Only the classic IDs are rewritten.

@@ -11,6 +11,7 @@ axis, and COLRv1 blue→orange Spectrum builds.
 ---------------------------------------
 - Renamed the family from Ezhuthu Kamalam to Kallar. The v1.000 entry below is
   the historical Malayalam release under the former name.
+- Renamed the GitHub repository from `ezhuthu` to `kallar`; old URLs redirect.
 - Added Kallar Devanagari, Tamil, Telugu and Kannada.
 - Each family: variable Regular and Bold with APER 0–100, static Round/Petal/
   Bold Petal instances, and COLRv1 Spectrum Regular/Bold builds.

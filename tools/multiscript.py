@@ -49,7 +49,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE = os.path.join(ROOT, "sources", "base")
 MASTERS = os.path.join(ROOT, "sources", "masters")
 FONTS = os.path.join(ROOT, "fonts")
-PROJECT_URL = "https://github.com/kurianbenoy/ezhuthu"
+PROJECT_URL = "https://github.com/kurianbenoy/kallar"
 
 NOTO_DEVA = "https://github.com/notofonts/devanagari"
 NOTO_TAML = "https://github.com/notofonts/tamil"
