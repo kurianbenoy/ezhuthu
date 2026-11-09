@@ -49,7 +49,7 @@ the shaping is identical at every value.
 
 ![Spectrum](proofs/kamalam_gradient.png)
 
-`Ezhuthu Kamalam Spectrum` is a variable Bold build with COLRv1/CPAL tables.
+`Ezhuthu Kamalam Spectrum` is a variable Regular + Bold build with COLRv1/CPAL tables.
 The gradient is defined once per glyph in font units, so a paragraph reads as
 one continuous field rather than a set of separately coloured letters. In
 applications without COLRv1 support the font falls back to its monochrome
@@ -75,7 +75,8 @@ the same fonts and the same aperture logic — not mocked up by hand.
 fonts/
   EzhuthuKamalam-Regular.ttf/.woff2    variable Regular, APER 0–100 (default 100)
   EzhuthuKamalam-Bold.ttf/.woff2       variable Bold,    APER 0–100 (default 100)
-  EzhuthuKamalam-Spectrum.ttf/.woff2   variable Bold + COLRv1 blue→orange spectrum
+  EzhuthuKamalam-Spectrum.ttf/.woff2         variable Bold + COLRv1 blue→orange spectrum
+  EzhuthuKamalam-SpectrumRegular.ttf/.woff2  variable Regular + COLRv1 spectrum
   EzhuthuKamalam-Round.ttf/.woff2      static APER 0 instance
   EzhuthuKamalam-Petal.ttf/.woff2      static APER 100 instance
   EzhuthuKamalam-BoldPetal.ttf/.woff2  static Bold APER 100 instance

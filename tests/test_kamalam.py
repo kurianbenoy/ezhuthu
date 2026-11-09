@@ -3,6 +3,7 @@
 
 Run: .venv/bin/python tests/test_kamalam.py
 """
+import os
 import sys
 
 import uharfbuzz as hb
@@ -11,6 +12,7 @@ from fontTools.ttLib import TTFont, TTLibError
 REG = "fonts/EzhuthuKamalam-Regular.ttf"
 BOLD = "fonts/EzhuthuKamalam-Bold.ttf"
 SPECTRUM = "fonts/EzhuthuKamalam-Spectrum.ttf"
+SPECTRUM_REG = "fonts/EzhuthuKamalam-SpectrumRegular.ttf"
 PETAL = "fonts/EzhuthuKamalam-Petal.ttf"
 
 FAILS = []
@@ -168,31 +170,34 @@ def test_outline_variation():
 # color
 # ---------------------------------------------------------------------------
 def test_color():
-    f = TTFont(SPECTRUM)
-    if "COLR" not in f or "CPAL" not in f:
-        return fail("Spectrum missing COLR/CPAL")
-    colr = f["COLR"]
-    if colr.version != 1:
-        fail(f"COLR version {colr.version}, expected 1")
-    cpal = f["CPAL"]
-    if not cpal.palettes or len(cpal.palettes[0]) < 2:
-        fail("CPAL palette too small")
-    records = colr.table.BaseGlyphList.BaseGlyphPaintRecord
-    if len(records) < 500:
-        fail(f"too few color glyphs: {len(records)}")
-    ok = 0
-    for rec in records[:50]:
-        p = rec.Paint
-        if p.Format != 10:  # PaintGlyph
+    for path in (SPECTRUM, SPECTRUM_REG):
+        f = TTFont(path)
+        if "COLR" not in f or "CPAL" not in f:
+            fail(f"{path}: missing COLR/CPAL")
             continue
-        if p.Paint.Format != 4:  # PaintLinearGradient
-            continue
-        if not p.Paint.ColorLine.ColorStop:
-            continue
-        ok += 1
-    if ok < 40:
-        fail(f"paint graph check failed ({ok}/50)")
-    print(f"PASS color tables ({len(records)} glyphs, {len(cpal.palettes[0])} colors)")
+        colr = f["COLR"]
+        if colr.version != 1:
+            fail(f"{path}: COLR version {colr.version}, expected 1")
+        cpal = f["CPAL"]
+        if not cpal.palettes or len(cpal.palettes[0]) < 2:
+            fail(f"{path}: CPAL palette too small")
+        records = colr.table.BaseGlyphList.BaseGlyphPaintRecord
+        if len(records) < 500:
+            fail(f"{path}: too few color glyphs: {len(records)}")
+        ok = 0
+        for rec in records[:50]:
+            p = rec.Paint
+            if p.Format != 10:  # PaintGlyph
+                continue
+            if p.Paint.Format != 4:  # PaintLinearGradient
+                continue
+            if not p.Paint.ColorLine.ColorStop:
+                continue
+            ok += 1
+        if ok < 40:
+            fail(f"{path}: paint graph check failed ({ok}/50)")
+        print(f"PASS color tables {os.path.basename(path)} "
+              f"({len(records)} glyphs, {len(cpal.palettes[0])} colors)")
 
 
 def main():

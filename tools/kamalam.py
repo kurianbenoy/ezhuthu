@@ -423,7 +423,7 @@ SPECTRUM = [
 
 
 def add_spectrum(src, dst, family="Ezhuthu Kamalam Spectrum",
-                 style="Bold", y_top=620, y_bottom=-120):
+                 style="Bold", weight=700, y_top=620, y_bottom=-120):
     font = TTFont(src)
     glyph_map = font.getReverseGlyphMap()
     glyf = font["glyf"]
@@ -462,7 +462,7 @@ def add_spectrum(src, dst, family="Ezhuthu Kamalam Spectrum",
     colr = buildCOLR(color_glyphs, version=1, glyphMap=glyph_map)
     font["COLR"] = colr
     font["CPAL"] = buildCPAL([palette], nameTable=font["name"])
-    set_names(font, family, style, weight=700)
+    set_names(font, family, style, weight=weight)
     font["name"].names = [n for n in font["name"].names if n.platformID != 1]
     font.save(dst)
     return font
@@ -533,10 +533,13 @@ def main(argv=None):
         print("variable fonts written to", FONTS)
 
     if args.command in ("spectrum", "all"):
+        reg_vf = os.path.join(FONTS, "EzhuthuKamalam-Regular.ttf")
         bold_vf = os.path.join(FONTS, "EzhuthuKamalam-Bold.ttf")
         spectrum = os.path.join(FONTS, "EzhuthuKamalam-Spectrum.ttf")
-        add_spectrum(bold_vf, spectrum)
-        print("spectrum written to", spectrum)
+        spectrum_reg = os.path.join(FONTS, "EzhuthuKamalam-SpectrumRegular.ttf")
+        add_spectrum(bold_vf, spectrum, style="Bold", weight=700)
+        add_spectrum(reg_vf, spectrum_reg, style="Regular", weight=400)
+        print("spectrum written to", spectrum, spectrum_reg)
 
     if args.command in ("instances", "all"):
         reg_vf = os.path.join(FONTS, "EzhuthuKamalam-Regular.ttf")

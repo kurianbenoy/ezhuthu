@@ -33,6 +33,7 @@ def img_b64(name, maxw=900, quality=82):
 REG = b64("EzhuthuKamalam-Regular.woff2")
 BOLD = b64("EzhuthuKamalam-Bold.woff2")
 SPEC = b64("EzhuthuKamalam-Spectrum.woff2")
+SPEC_REG = b64("EzhuthuKamalam-SpectrumRegular.woff2")
 
 POSTER = img_b64("kamalam_poster.png")
 EDITORIAL = img_b64("kamalam_editorial.png")
@@ -68,6 +69,13 @@ HTML = f"""<!doctype html>
     font-family: 'Ezhuthu Kamalam';
     src: url(data:font/woff2;base64,{BOLD}) format('woff2');
     font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }}
+  @font-face {{
+    font-family: 'Ezhuthu Kamalam Spectrum';
+    src: url(data:font/woff2;base64,{SPEC_REG}) format('woff2');
+    font-weight: 400;
     font-style: normal;
     font-display: swap;
   }}
@@ -395,8 +403,10 @@ HTML = f"""<!doctype html>
       <div class="panel">
         <div class="label">COLRv1 build</div>
         <div class="ml" style="font-family:'Ezhuthu Kamalam Spectrum','Ezhuthu Kamalam';font-weight:700;font-size:clamp(34px,5vw,68px);line-height:1.3;font-variation-settings:'APER' 100">കമലം സർവം</div>
+        <div class="ml" style="font-family:'Ezhuthu Kamalam Spectrum','Ezhuthu Kamalam';font-weight:400;font-size:clamp(22px,3.2vw,40px);line-height:1.5;margin-top:14px;font-variation-settings:'APER' 100">മലയാളം ഒരു ദ്രാവിഡ ഭാഷയാണ്.</div>
         <p class="spectrum-note" style="margin:10px 0 0">If your browser supports COLRv1 the
-          sample above is painted by the font itself; otherwise it falls back to monochrome.</p>
+          samples above are painted by the font itself (Bold and Regular); otherwise they
+          fall back to monochrome.</p>
       </div>
     </div>
   </div>
@@ -504,7 +514,7 @@ HTML = f"""<!doctype html>
         <tr><td>Family</td><td>Ezhuthu Kamalam</td></tr>
         <tr><td>Styles</td><td>Regular · Bold (variable)</td></tr>
         <tr><td>Axis</td><td>APER 0–100 (default 100)</td></tr>
-        <tr><td>Colour</td><td>Ezhuthu Kamalam Spectrum · COLRv1</td></tr>
+        <tr><td>Colour</td><td>Ezhuthu Kamalam Spectrum · Regular + Bold · COLRv1</td></tr>
         <tr><td>Glyphs</td><td>918 (Regular) · 912 (Bold)</td></tr>
         <tr><td>Scripts</td><td>Malayalam, Latin</td></tr>
         <tr><td>Format</td><td>TTF · WOFF2</td></tr>
@@ -535,10 +545,12 @@ HTML = f"""<!doctype html>
     <p class="fine">Files:
       <a href="../fonts/EzhuthuKamalam-Regular.woff2">Regular WOFF2</a> ·
       <a href="../fonts/EzhuthuKamalam-Bold.woff2">Bold WOFF2</a> ·
-      <a href="../fonts/EzhuthuKamalam-Spectrum.woff2">Spectrum WOFF2</a> ·
+      <a href="../fonts/EzhuthuKamalam-Spectrum.woff2">Spectrum Bold WOFF2</a> ·
+      <a href="../fonts/EzhuthuKamalam-SpectrumRegular.woff2">Spectrum Regular WOFF2</a> ·
       <a href="../fonts/EzhuthuKamalam-Regular.ttf">Regular TTF</a> ·
       <a href="../fonts/EzhuthuKamalam-Bold.ttf">Bold TTF</a> ·
-      <a href="../fonts/EzhuthuKamalam-Spectrum.ttf">Spectrum TTF</a> ·
+      <a href="../fonts/EzhuthuKamalam-Spectrum.ttf">Spectrum Bold TTF</a> ·
+      <a href="../fonts/EzhuthuKamalam-SpectrumRegular.ttf">Spectrum Regular TTF</a> ·
       <a href="../fonts/EzhuthuKamalam-Petal.ttf">Static Petal</a></p>
   </div>
 </footer>

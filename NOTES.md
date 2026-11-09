@@ -132,7 +132,7 @@ outline coordinates, so spacing and shaping stay stable across the axis.
 
 ## 5. COLRv1 spectrum
 
-The Spectrum build starts from the variable Bold and adds:
+The Spectrum builds start from the variable Regular and Bold and add:
 
 - `CPAL` with a 7-entry palette:
   `#181E5C`, `#2B3FB0`, `#5C64DB`, `#A06CD2`, `#D973A0`, `#EE7944`, `#F9C36D`.
@@ -142,7 +142,8 @@ The Spectrum build starts from the variable Bold and adds:
   `(500, 620)` (perpendicular to the gradient direction). The gradient is in
   font units and is clipped by the glyph outline. This range puts blue at the
   top of the body, orange near the baseline and gold in the descenders.
-- 907 glyphs carry a paint record; the rest fall back to monochrome.
+- 907 glyphs carry a paint record in the Bold build and 913 in the Regular
+  build; the rest fall back to monochrome.
 
 Browsers/apps with COLRv1 (Chrome, Edge, Figma, recent Safari) paint the
 gradient; apps without it render the base outlines. The specimen also shows a
