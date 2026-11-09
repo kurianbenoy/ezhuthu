@@ -206,3 +206,137 @@ The specimen HTML and COLRv1 paint were verified in headless Chromium 156.
   (Noto Sans Malayalam is a candidate) or a carefully offset master.
 - The display cut is optimised for large sizes. A text-optimised cut with
   smaller petal lifts and looser spacing is planned.
+
+## 9. The multiscript extension
+
+### 9.1 Why separate families
+
+Manjari is a Malayalam + Latin face; it has no Devanagari, Tamil, Telugu or
+Kannada glyphs. A literal Manjari derivative therefore cannot cover those
+scripts. The multiscript release uses one OFL skeleton per script and keeps the
+same derivative model: rename, preserve the upstream copyright, record the
+base, and do the new work in the aperture engine, axis, Spectrum, metrics and
+specimens.
+
+The four new families are deliberately separate variable fonts rather than one
+merged font. Scripts have different GSUB/GPOS tables, glyph names, mark
+attachments and vertical metrics; merging them would create conflicts in
+shared Latin, punctuation and mark glyphs. Separate families also match how
+Anek, Noto and most multiscript systems ship, and let each script keep its own
+line height.
+
+### 9.2 Sources
+
+| Branch | Base | Upstream |
+|---|---|---|
+| Devanagari | Noto Sans Devanagari VF | notofonts/devanagari |
+| Tamil | Noto Sans Tamil VF | notofonts/tamil |
+| Telugu | Noto Sans Telugu VF | notofonts/telugu |
+| Kannada | Noto Sans Kannada VF | notofonts/kannada |
+
+The variable bases are instantiated at `wght=400/700`, `wdth=100`, scaled to
+1000 UPM (they are already 1000), stripped of hinting and variation tables, and
+given the Ezhuthu name/metrics. The vendored files and SHA-256 checksums are in
+`sources/base/README.md`.
+
+### 9.3 Script-specific aperture profiles
+
+The warp is still point-preserving, but the profiles differ because the
+scripts do not share one counter grammar.
+
+| Script | hole_bump | peak_bump | freeze | sigma_f | Notes |
+|---|---:|---:|---|---:|---|
+| Devanagari | 110 | 60 | absolute y=545, fade 120 | 0.22 | Keeps the shirorekha straight; only loops below it open |
+| Tamil | 100 | 25 | top 18% | 0.30 | Gentler; concentrated in the fewer closed loops |
+| Telugu | 110 | 40 | none | 0.28 | Full loop warp |
+| Kannada | 110 | 36 | none | 0.28 | Full loop warp |
+
+`PETAL_WARP` now supports `only` (a glyph-name set), `freeze_top` (fraction),
+`freeze_above` (absolute y), `freeze_fade`, `peak_max_frac`/`peak_max_y` and
+`valley_bump`. With the defaults these are no-ops, which is why the Malayalam
+build remains byte-identical.
+
+The **absolute freeze** is the important Devanagari detail. Devanagari base
+letters share a headline at roughly y=570–622; freezing above y=545 leaves the
+headline and its junctions untouched, while the counter tops below 545 can
+rise. A 120-unit fade avoids a hard step at the freeze boundary. The first
+attempt used a per-glyph percentage freeze and a wide Gaussian, which pulled
+the headline at the stem junctions; the absolute freeze plus a narrower
+`sigma_f=0.22` fixed it.
+
+### 9.4 Glyph filtering
+
+`petal_warp` accepts `only`, a set of glyph names. `tools/multiscript.py`
+computes that set with `fontTools.subset`: it starts from the script's
+codepoints and closes over GSUB, so conjuncts, half forms, reph forms,
+contextual variants and matras are included. Latin, punctuation and unrelated
+glyphs are left in the base style. This is why the Latin in the new families
+stays Noto Sans, while the script outline changes.
+
+The closure sizes (excluding `.notdef`) are 735 Devanagari, 166 Tamil, 723
+Telugu and 414 Kannada glyphs.
+
+### 9.5 Metrics
+
+The new families use the base typographic ascender/descender, but the win
+metrics are computed from the actual outline extents:
+
+```
+usWinAscent  = max(sTypoAscender, ceil(yMax) + 50)
+usWinDescent = max(-sTypoDescender, ceil(-yMin) + 50)
+```
+
+Devanagari uses `sTypoAscender=1000` (rather than Noto's 896) because its
+Vedic marks reach y=1347 and fontbakery's ascender check wants more room. The
+other families keep their base ascenders: Tamil 870, Telugu 869, Kannada 809.
+All set `USE_TYPO_METRICS`.
+
+### 9.6 Testing and QA
+
+`tests/test_multiscript.py` checks, for all four scripts:
+
+- `fvar` `APER=0…100`, default 100, and STAT values 0/50/100;
+- the Noto copyright and Ezhuthu modification notice in name ID 0, the Noto
+  designer credit in name ID 9, and the OFL notice in name ID 13;
+- shaping of every case, display word and paragraph at APER 0/50/100, with
+  identical glyph names and advances and no `.notdef`;
+- full cmap coverage of the base script, and shaping every script codepoint
+  (marks with a base consonant);
+- outline variation between APER 0 and 100, and a guard that Latin `H` is
+  unchanged;
+- static Round/Petal instances, names and the fact that they differ;
+- COLRv1/CPAL structure in both Spectrum builds.
+
+Fontbakery `check-universal` reports **0 FAIL** on all eight new Regular/Bold
+VFs. The exclusions are the same as Malayalam:
+
+- `opentype/fvar/regular_coords_correct` (custom `APER` axis);
+- `alt_caron` (Czech/Slovak-specific);
+- `opentype/fsselection` and `opentype/mac_style` for Bold (fontbakery infers
+  "Regular" from the custom axis and cannot see the Bold style, although the
+  OS/2 and `head` bits are correct).
+
+The STAT value labels for the new families are `0`, `50`, `100` rather than
+`Round`, `Bloom`, `Petal`: the family name plus the poetic label would exceed
+Microsoft's 31-character family+style limit. The `fvar` named instances keep
+the poetic names, and the specimen and documentation use them.
+
+Inherited Noto warnings (not introduced by this project) include:
+
+- GDEF mark-class warnings for Vedic characters;
+- a missing `avar` table (the APER axis is linear, so no mapping is needed);
+- long Vedic glyph names and unreachable Vedic variants;
+- a soft hyphen in the base font.
+
+These are recorded rather than silenced, because changing GDEF classes or
+removing Vedic glyphs could break shaping.
+
+### 9.7 Multiscript limits
+
+- Tamil has fewer closed counters than the other scripts, so its APER change
+  is deliberately subtler. A more radical Tamil cut would need new stroke
+  terminals, not just a counter warp.
+- The four families are separate fonts. A merged all-in-one font is not
+  planned because of the shaping and glyph-name conflicts described above.
+- The Spectrum gradient is the same font-unit range for every script; a
+  per-script baseline calibration could be a future refinement.
