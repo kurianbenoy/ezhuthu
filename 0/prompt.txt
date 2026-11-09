@@ -1,0 +1,22 @@
+continue
+
+---
+
+WRite a nice README.md with new font, font samples etc: https://github.com/EkType/Anek
+
+---
+
+Commit and push to github as atomic bit of works
+
+---
+
+Can we extend this font to other languages like Hindi, Tamil, Telugu, Kannada
+
+---
+
+Before you go ahead and building start building in a new branch for this particular feature and - Trail #2: Extend Ezhuthu to Hindi, Tamil, Telugu, and Kannada
+- URL: https://entire.com/gh/kurianbenoy/-/trails/2
+- Type: feature · Priority: high · Status: open · Phase: planning
+- Scope: repository ezhuthu, intent-only (no branch created)
+- Goal recorded: carry the APER aperture axis, lotus-gateway counters, and Spectrum treatment into Hindi (Devanagari), Tamil, Telugu, and Kannada using OFL-compatible base skeletons, point-compatible masters, full script coverage, and the existing build/shaping/QA pipeline.
+When you start on a script, link the working branch to this trail with entire trail link (or create the branch and trail together) so checkpoints and sessions attribute to it. use this as part of trails feature
