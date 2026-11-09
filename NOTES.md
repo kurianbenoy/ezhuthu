@@ -209,35 +209,47 @@ The specimen HTML and COLRv1 paint were verified in headless Chromium 156.
 
 ## 9. The multiscript extension
 
-### 9.1 Why separate families
+### 9.1 Manjari is the base of every family
 
-Manjari is a Malayalam + Latin face; it has no Devanagari, Tamil, Telugu or
-Kannada glyphs. A literal Manjari derivative therefore cannot cover those
-scripts. The multiscript release uses one OFL skeleton per script and keeps the
-same derivative model: rename, preserve the upstream copyright, record the
-base, and do the new work in the aperture engine, axis, Spectrum, metrics and
-specimens.
+The original idea is preserved: all five Kallar families start from the
+**Manjari** skeleton. Manjari supplies the shared Latin, digits, punctuation,
+symbols, spacing, metrics and design language. The Malayalam family is Manjari
+throughout.
 
-The four new families are deliberately separate variable fonts rather than one
+Manjari is a Malayalam + Latin face, so it has no Devanagari, Tamil, Telugu or
+Kannada glyphs. Drawing four new scripts from a blank page would be a
+years-long design project, and a from-scratch skeleton would not have Manjari's
+quality. The release therefore uses one OFL **script donor** per
+non-Malayalam script. The donor supplies only the script-specific letter
+structures and shaping rules; it is not the base. Every shared glyph is
+transplanted from Manjari, and the donor is instantiated at the weight that
+matches Manjari's pen.
+
+The four families are deliberately separate variable fonts rather than one
 merged font. Scripts have different GSUB/GPOS tables, glyph names, mark
-attachments and vertical metrics; merging them would create conflicts in
-shared Latin, punctuation and mark glyphs. Separate families also match how
+attachments and win metrics; merging them would create conflicts in shared
+Latin, punctuation and mark glyphs. Separate families also match how
 Anek, Noto and most multiscript systems ship, and let each script keep its own
 line height.
 
 ### 9.2 Sources
 
-| Branch | Base | Upstream |
-|---|---|---|
-| Devanagari | Noto Sans Devanagari VF | notofonts/devanagari |
-| Tamil | Noto Sans Tamil VF | notofonts/tamil |
-| Telugu | Noto Sans Telugu VF | notofonts/telugu |
-| Kannada | Noto Sans Kannada VF | notofonts/kannada |
+| Branch | Base | Script donor | Upstream |
+|---|---|---|---|
+| Malayalam | Manjari | — | smc/fonts/manjari |
+| Devanagari | Manjari | Noto Sans Devanagari VF | notofonts/devanagari |
+| Tamil | Manjari | Noto Sans Tamil VF | notofonts/tamil |
+| Telugu | Manjari | Noto Sans Telugu VF | notofonts/telugu |
+| Kannada | Manjari | Noto Sans Kannada VF | notofonts/kannada |
 
-The variable bases are instantiated at `wght=400/700`, `wdth=100`, scaled to
-1000 UPM (they are already 1000), stripped of hinting and variation tables, and
-given the Kallar name/metrics. The vendored files and SHA-256 checksums are in
-`sources/base/README.md`.
+The donor variable fonts are instantiated at the weight that matches
+Manjari's stroke: `wght=360` for Regular and `wght=550` for Bold (Telugu uses
+`340`/`500` because its base stem is heavier). They are then stripped of
+hinting and variation tables and scaled to 1000 UPM (they are already 1000).
+The Manjari base is scaled to 1000 UPM, stripped of hinting, and given the two
+Latin case pairs (U+010F, U+01D1) that Manjari lacks. The vendored files and
+SHA-256 checksums are in `sources/base/README.md` and
+`sources/donors/README.md`.
 
 ### 9.3 Script-specific aperture profiles
 
@@ -266,41 +278,57 @@ the headline at the stem junctions; the absolute freeze plus a narrower
 
 ### 9.4 Glyph filtering
 
-`petal_warp` accepts `only`, a set of glyph names. `tools/multiscript.py`
-computes that set with `fontTools.subset`: it starts from the script's
-codepoints and closes over GSUB, so conjuncts, half forms, reph forms,
-contextual variants and matras are included. Latin, punctuation and unrelated
-glyphs are left in the base style. This is why the Latin in the new families
-stays Noto Sans, while the script outline changes.
+`tools/multiscript.py` first transplants every Manjari codepoint outside the
+Malayalam block into the donor, using the donor's glyph name where one already
+exists so the donor's GSUB/GPOS keeps working. Missing Manjari glyphs are
+appended. Composites are flattened during the transplant, so a Manjari
+composite cannot become a nested component inside a donor composite.
+
+`petal_warp` then accepts `only`, a set of glyph names. The build computes that
+set with `fontTools.subset`: it starts from the script's codepoints and closes
+over GSUB, so conjuncts, half forms, reph forms, contextual variants and matras
+are included. The Manjari shared set is subtracted, so Latin, punctuation and
+digits stay in Manjari's style and are never warped.
 
 The closure sizes (excluding `.notdef`) are 735 Devanagari, 166 Tamil, 723
 Telugu and 414 Kannada glyphs.
 
+`merge_latin_kerning` then appends Manjari's `latn` `kern` lookups to the
+donor's GPOS and points the donor's `latn` language systems at the new
+feature. The shared Latin therefore keeps Manjari's kerning as well as its
+outlines and advances; the donor's script-specific GPOS is untouched.
+
 ### 9.5 Metrics
 
-The new families use the base typographic ascender/descender, but the win
-metrics are computed from the actual outline extents:
+The families use Manjari's typographic metrics (`sTypoAscender=800`,
+`sTypoDescender=-300`, `sTypoLineGap=0`) so the shared Latin and the script
+text sit on one line-height system. The win metrics are computed from the
+actual outline extents, because the script donors have marks that reach above
+and below Manjari's Latin:
 
 ```
 usWinAscent  = max(sTypoAscender, ceil(yMax) + 50)
 usWinDescent = max(-sTypoDescender, ceil(-yMin) + 50)
 ```
 
-Devanagari uses `sTypoAscender=1000` (rather than Noto's 896) because its
-Vedic marks reach y=1347 and fontbakery's ascender check wants more room. The
-other families keep their base ascenders: Tamil 870, Telugu 869, Kannada 809.
-All set `USE_TYPO_METRICS`.
+Devanagari's Vedic marks reach y=1347, so its win ascent is 1397; the typo
+ascender stays at Manjari's 800, which means fontbakery reports the expected
+`typoAscender` warning for the tall Manjari `Agrave` and Vedic marks. All
+families set `USE_TYPO_METRICS`.
 
 ### 9.6 Testing and QA
 
 `tests/test_multiscript.py` checks, for all four scripts:
 
 - `fvar` `APER=0…100`, default 100, and STAT values 0/50/100;
-- the Noto copyright and Kallar modification notice in name ID 0, the Noto
-  designer credit in name ID 9, and the OFL notice in name ID 13;
+- the Manjari base and Noto donor copyright/designer credits in name IDs 0
+  and 9, and the OFL notice in name ID 13;
+- that `H`, `a`, `0`, `.` and the word space are byte-for-byte Manjari's
+  outlines and advances in both Regular and Bold, and that the `AV`, `To`
+  and `Wa` kern pairs match Manjari's;
 - shaping of every case, display word and paragraph at APER 0/50/100, with
   identical glyph names and advances and no `.notdef`;
-- full cmap coverage of the base script, and shaping every script codepoint
+- full cmap coverage of the script donor, and shaping every script codepoint
   (marks with a base consonant);
 - outline variation between APER 0 and 100, and a guard that Latin `H` is
   unchanged;
@@ -321,18 +349,29 @@ The STAT value labels for the new families are `0`, `50`, `100` rather than
 Microsoft's 31-character family+style limit. The `fvar` named instances keep
 the poetic names, and the specimen and documentation use them.
 
-Inherited Noto warnings (not introduced by this project) include:
+Inherited donor warnings (not introduced by this project) include:
 
 - GDEF mark-class warnings for Vedic characters;
 - a missing `avar` table (the APER axis is linear, so no mapping is needed);
 - long Vedic glyph names and unreachable Vedic variants;
-- a soft hyphen in the base font.
+- a soft hyphen in the donor font;
+- a `typoAscender` warning because Manjari's tall accented Latin and the
+  Vedic marks extend above the 800-unit typo ascender. The win metrics are
+  computed from the actual extents, so nothing clips.
 
 These are recorded rather than silenced, because changing GDEF classes or
 removing Vedic glyphs could break shaping.
 
 ### 9.7 Multiscript limits
 
+- Manjari contains no Devanagari, Tamil, Telugu or Kannada outlines. The
+  script-specific letters therefore come from the Noto donors; only the
+  shared glyphs and the design system are literally Manjari. A future release
+  could draw those letters from Manjari's pen, but that is a new type-design
+  project, not a build change.
+- The donor's Latin GPOS mark features still use the donor's anchors with
+  Manjari's Latin outlines. Precomposed accented letters are Manjari's own
+  glyphs; decomposed mark sequences may need a small anchor pass.
 - Tamil has fewer closed counters than the other scripts, so its APER change
   is deliberately subtler. A more radical Tamil cut would need new stroke
   terminals, not just a counter warp.

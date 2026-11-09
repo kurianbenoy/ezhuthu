@@ -127,7 +127,7 @@ def make_hero():
             draw_rule(d, 90, y - 40, W - 90, y - 40, (255, 255, 255, 22))
 
     draw_rule(d, 90, H - 130, W - 90, H - 130, (255, 255, 255, 30))
-    draw_label(d, "KALLAR  /  v1.100  /  OFL 1.1", (90, H - 100),
+    draw_label(d, "KALLAR  /  v1.200  /  OFL 1.1", (90, H - 100),
                14, (150, 162, 195), tracking=1)
     draw_label(d, "MALAYALAM  ·  DEVANAGARI  ·  TAMIL  ·  TELUGU  ·  KANNADA",
                (90, H - 74), 12, (190, 170, 150), tracking=1)
@@ -256,8 +256,8 @@ def make_sheet(key):
                    W - 520, 775, stops=STOPS, glow=6)
 
     draw_rule(d, 80, H - 90, W - 80, H - 90, (30, 30, 30, 36))
-    draw_label(d, f"{script['family']}  /  OFL 1.1  /  base: Noto Sans "
-               f"{ {'devanagari':'Devanagari','tamil':'Tamil','telugu':'Telugu','kannada':'Kannada'}[key] }",
+    draw_label(d, f"{script['family']}  /  OFL 1.1  /  base: Manjari  /  "
+               f"{script['script_name']} letters: {script['donor_name']}",
                (80, H - 70), 11, (150, 130, 110))
     bg.convert("RGB").save(os.path.join(PROOFS, f"kallar_{key}.png"))
     print(f"{key} sheet")

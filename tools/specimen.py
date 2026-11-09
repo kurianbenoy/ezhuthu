@@ -328,7 +328,7 @@ def make_hero():
         draw_label(d, num, (x, 898), 14, (238, 121, 68), bold=True)
         draw_label(d, title, (x + 40, 896), 17, (240, 243, 255), bold=True, tracking=1)
         draw_label(d, body, (x + 40, 922), 16, (160, 172, 205))
-    draw_label(d, "Kallar  /  v1.100  /  OFL 1.1", (72, 962), 13,
+    draw_label(d, "Kallar  /  v1.200  /  OFL 1.1", (72, 962), 13,
                (120, 132, 168))
     bg.convert("RGB").save(os.path.join(PROOFS, "kallar_hero.png"))
     print("hero")
@@ -514,7 +514,7 @@ def make_poster():
             bg.alpha_composite(lay, (x, y))
         draw_label(d, f"{v:03d}", (x + 10, y + 190), 18, (238, 121, 68), bold=True)
         draw_label(d, name, (x + 10, y + 218), 11, (160, 172, 205), tracking=2)
-    draw_label(d, "Kallar  /  v1.100  /  OFL 1.1  /  Malayalam + Latin",
+    draw_label(d, "Kallar  /  v1.200  /  OFL 1.1  /  Malayalam + Latin",
                (90, H - 80), 14, (140, 152, 185))
     bg.convert("RGB").save(os.path.join(PROOFS, "kallar_poster.png"))
     print("poster")
@@ -675,7 +675,7 @@ def make_lockup():
     draw_label(d, "KALLAR", (510, 350), 18, (120, 80, 50), bold=True, tracking=4)
     draw_label(d, "Aperture-variable Malayalam  ·  APER 0—100", (510, 384), 15, (120, 110, 100))
     draw_rule(d, 510, 430, 1100, 430, (30, 30, 30, 40))
-    draw_label(d, "OFL 1.1  ·  v1.100", (510, 450), 13, (150, 120, 90))
+    draw_label(d, "OFL 1.1  ·  v1.200", (510, 450), 13, (150, 120, 90))
     bg.convert("RGB").save(os.path.join(PROOFS, "kallar_lockup.png"))
     print("lockup")
 

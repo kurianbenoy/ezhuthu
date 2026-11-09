@@ -1,11 +1,36 @@
 FONTLOG for Kallar
 ==================
 
-Kallar is an aperture-variable multiscript display family. The Malayalam
-branch is based on the Manjari skeleton (OFL 1.1); the Devanagari, Tamil,
-Telugu and Kannada branches are based on the corresponding Noto Sans skeletons
-(OFL 1.1). All branches add the Petal/Aperture transformation, a variable APER
-axis, and COLRv1 blue→orange Spectrum builds.
+Kallar is an aperture-variable multiscript display family. Every branch is
+built on the Manjari skeleton (OFL 1.1): Manjari supplies the shared Latin,
+digits, punctuation, symbols, spacing, metrics and design language. The
+Devanagari, Tamil, Telugu and Kannada branches use the corresponding Noto Sans
+faces only as script donors, because Manjari has no glyphs for those scripts.
+All branches add the Petal/Aperture transformation, a variable APER axis, and
+COLRv1 blue→orange Spectrum builds.
+
+2026-11-09 — v1.200 (Manjari Base)
+----------------------------------
+- Rebuilt all five families on the Manjari base. Manjari now supplies the
+  shared Latin, digits, punctuation, symbols, spacing, metrics, x-height,
+  cap-height and Latin kerning of every family.
+- The Devanagari, Tamil, Telugu and Kannada branches use Noto Sans only as
+  script donors for the script-specific letter structures Manjari does not
+  contain. Donor weights are calibrated to Manjari's pen: wght 360/550 for
+  Devanagari, Tamil and Kannada; 340/500 for Telugu.
+- Moved the Noto files from `sources/base/` to `sources/donors/`; added
+  `sources/donors/README.md` and updated the derivative-model documentation.
+- All families use Manjari's typo metrics 800/-300 with automatic win metrics
+  sized to each script's outline extents. OS/2 x-height and cap-height now
+  follow Manjari.
+- Manjari's Latin `kern` lookups are merged into each script family's GPOS.
+- Manjari composites are flattened when transplanted, fixing fontbakery's
+  nested-components check.
+- Tests now assert Manjari's shared-glyph outlines, advances, spacing and
+  kerning in every family.
+- Regenerated all fonts, specimens, proofs and PDFs. Fontbakery: 0 FAIL on
+  all eight multiscript Regular/Bold variable fonts.
+- Reproducible builds remain byte-identical.
 
 2026-11-09 — v1.100 (Kallar Multiscript)
 ---------------------------------------
@@ -58,6 +83,7 @@ axis, and COLRv1 blue→orange Spectrum builds.
 License
 -------
 SIL Open Font License 1.1. See OFL.txt.
-Malayalam base: Manjari, Copyright 2018 The Manjari Project Authors.
-Multiscript bases: Noto Sans Devanagari/Tamil/Telugu/Kannada, Copyright 2022
-The Noto Project Authors. Upstream licences are in sources/base/.
+Base skeleton for all five families: Manjari, Copyright 2018 The Manjari
+Project Authors.
+Script donors: Noto Sans Devanagari/Tamil/Telugu/Kannada, Copyright 2022
+The Noto Project Authors. Upstream licences are in sources/donors/.

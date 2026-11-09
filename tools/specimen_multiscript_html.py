@@ -371,12 +371,14 @@ HTML = f"""<!doctype html>
   <div class="wrap">
     <div class="notes">
       <div>
-        <p><strong>Derivative model.</strong> The Malayalam branch is a
-          derivative of Manjari. The Devanagari, Tamil, Telugu and Kannada
-          branches are derivatives of the corresponding Noto Sans faces. The
-          aperture engine, APER axis, Spectrum treatment, metrics and specimens
-          are original work by the Kallar Project Authors. All bases are used
-          under the SIL Open Font License 1.1.</p>
+        <p><strong>Derivative model.</strong> All five branches start from
+          Manjari. Manjari supplies the shared Latin, digits, punctuation,
+          spacing, metrics and design language. The Devanagari, Tamil, Telugu
+          and Kannada letter structures use the corresponding Noto Sans faces
+          as script donors, because Manjari has no glyphs for those scripts.
+          The aperture engine, APER axis, Spectrum treatment, metrics and
+          specimens are original work by the Kallar Project Authors. All bases
+          are used under the SIL Open Font License 1.1.</p>
         <p><strong>Independence.</strong> This project is independent and is
           not affiliated with or endorsed by Google, the Noto Project Authors,
           Sarvam AI, or SMC. The blue → orange spectrum is an homage to
@@ -392,7 +394,7 @@ HTML = f"""<!doctype html>
           build is deterministic: repeated runs produce byte-identical TTF and
           WOFF2 files. Fonts are subset-free and retain the full upstream
           coverage, including conjuncts, reph forms, matras and Vedic
-          extensions where the base supports them.</p>
+          extensions where the script donor supports them.</p>
       </div>
     </div>
   </div>
@@ -400,7 +402,7 @@ HTML = f"""<!doctype html>
 
 <footer>
   <div class="wrap">
-    Kallar · v1.100 · SIL Open Font License 1.1 · Malayalam +
+    Kallar · v1.200 · SIL Open Font License 1.1 · Malayalam +
     Devanagari + Tamil + Telugu + Kannada · <a href="index.html">Malayalam
     specimen</a> · <a href="../README.md">README</a>
   </div>

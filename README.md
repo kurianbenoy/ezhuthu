@@ -17,14 +17,18 @@ axis, interpolated from point-compatible outlines.
 
 The family began with Malayalam and now carries the same `APER` axis into
 **Devanagari (Hindi, Marathi, Nepali), Tamil, Telugu and Kannada**. Each
-script is a separate variable family because its shaping, glyph set and
-vertical metrics are its own; together they share one axis, one set of design
-stops, one Spectrum palette and one build pipeline.
+script is a separate variable family because its shaping, glyph set and win
+metrics are its own; together they share one axis, one set of design stops,
+one Spectrum palette, Manjari's typographic metrics and one build pipeline.
 
-The Malayalam branch is built on the **Manjari** skeleton by Santhosh
-Thottingal and Swathanthra Malayalam Computing. The four new branches are
-built on the corresponding **Noto Sans** skeletons by the Noto Project
-Authors. All bases are used under the SIL Open Font License. The aperture
+Every family is built on the **Manjari** skeleton by Santhosh Thottingal and
+Swathanthra Malayalam Computing. Manjari supplies the shared Latin, digits,
+punctuation, symbols, spacing, metrics and design language of all five
+families. Because Manjari is a Malayalam + Latin face, the Devanagari, Tamil,
+Telugu and Kannada letters use the corresponding **Noto Sans** faces as
+**script donors**: a donor supplies only the script-specific letter structures
+and shaping rules, while every shared glyph and the design language come from
+Manjari. All bases are used under the SIL Open Font License. The aperture
 engine, variable axis, Spectrum builds, metrics and specimens are new work by
 the Kallar Project Authors.
 
@@ -85,20 +89,24 @@ where the crowns settle into a quiet, readable rhythm.
    every intermediate value is a designed shape and text keeps its metrics.
 4. **Colour is part of the type.** The spectrum is painted by the font, not
    pasted on top of it.
-5. **Honest derivatives.** The base skeletons, their authors and their OFL
-   licences are recorded in the fonts and in this repository.
+5. **Honest derivatives.** The base skeleton, the script donors, their authors
+   and their OFL licences are recorded in the fonts and in this repository.
 
 ---
 
 ## Five scripts, one aperture
 
-| Script | Native name | Family | Base skeleton | Script codepoints | Glyphs |
-|---|---|---|---|---:|---:|
-| Malayalam | **കല്ലാർ** | `Kallar` | Manjari | full block | 918 / 912 |
-| Devanagari (Hindi) | **कल्लार** | `Kallar Devanagari` | Noto Sans Devanagari | 201 | 1117 |
-| Tamil | **கல்லார்** | `Kallar Tamil` | Noto Sans Tamil | 72 | 576 |
-| Telugu | **కల్లార్** | `Kallar Telugu` | Noto Sans Telugu | 100 | 1247 |
-| Kannada | **ಕಲ್ಲಾರ್** | `Kallar Kannada` | Noto Sans Kannada | 91 | 933 |
+| Script | Native name | Family | Base | Script donor | Script codepoints | Glyphs |
+|---|---|---|---|---|---:|---:|
+| Malayalam | **കല്ലാർ** | `Kallar` | Manjari | — | full block | 918 / 912 |
+| Devanagari (Hindi) | **कल्लार** | `Kallar Devanagari` | Manjari | Noto Sans Devanagari | 201 | 1151 |
+| Tamil | **கல்லார்** | `Kallar Tamil` | Manjari | Noto Sans Tamil | 72 | 605 |
+| Telugu | **కల్లార్** | `Kallar Telugu` | Manjari | Noto Sans Telugu | 100 | 1279 |
+| Kannada | **ಕಲ್ಲಾರ್** | `Kallar Kannada` | Manjari | Noto Sans Kannada | 91 | 967 |
+
+The **Base** column is the skeleton of every family. The **Script donor**
+column is only the source of the script-specific letters that Manjari does not
+contain; it is not the base.
 
 The name **Kallar** is written **കല്ലാർ** in Malayalam, **कल्लार** in
 Devanagari, **கல்லார்** in Tamil, **కల్లార్** in Telugu and **ಕಲ್ಲಾರ್** in
@@ -106,7 +114,9 @@ Kannada.
 
 “Hindi” is written in Devanagari; the Devanagari family also covers Marathi,
 Nepali and Sanskrit. The Tamil, Telugu and Kannada families each cover their
-own script plus the Latin, digits and punctuation inherited from the base.
+own script plus the Latin, digits, punctuation and spacing inherited from
+Manjari. The Noto Sans files are script donors for the letters Manjari does
+not contain; they are not the base of the family.
 
 ![The APER axis across four scripts](proofs/kallar_multiscript_axis.png)
 
@@ -122,7 +132,7 @@ single counter grammar:
 - **Telugu** and **Kannada** take the full hole-and-crown warp. Their round
   loops carry the lotus form most naturally.
 - The warp is restricted to the script's **GSUB closure**, so Latin,
-  punctuation and unrelated glyphs remain in the base style. The axis changes
+  punctuation and unrelated glyphs remain in Manjari's style. The axis changes
   the script's counters, never its glyph sequence, spacing or kerning.
 
 The per-script specimens show the full system:
@@ -221,18 +231,19 @@ The Malayalam family covers the complete Malayalam block plus Latin:
 - **918 glyphs** in Regular, **912** in Bold
 
 The multiscript families retain the full cmap and GSUB coverage of their
-bases: Devanagari includes the Devanagari block, Devanagari Extended and the
-Vedic extensions supported by Noto; Tamil, Telugu and Kannada include their
-full blocks. Coverage is verified codepoint by codepoint in
+script donors: Devanagari includes the Devanagari block, Devanagari Extended
+and the Vedic extensions supported by the donor; Tamil, Telugu and Kannada
+include their full blocks. The shared Latin, digits, punctuation and symbols
+are Manjari's. Coverage and the Manjari base are verified in
 `tests/test_multiscript.py`.
 
 | Family | Script cmap | Colour glyphs (Spectrum) |
 |---|---:|---:|
 | Kallar (Malayalam) | full block | 913 Regular / 907 Bold |
-| Kallar Devanagari | 201 | 1111 |
-| Kallar Tamil | 72 | 570 |
-| Kallar Telugu | 100 | 1242 |
-| Kallar Kannada | 91 | 928 |
+| Kallar Devanagari | 201 | 1144 |
+| Kallar Tamil | 72 | 598 |
+| Kallar Telugu | 100 | 1273 |
+| Kallar Kannada | 91 | 961 |
 
 ---
 
@@ -291,7 +302,7 @@ axes, use the static `Round` (APER 0) or `Petal` (APER 100) instances.
 
 > **Note:** the five script families are deliberately separate fonts. There is
 > no single merged all-script TTF, because each script has its own GSUB/GPOS
-> tables, glyph names and vertical metrics.
+> tables, glyph names and win metrics.
 
 ---
 
@@ -420,15 +431,16 @@ make qa-multiscript  # fontbakery on the four new Regular/Bold families
 | Path | What it is |
 |---|---|
 | `tools/kallar.py` | The aperture engine, Malayalam build, spectrum, instances |
-| `tools/multiscript.py` | The Devanagari/Tamil/Telugu/Kannada build driver |
+| `tools/multiscript.py` | The Manjari-base Devanagari/Tamil/Telugu/Kannada build driver |
 | `tools/specimen.py` | Malayalam proof images and brand mockups |
 | `tools/specimen_multiscript.py` | Multiscript hero, axis and script sheets |
 | `tools/specimen_html.py` | Self-contained Malayalam HTML specimen |
 | `tools/specimen_multiscript_html.py` | Self-contained multiscript HTML specimen |
 | `tools/pdf.py` | Chromium PDF printer |
-| `sources/base/` | Manjari and Noto Sans source fonts + upstream OFL texts |
+| `sources/base/` | Manjari base fonts + upstream OFL text |
+| `sources/donors/` | Noto Sans script donors + upstream OFL texts |
 | `tests/test_kallar.py` | Malayalam shaping, variation and colour tests |
-| `tests/test_multiscript.py` | Multiscript axes, metadata, coverage and colour tests |
+| `tests/test_multiscript.py` | Multiscript axes, Manjari base, metadata, coverage and colour tests |
 
 ### Reproducible builds
 
@@ -443,8 +455,11 @@ deterministic too.
 
 - HarfBuzz shaping across `APER 0`, `50` and `100` for every script — identical
   glyph sequences and advances, no `.notdef` in any test case.
-- Full cmap coverage of each base script, plus conjuncts, matras, reph forms
-  and the Devanagari Vedic extensions supported by the base.
+- Full cmap coverage of each script donor, plus conjuncts, matras, reph forms
+  and the Devanagari Vedic extensions supported by the donor.
+- The shared Latin, digits, punctuation and spacing are byte-for-byte
+  Manjari's outlines and advances in every family, and the Latin kern pairs
+  use Manjari's lookups.
 - Outline variation at the two extremes, and a guard that Latin stays
   untouched in the script families.
 - Static Round/Petal instances differ from each other and carry the correct
@@ -452,7 +467,7 @@ deterministic too.
 - Fontbakery universal: **0 FAIL** on all eight multiscript Regular/Bold
   variable fonts. The same documented custom-axis and Bold/`fsSelection`
   exclusions as Malayalam are used, plus numeric STAT labels that stay inside
-  the Windows 31-character limit. Inherited Noto warnings are listed in
+  the Windows 31-character limit. Inherited donor warnings are listed in
   [NOTES.md](NOTES.md).
 - Both HTML specimens and the COLRv1 gradient were verified in headless
   Chromium 156; the shared APER slider drives all four script families.
@@ -465,10 +480,11 @@ deterministic too.
 The full design and engineering rationale is in [NOTES.md](NOTES.md),
 including:
 
-- why Manjari and Noto Sans are the skeletons;
+- why Manjari is the base of every family;
+- what the Noto Sans script donors contribute and why;
 - the exact aperture parameters for each script;
 - why Devanagari needs an absolute headline freeze;
-- how the GSUB closure keeps Latin in the base style;
+- how the GSUB closure keeps Latin in Manjari's style;
 - metrics, reproducibility, fontbakery exclusions and known limits.
 
 The short version:
@@ -488,14 +504,14 @@ The short version:
 Kallar is licensed under the **SIL Open Font License v1.1**
 (<http://scripts.sil.org/OFL>). See [OFL.txt](OFL.txt).
 
-The Malayalam base skeleton is **Manjari**, Copyright 2018 The Manjari Project
-Authors (<https://gitlab.com/smc/fonts/manjari>), under the SIL Open Font
-License 1.1.
+The base skeleton of every family is **Manjari**, Copyright 2018 The Manjari
+Project Authors (<https://gitlab.com/smc/fonts/manjari>), under the SIL Open
+Font License 1.1.
 
-The Devanagari, Tamil, Telugu and Kannada base skeletons are the **Noto Sans**
-families, Copyright 2022 The Noto Project Authors
+The Devanagari, Tamil, Telugu and Kannada letter structures are adapted from
+the **Noto Sans** script donors, Copyright 2022 The Noto Project Authors
 (<https://github.com/notofonts>), under the SIL Open Font License 1.1. Their
-upstream licences are kept in `sources/base/NotoSans*-OFL.txt`.
+upstream licences are kept in `sources/donors/NotoSans*-OFL.txt`.
 
 The aperture engine, variable axis, Spectrum builds, metrics and specimens are
 Copyright 2026 The Kallar Project Authors.
@@ -509,9 +525,9 @@ and in `tools/glyphs_ml.py`.
 
 - **Design, aperture engine, variable fonts, Spectrum, specimens:** Kallar
   Project Authors
-- **Malayalam base skeleton:** Santhosh Thottingal and Swathanthra Malayalam
-  Computing
-- **Devanagari, Tamil, Telugu and Kannada base skeletons:** The Noto Project
+- **Base skeleton for all five families:** Santhosh Thottingal and Swathanthra
+  Malayalam Computing (Manjari)
+- **Devanagari, Tamil, Telugu and Kannada script donors:** The Noto Project
   Authors
 - **Legacy v0.2 shaping engine:** adapted from
   [Nupuram](https://gitlab.com/smc/fonts/Nupuram) by Santhosh Thottingal / SMC
@@ -547,7 +563,8 @@ appreciated.
 
 | Version | Date | What changed |
 |---|---|---|
-| **1.100** | 2026-11-09 | Renamed the family to **Kallar**; added Devanagari, Tamil, Telugu and Kannada; added multiscript specimens and PDF |
+| **1.200** | 2026-11-09 | Rebuilt all five families on the **Manjari** base: Manjari now supplies the shared Latin, digits, punctuation, spacing, metrics and Latin kerning; Noto Sans is used only as script donors for the four scripts Manjari does not contain; regenerated fonts, specimens and PDFs |
+| 1.100 | 2026-11-09 | Renamed the family to **Kallar**; added Devanagari, Tamil, Telugu and Kannada; added multiscript specimens and PDF |
 | 1.000 | 2026-11-09 | First production Malayalam release (as Ezhuthu Kamalam) |
 | 0.2 | 2023 | Legacy parametric draft: metric and letterform tuning, OTF/WOFF2, Makefile |
 | 0.1 | 2023 | Legacy from-scratch parametric Malayalam typeface |

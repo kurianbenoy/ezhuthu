@@ -240,7 +240,7 @@ def petal_warp(font: TTFont, hole_bump=HOLE_BUMP, peak_bump=PEAK_BUMP,
 # font metadata
 # ---------------------------------------------------------------------------
 def set_names(font: TTFont, family, style, full=None, ps=None,
-              weight=400, copyright_note=None, version="Version 1.100",
+              weight=400, copyright_note=None, version="Version 1.200",
               designer=None, url=None):
     full = full or f"{family} {style}"
     ps = ps or f"{family.replace(' ', '')}-{style.replace(' ', '')}"
@@ -295,7 +295,7 @@ def set_metrics(font: TTFont, weight=400, asc=None, desc=None,
     os2 = font["OS/2"]
     hhea = font["hhea"]
     head = font["head"]
-    head.fontRevision = 1.1
+    head.fontRevision = 1.2
     head.created = FIXED_TIME
     head.modified = FIXED_TIME
     # Minimal smart-dropout prep.  The font has no TT hinting otherwise;

@@ -10,11 +10,13 @@ import unicodedata
 import uharfbuzz as hb
 from fontTools.pens.recordingPen import DecomposingRecordingPen
 from fontTools.ttLib import TTFont
+from fontTools.ttLib.scaleUpem import scale_upem
 from fontTools.varLib.instancer import instantiateVariableFont
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "tools"))
 
+from kallar import add_case_pairs  # noqa: E402
 from multiscript import SCRIPTS  # noqa: E402
 
 FAILS = []
@@ -102,16 +104,78 @@ def test_metadata():
             designer = font["name"].getDebugName(9) or ""
             if "SIL Open Font License" not in lic:
                 fail(f"{os.path.basename(p)}: OFL missing")
+            if "Base skeleton: Manjari" not in copyright_note:
+                fail(f"{os.path.basename(p)}: Manjari base attribution missing")
+            if "Manjari Project Authors" not in copyright_note:
+                fail(f"{os.path.basename(p)}: Manjari copyright missing")
             if "Noto Project Authors" not in copyright_note:
-                fail(f"{os.path.basename(p)}: Noto copyright missing")
+                fail(f"{os.path.basename(p)}: Noto donor copyright missing")
             if "Kallar Project Authors" not in copyright_note:
                 fail(f"{os.path.basename(p)}: Kallar copyright missing")
+            if "Santhosh Thottingal" not in designer:
+                fail(f"{os.path.basename(p)}: Manjari designer credit missing")
             if "Noto Project Authors" not in designer:
-                fail(f"{os.path.basename(p)}: Noto designer credit missing")
+                fail(f"{os.path.basename(p)}: Noto donor designer credit missing")
         if (TTFont(path(stem, "Regular"))["name"].getDebugName(1)
                 != script["family"]):
             fail(f"{key}: family name mismatch")
     print("PASS license and attribution metadata")
+
+
+def test_manjari_base():
+    """The shared Latin, digits and punctuation must be Manjari's outlines."""
+    refs = {}
+    for weight in (400, 700):
+        name = "Manjari-Regular.ttf" if weight == 400 else "Manjari-Bold.ttf"
+        ref = TTFont(os.path.join(ROOT, "sources", "base", name))
+        scale_upem(ref, 1000)
+        add_case_pairs(ref)
+        refs[weight] = ref
+
+    def outline(font, gname):
+        pen = DecomposingRecordingPen(font.getGlyphSet())
+        font["glyf"][gname].draw(pen, font["glyf"])
+        return pen.value
+
+    # The donor may localise glyph names (Tamil uses zero.tamil for U+0030),
+    # so resolve the output glyph through its cmap.
+    shared = {ord("H"): "H", ord("a"): "a", ord("0"): "zero",
+              ord("."): "period"}
+    for key, script in SCRIPTS.items():
+        for style, weight in (("Regular", 400), ("Bold", 700)):
+            font = TTFont(path(script["stem"], style))
+            ref = refs[weight]
+            cmap = font.getBestCmap()
+            for cp, ref_name in shared.items():
+                gname = cmap.get(cp)
+                if gname is None or gname not in font["glyf"]:
+                    fail(f"{key} {style}: U+{cp:04X} missing")
+                    continue
+                if outline(font, gname) != outline(ref, ref_name):
+                    fail(f"{key} {style}: U+{cp:04X} is not Manjari's outline")
+                if (font["hmtx"].metrics[gname]
+                        != ref["hmtx"].metrics[ref_name]):
+                    fail(f"{key} {style}: U+{cp:04X} is not Manjari's advance")
+            space = cmap.get(0x20)
+            if (space is None or font["hmtx"].metrics[space]
+                    != ref["hmtx"].metrics["space"]):
+                fail(f"{key} {style}: space is not Manjari's advance")
+
+            # The Latin kern pairs must be Manjari's too, not the donor's.
+            ref_path = os.path.join(
+                ROOT, "sources", "base",
+                "Manjari-Regular.ttf" if weight == 400 else "Manjari-Bold.ttf",
+            )
+            ref_hb = load(ref_path)
+            out_hb = load(path(script["stem"], style))
+            for text in ("AV", "To", "Wa"):
+                ref_adv = [round(adv * 1000 / 2048)
+                           for _, adv in shape(ref_hb, text)]
+                out_adv = [adv for _, adv in shape(out_hb, text)]
+                if len(ref_adv) != len(out_adv) or any(
+                        abs(a - b) > 1 for a, b in zip(ref_adv, out_adv)):
+                    fail(f"{key} {style}: Latin kern {text!r} is not Manjari's")
+    print("PASS Manjari base (shared Latin, digits, punctuation, spacing and kerning)")
 
 
 # ---------------------------------------------------------------------------
@@ -140,7 +204,7 @@ def test_shaping():
 
 def test_coverage():
     for key, script in SCRIPTS.items():
-        base = TTFont(script["base"])
+        base = TTFont(script["donor"])
         base_cmap = {
             cp for table in base["cmap"].tables if table.isUnicode()
             for cp in table.cmap
@@ -266,6 +330,7 @@ def test_color():
 def main():
     test_axes()
     test_metadata()
+    test_manjari_base()
     test_shaping()
     test_coverage()
     test_outline_variation()

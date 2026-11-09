@@ -1,31 +1,32 @@
-# Base skeletons
+# Manjari base
 
-Kallar is a multi-script type system built on open-source structural
-skeletons. The new work is the aperture engine (`APER`), the lotus-gateway
-counters, the Spectrum builds, the metrics, the build pipeline and the
-specimens. The base outlines are used under the SIL Open Font License 1.1.
+**Manjari is the base skeleton of every Kallar family.** The shared Latin,
+digits, punctuation, symbols, spacing, metrics and design language all come
+from these two files. The Malayalam family is Manjari throughout.
 
 | Branch | Upstream | Vendored file | SHA-256 |
 |---|---|---|---|
-| Malayalam | [Manjari](https://gitlab.com/smc/fonts/manjari) by Santhosh Thottingal / SMC | `Manjari-Regular.ttf`, `Manjari-Bold.ttf` | see `AUTHORS.md` |
-| Devanagari | [Noto Sans Devanagari](https://github.com/notofonts/devanagari) | `NotoSansDevanagari-VF.ttf` | `14ec4af41f27482216d1c2229f417ff9b1425e1babb014e57d1d40d03229853e` |
-| Tamil | [Noto Sans Tamil](https://github.com/notofonts/tamil) | `NotoSansTamil-VF.ttf` | `aa3a9b321f4b0bb2c40203ffbde9af89713227866e0e13f76e5b9eeea727cf88` |
-| Telugu | [Noto Sans Telugu](https://github.com/notofonts/telugu) | `NotoSansTelugu-VF.ttf` | `e618af7bf999df192ed4f388eba2e563f2b5015034e9cbb317b5bd793bd7334d` |
-| Kannada | [Noto Sans Kannada](https://github.com/notofonts/kannada) | `NotoSansKannada-VF.ttf` | `cca4f3b3a8cb12fb261f1b43baf5d2f7f59d90fe123d41f0065ed3a183997ec9` |
+| Base (Regular) | [Manjari](https://gitlab.com/smc/fonts/manjari) by Santhosh Thottingal / SMC | `Manjari-Regular.ttf` | `16460924696bfea2a2f71b4201d8786867c6413b548ecbd22bc6bfe55be90f95` |
+| Base (Bold) | [Manjari](https://gitlab.com/smc/fonts/manjari) by Santhosh Thottingal / SMC | `Manjari-Bold.ttf` | `f19fef695b28e5448ae87451dfbab426676cadf4b59340558a157c0071b69d26` |
 
-The Noto variable fonts were downloaded from the `google/fonts` repository on
-2026-11-09. They are vendored so that builds are offline and reproducible.
-Each upstream font carries its own copyright notice in its `name` table and
-its own `OFL.txt` beside the binary.
+## Script donors
+
+Manjari is a Malayalam + Latin face, so it has no Devanagari, Tamil, Telugu or
+Kannada outlines. The four sister families use the corresponding Noto Sans
+faces as **script donors**. A donor supplies only the script-specific letter
+structures and the GSUB/GPOS rules that shape them; every shared glyph is
+transplanted from Manjari. The donors are vendored in
+[`sources/donors/`](../donors/) with their upstream OFL texts.
 
 ## Derivative model
 
-The Malayalam branch is a derivative of Manjari. The Devanagari, Tamil, Telugu
-and Kannada branches are derivatives of the corresponding Noto Sans faces.
-Each derived family is renamed to `Kallar <Script>`, preserves the
-upstream copyright and OFL notice, and records the base in its name table and
-documentation. The aperture axis and the Spectrum treatment are original work
-by the Kallar Project Authors.
+All five Kallar families are derivatives of Manjari. Each family is renamed to
+`Kallar` or `Kallar <Script>`, preserves the Manjari copyright and OFL notice,
+and records the base in its name table and documentation. The Devanagari,
+Tamil, Telugu and Kannada letter structures are adapted from the Noto Sans
+donors under the SIL Open Font License; that attribution is kept in every
+derived font. The aperture axis, the Spectrum treatment and the specimens are
+original work by the Kallar Project Authors.
 
 This project is independent and is not affiliated with or endorsed by Google,
 the Noto Project Authors, Sarvam AI, or SMC.
