@@ -1,18 +1,24 @@
-Kallar Multiscript Font Family
-==============================
+# Kallar
 
-![Five scripts, one aperture](proofs/kallar_multiscript.png)
+### A multiscript typeface that blooms.
 
-**Kallar** is a multiscript display type system built around one
-idea: the counter as a **lotus gateway**. At one end of its variable axis a
-loop is the classic round form; at the other, its crown rises into a soft
-petal. The transformation is not a decorative filter — it is a real OpenType
-variation axis, interpolated from point-compatible outlines.
+![Kallar — five scripts, one aperture](proofs/kallar_multiscript.png)
+
+![License: OFL 1.1](https://img.shields.io/badge/license-OFL%201.1-ee7944)
+![Scripts: 5](https://img.shields.io/badge/scripts-5-3d4fbf)
+![Variable: APER 0–100](https://img.shields.io/badge/variable-APER%200--100-7f63d6)
+![Colour: COLRv1](https://img.shields.io/badge/colour-COLRv1-d973a0)
+
+**Kallar** is a multiscript display type system built around one idea: the
+counter as a **lotus gateway**. At one end of its variable axis a loop is the
+classic round form; at the other, its crown rises into a soft petal. The
+transformation is not a decorative filter — it is a real OpenType variation
+axis, interpolated from point-compatible outlines.
 
 The family began with Malayalam and now carries the same `APER` axis into
 **Devanagari (Hindi, Marathi, Nepali), Tamil, Telugu and Kannada**. Each
 script is a separate variable family because its shaping, glyph set and
-vertical metrics are its own; together they share one axis, one set of named
+vertical metrics are its own; together they share one axis, one set of design
 stops, one Spectrum palette and one build pipeline.
 
 The Malayalam branch is built on the **Manjari** skeleton by Santhosh
@@ -22,11 +28,69 @@ Authors. All bases are used under the SIL Open Font License. The aperture
 engine, variable axis, Spectrum builds, metrics and specimens are new work by
 the Kallar Project Authors.
 
-The project lives in the Ezhuthu repository:
-[github.com/kurianbenoy/ezhuthu](https://github.com/kurianbenoy/ezhuthu).
+Kallar lives at
+[github.com/kurianbenoy/kallar](https://github.com/kurianbenoy/kallar).
 
-Five Scripts, One Aperture
---------------------------
+---
+
+## Contents
+
+- [The idea](#the-idea)
+- [Five scripts, one aperture](#five-scripts-one-aperture)
+- [The APER axis](#the-aper-axis)
+- [The Spectrum](#the-spectrum)
+- [In context](#in-context)
+- [Character set](#character-set)
+- [The family](#the-family)
+- [Download](#download)
+- [Using Kallar](#using-kallar)
+- [Building from source](#building-from-source)
+- [Testing and QA](#testing-and-qa)
+- [Design notes](#design-notes)
+- [License](#license)
+- [Credits](#credits)
+- [Contributing](#contributing)
+- [Version history](#version-history)
+
+---
+
+## The idea
+
+Malayalam is a script of loops. The loop head is its most recognisable
+gesture: a round counter, an opening, a tail. Most typefaces treat that loop
+as a circle or an oval. Kallar treats it as a **gateway**.
+
+At `APER 0` the counter is a classic round loop. As `APER` rises, the crown of
+the counter lifts into a soft point: the negative space becomes a lotus petal,
+a temple doorway. The outer silhouette follows with a gentler version of the
+same gesture, so open arches and closed loops share one rhythm. The counters
+themselves change shape — this is outline variation, not a decorative overlay.
+
+The second layer is colour. **Kallar Spectrum** carries a blue → orange
+gradient inside the font with COLRv1 and CPAL. The gradient is defined once per
+glyph in font units, so a paragraph reads as one continuous field rather than
+a set of separately coloured letters.
+
+Kallar is a **display** companion, designed to be set large where the petal
+crowns and the spectrum are visible. It is also comfortable in short text,
+where the crowns settle into a quiet, readable rhythm.
+
+### Design principles
+
+1. **The counter is the signature.** The transform starts in the negative
+   space, not on the outer contour.
+2. **One grammar, five scripts.** Scripts keep their own shaping and
+   proportions, but share the same aperture logic.
+3. **Point compatibility over effects.** Masters only move existing points, so
+   every intermediate value is a designed shape and text keeps its metrics.
+4. **Colour is part of the type.** The spectrum is painted by the font, not
+   pasted on top of it.
+5. **Honest derivatives.** The base skeletons, their authors and their OFL
+   licences are recorded in the fonts and in this repository.
+
+---
+
+## Five scripts, one aperture
 
 | Script | Family | Base skeleton | Script codepoints | Glyphs |
 |---|---|---|---:|---:|
@@ -42,13 +106,15 @@ own script plus the Latin, digits and punctuation inherited from the base.
 
 ![The APER axis across four scripts](proofs/kallar_multiscript_axis.png)
 
+### Script-specific profiles
+
 Each script has its own aperture profile, because the scripts do not share a
 single counter grammar:
 
 - **Devanagari** keeps the shirorekha dead straight. An absolute freeze at the
   headline means only the counters and the loops below it open into petals.
 - **Tamil** uses a gentler hole-and-crown profile. Its counters are fewer and
-  more open, so the petal is concentrated in the loops and the inner curves.
+  more open, so the petal is concentrated in the loops and inner curves.
 - **Telugu** and **Kannada** take the full hole-and-crown warp. Their round
   loops carry the lotus form most naturally.
 - The warp is restricted to the script's **GSUB closure**, so Latin,
@@ -62,14 +128,14 @@ The per-script specimens show the full system:
 | ![Devanagari](proofs/kallar_devanagari.png) | ![Tamil](proofs/kallar_tamil.png) |
 | ![Telugu](proofs/kallar_telugu.png) | ![Kannada](proofs/kallar_kannada.png) |
 
-The Aperture Axis
------------------
+---
+
+## The APER axis
 
 ![The five stops of the aperture axis](proofs/kallar_axis.png)
 
-Every counter in Kallar can open from a classic round loop
-(`APER 0`) to a pointed lotus gateway (`APER 100`). The axis is exposed as
-`APER` in every variable font and has five named stops:
+Every counter in Kallar can open from a classic round loop (`APER 0`) to a
+pointed lotus gateway (`APER 100`). The axis has five design stops:
 
 | APER | Name | Character |
 |---:|---|---|
@@ -86,23 +152,44 @@ a designed shape and HarfBuzz shaping is identical at every stop. The axis
 changes the counters and crowns, never the glyph sequence, the spacing or the
 kerning.
 
-The Spectrum
-------------
+```css
+/* 0 = round · 50 = bloom · 100 = petal */
+font-variation-settings: "APER" 100;
+```
+
+---
+
+## The Spectrum
 
 ![Kallar Spectrum](proofs/kallar_gradient.png)
 
-**Kallar Spectrum** carries a blue → orange gradient inside the font
-itself with COLRv1 and CPAL. Blue sits at the crown, orange near the baseline
-and gold in the descenders, so a paragraph reads as one continuous field
-rather than a set of separately coloured letters. Regular and Bold Spectrum
-builds ship for every script.
+**Kallar Spectrum** carries a blue → orange gradient inside the font itself
+with COLRv1 and CPAL. Blue sits at the crown, orange near the baseline and gold
+in the descenders, so a paragraph reads as one continuous field rather than a
+set of separately coloured letters. Regular and Bold Spectrum builds ship for
+every script.
+
+| Stop | Colour | Role |
+|---:|---|---|
+| 0.00 | `#181E5C` | deep indigo |
+| 0.20 | `#2B3FB0` | blue |
+| 0.40 | `#5C64DB` | periwinkle |
+| 0.58 | `#A06CD2` | violet |
+| 0.74 | `#D973A0` | pink |
+| 0.88 | `#EE7944` | Sarvam orange |
+| 1.00 | `#F9C36D` | warm gold |
+
+Clients with COLRv1 support paint the gradient; clients without it fall back
+to the monochrome outlines. The gradient is clipped to each glyph outline and
+runs from `y=620` to `y=-120` in font units.
 
 The spectrum is an homage to the lotus-and-gateway visual language of
 [Sarvam AI](https://www.sarvam.ai/brand). This project is independent and is
 not affiliated with or endorsed by Sarvam AI.
 
-In Context
-----------
+---
+
+## In context
 
 The same fonts, the same axis, the same spectrum — applied to the kinds of
 surfaces a contemporary Indian type system has to live on.
@@ -114,8 +201,9 @@ surfaces a contemporary Indian type system has to live on.
 
 ![Kallar lockup](proofs/kallar_lockup.png)
 
-Character Set
--------------
+---
+
+## Character set
 
 ![Kallar character sheet](proofs/kallar_glyphs.png)
 
@@ -134,10 +222,22 @@ Vedic extensions supported by Noto; Tamil, Telugu and Kannada include their
 full blocks. Coverage is verified codepoint by codepoint in
 `tests/test_multiscript.py`.
 
-The Family
-----------
+| Family | Script cmap | Colour glyphs (Spectrum) |
+|---|---:|---:|
+| Kallar (Malayalam) | full block | 913 Regular / 907 Bold |
+| Kallar Devanagari | 201 | 1111 |
+| Kallar Tamil | 72 | 570 |
+| Kallar Telugu | 100 | 1242 |
+| Kallar Kannada | 91 | 928 |
 
-The Malayalam family:
+---
+
+## The family
+
+Each of the five script families ships the same seven styles. All files are
+available as TTF and WOFF2.
+
+### Malayalam
 
 | File | What it is |
 |---|---|
@@ -149,7 +249,7 @@ The Malayalam family:
 | `fonts/Kallar-Petal.ttf/.woff2` | Static `APER 100` instance |
 | `fonts/Kallar-BoldPetal.ttf/.woff2` | Static Bold `APER 100` instance |
 
-Each new script ships the same seven styles:
+### Multiscript
 
 | Family | Files |
 |---|---|
@@ -158,7 +258,7 @@ Each new script ships the same seven styles:
 | Kallar Telugu | `fonts/KallarTelugu-{Regular,Bold,Round,Petal,BoldPetal,Spectrum,SpectrumRegular}.{ttf,woff2}` |
 | Kallar Kannada | `fonts/KallarKannada-{Regular,Bold,Round,Petal,BoldPetal,Spectrum,SpectrumRegular}.{ttf,woff2}` |
 
-Specimens:
+### Specimens
 
 | File | What it is |
 |---|---|
@@ -167,8 +267,9 @@ Specimens:
 | `proofs/Kallar-Specimen.pdf` | Vector Malayalam PDF specimen |
 | `proofs/Kallar-Multiscript-Specimen.pdf` | Vector multiscript PDF specimen |
 
-Downloading the font files
---------------------------
+---
+
+## Download
 
 The latest TTF and WOFF2 builds live in [`fonts/`](fonts/). The multiscript
 specimen is [`specimen/multiscript.html`](specimen/multiscript.html); the
@@ -180,8 +281,43 @@ Open the HTML directly, or serve both specimens with:
 make serve   # http://localhost:8000
 ```
 
-Using the font
---------------
+For most web projects, use the WOFF2 variable fonts. For desktop design apps,
+install the TTF variable fonts. If an app does not expose custom variation
+axes, use the static `Round` (APER 0) or `Petal` (APER 100) instances.
+
+> **Note:** the five script families are deliberately separate fonts. There is
+> no single merged all-script TTF, because each script has its own GSUB/GPOS
+> tables, glyph names and vertical metrics.
+
+---
+
+## Using Kallar
+
+### Web
+
+```css
+@font-face {
+  font-family: "Kallar";
+  src: url("Kallar-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Kallar";
+  src: url("Kallar-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+
+.bloom {
+  font-family: "Kallar";
+  font-weight: 700;
+  font-variation-settings: "APER" 100; /* 0 = round, 100 = petal */
+}
+```
+
+### Devanagari, Tamil, Telugu and Kannada
 
 ```css
 @font-face {
@@ -192,18 +328,15 @@ Using the font
 
 .deva {
   font-family: "Kallar Devanagari";
-  font-variation-settings: "APER" 100; /* 0 = round, 100 = petal */
+  font-variation-settings: "APER" 100;
 }
 ```
 
-```python
-# HarfBuzz / uharfbuzz
-font.set_variations({"APER": 65})
-```
+### Mixed-script copy
 
-For mixed-script copy, stack the families. The browser picks the first family
-that supports each character; the Malayalam family handles Malayalam and the
-shared Latin, and the script families fill in the rest:
+Stack the families. The browser picks the first family that supports each
+character — the Malayalam family handles Malayalam and the shared Latin, and
+the script families fill in the rest:
 
 ```css
 .multiscript {
@@ -218,14 +351,51 @@ shared Latin, and the script families fill in the rest:
 }
 ```
 
-For the colour builds, use `Kallar<Script>-SpectrumRegular` or
-`Kallar<Script>-Spectrum`. Clients with COLRv1 support paint the
+### Colour
+
+Use `Kallar-SpectrumRegular` / `Kallar-Spectrum`, or the corresponding
+`Kallar<Script>-Spectrum*` builds. Clients with COLRv1 support paint the
 gradient; clients without it fall back to the monochrome outlines.
 
-Building from source
---------------------
+```css
+.spectrum {
+  font-family: "Kallar Spectrum", "Kallar", sans-serif;
+  font-weight: 700;
+}
+```
 
-The build is Python + fontTools + varLib + COLRv1:
+### JavaScript
+
+```js
+const title = document.querySelector(".bloom");
+title.style.fontVariationSettings = '"APER" 65';
+```
+
+### HarfBuzz
+
+```python
+import uharfbuzz as hb
+
+blob = hb.Blob.from_file_path("KallarDevanagari-Regular.ttf")
+face = hb.Face(blob)
+font = hb.Font(face)
+font.set_variations({"APER": 65})
+```
+
+### The APER value
+
+| Value | Use it for |
+|---:|---|
+| 0 | A conventional, round text cut |
+| 25–50 | A subtle display lift |
+| 50–75 | A clear petal silhouette |
+| 100 | The full lotus display cut (default) |
+
+---
+
+## Building from source
+
+The build is Python + fontTools + varLib + COLRv1.
 
 ```bash
 make venv            # create .venv and install dependencies
@@ -239,14 +409,33 @@ make qa              # fontbakery on Malayalam Regular and Bold
 make qa-multiscript  # fontbakery on the four new Regular/Bold families
 ```
 
-Sources live in `sources/base/` (Manjari and the four Noto Sans variable
-skeletons). The aperture engine is `tools/kallar.py`; the multiscript driver
-is `tools/multiscript.py`. The build is reproducible: repeated runs produce
-byte-identical TTF and WOFF2 files. Design and engineering notes are in
-[NOTES.md](NOTES.md).
+`make kamalam` remains as a deprecated alias for the old v1.000 target name.
 
-Testing and QA
---------------
+### Source layout
+
+| Path | What it is |
+|---|---|
+| `tools/kallar.py` | The aperture engine, Malayalam build, spectrum, instances |
+| `tools/multiscript.py` | The Devanagari/Tamil/Telugu/Kannada build driver |
+| `tools/specimen.py` | Malayalam proof images and brand mockups |
+| `tools/specimen_multiscript.py` | Multiscript hero, axis and script sheets |
+| `tools/specimen_html.py` | Self-contained Malayalam HTML specimen |
+| `tools/specimen_multiscript_html.py` | Self-contained multiscript HTML specimen |
+| `tools/pdf.py` | Chromium PDF printer |
+| `sources/base/` | Manjari and Noto Sans source fonts + upstream OFL texts |
+| `tests/test_kallar.py` | Malayalam shaping, variation and colour tests |
+| `tests/test_multiscript.py` | Multiscript axes, metadata, coverage and colour tests |
+
+### Reproducible builds
+
+`head.created` and `head.modified` are pinned to a fixed date and
+`recalcTimestamp` is disabled. Repeated `make kallar` and `make multiscript`
+runs produce byte-identical TTF and WOFF2 files. `make proofs` is
+deterministic too.
+
+---
+
+## Testing and QA
 
 - HarfBuzz shaping across `APER 0`, `50` and `100` for every script — identical
   glyph sequences and advances, no `.notdef` in any test case.
@@ -257,23 +446,47 @@ Testing and QA
 - Static Round/Petal instances differ from each other and carry the correct
   names; COLRv1/CPAL paint graphs are present in every Spectrum build.
 - Fontbakery universal: **0 FAIL** on all eight multiscript Regular/Bold
-  variable fonts (the same documented custom-axis and Bold/`fsSelection`
-  exclusions as Malayalam, plus numeric STAT labels that stay inside the
-  Windows 31-character limit; inherited Noto warnings are listed in
-  [NOTES.md](NOTES.md)).
+  variable fonts. The same documented custom-axis and Bold/`fsSelection`
+  exclusions as Malayalam are used, plus numeric STAT labels that stay inside
+  the Windows 31-character limit. Inherited Noto warnings are listed in
+  [NOTES.md](NOTES.md).
 - Both HTML specimens and the COLRv1 gradient were verified in headless
   Chromium 156; the shared APER slider drives all four script families.
 - Byte-identical repeat builds for `make kallar` and `make multiscript`.
 
-License
--------
+---
+
+## Design notes
+
+The full design and engineering rationale is in [NOTES.md](NOTES.md),
+including:
+
+- why Manjari and Noto Sans are the skeletons;
+- the exact aperture parameters for each script;
+- why Devanagari needs an absolute headline freeze;
+- how the GSUB closure keeps Latin in the base style;
+- metrics, reproducibility, fontbakery exclusions and known limits.
+
+The short version:
+
+| Script | Profile |
+|---|---|
+| Malayalam | Full hole-and-crown warp; the original Kallar cut |
+| Devanagari | Counters-only below an absolute headline freeze |
+| Tamil | Gentler profile concentrated in the fewer closed loops |
+| Telugu | Full hole-and-crown warp |
+| Kannada | Full hole-and-crown warp |
+
+---
+
+## License
 
 Kallar is licensed under the **SIL Open Font License v1.1**
 (<http://scripts.sil.org/OFL>). See [OFL.txt](OFL.txt).
 
-The Malayalam base skeleton is **Manjari**, Copyright 2018 The Manjari
-Project Authors (<https://gitlab.com/smc/fonts/manjari>), under the SIL Open
-Font License 1.1.
+The Malayalam base skeleton is **Manjari**, Copyright 2018 The Manjari Project
+Authors (<https://gitlab.com/smc/fonts/manjari>), under the SIL Open Font
+License 1.1.
 
 The Devanagari, Tamil, Telugu and Kannada base skeletons are the **Noto Sans**
 families, Copyright 2022 The Noto Project Authors
@@ -283,11 +496,12 @@ upstream licences are kept in `sources/base/NotoSans*-OFL.txt`.
 The aperture engine, variable axis, Spectrum builds, metrics and specimens are
 Copyright 2026 The Kallar Project Authors.
 
-The legacy v0.2 from-scratch parametric draft is preserved in
-[`legacy/`](legacy/) and in `tools/glyphs_ml.py`.
+The legacy v0.2 from-scratch parametric draft is preserved in [`legacy/`](legacy/)
+and in `tools/glyphs_ml.py`.
 
-Credits
--------
+---
+
+## Credits
 
 - **Design, aperture engine, variable fonts, Spectrum, specimens:** Kallar
   Project Authors
@@ -301,13 +515,42 @@ Credits
 - **Sarvam inspiration:** the blue → orange spectrum and the gateway/lotus
   language are an homage to [Sarvam AI](https://www.sarvam.ai/brand)
 
-Getting involved
-----------------
+---
 
-Bug reports, glyph requests and feature suggestions are welcome. Open an
-issue in the repository or send a pull request against the `tools/` and
-`sources/` directories. Please run `make test` and `make qa-multiscript`
-before sending a contribution.
+## Contributing
+
+Bug reports, glyph requests and feature suggestions are welcome. Open an issue
+in the repository or send a pull request against the `tools/` and `sources/`
+directories.
+
+Before sending a contribution:
+
+```bash
+make test
+make qa
+make qa-multiscript
+```
+
+Please keep derived fonts under the SIL Open Font License and preserve the
+base authors' copyright notices.
 
 If you use Kallar in a project, a small credit — “Typeface: Kallar” — is
 appreciated.
+
+---
+
+## Version history
+
+| Version | Date | What changed |
+|---|---|---|
+| **1.100** | 2026-11-09 | Renamed the family to **Kallar**; added Devanagari, Tamil, Telugu and Kannada; added multiscript specimens and PDF |
+| 1.000 | 2026-11-09 | First production Malayalam release (as Ezhuthu Kamalam) |
+| 0.2 | 2023 | Legacy parametric draft: metric and letterform tuning, OTF/WOFF2, Makefile |
+| 0.1 | 2023 | Legacy from-scratch parametric Malayalam typeface |
+
+See [FONTLOG.txt](FONTLOG.txt) for details.
+
+> **A note on the name.** Kallar was previously developed as *Ezhuthu
+> Kamalam*. The v1.000 release and the legacy `ezhuthu` draft keep that
+> history. The GitHub repository was renamed from `ezhuthu` to `kallar`; old
+> GitHub URLs redirect to the new repository.
